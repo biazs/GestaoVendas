@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using GestaoVendas.Data;
+using GestaoVendas.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using GestaoVendas.Data;
-using GestaoVendas.Models;
+using Rotativa.AspNetCore;
 
 namespace GestaoVendas.Controllers
 {
@@ -161,6 +160,25 @@ namespace GestaoVendas.Controllers
         private bool VendaExists(int id)
         {
             return _context.Venda.Any(e => e.Id == id);
+        }
+
+        public IActionResult VisualizarComoPDF()
+        {
+            CarregaLista();
+
+            var pdf = new ViewAsPdf
+            {
+                ViewName = "VisualizarComoPDF",
+                IsGrayScale = true,
+                Model = ViewBag.ListaVendas
+            };
+
+            return pdf;
+        }
+
+        private void CarregaLista()
+        {
+            ViewBag.ListaVendas = _context.Venda.ToList();
         }
     }
 }

@@ -624,3 +624,7 @@ D:\Fabiana\Desenvolvimento_Full_Stack\TCC_Aplicativo\GestaoVendas_TCC\GestaoVend
 D:\Fabiana\Desenvolvimento_Full_Stack\TCC_Aplicativo\GestaoVendas_TCC\GestaoVendas\obj\Debug\netcoreapp3.1\GestaoVendas.MvcApplicationPartsAssemblyInfo.cs
 D:\Fabiana\Desenvolvimento_Full_Stack\TCC_Aplicativo\GestaoVendas_TCC\GestaoVendas\obj\Debug\netcoreapp3.1\GestaoVendas.MvcApplicationPartsAssemblyInfo.cache
 D:\Fabiana\Desenvolvimento_Full_Stack\TCC_Aplicativo\GestaoVendas_TCC\GestaoVendas\obj\Debug\netcoreapp3.1\Razor\Views\Clientes\VisualizarComoPDF.cshtml.g.cs
+D:\Fabiana\Desenvolvimento_Full_Stack\TCC_Aplicativo\GestaoVendas_TCC\GestaoVendas\obj\Debug\netcoreapp3.1\Razor\Views\Fornecedores\VisualizarComoPDF.cshtml.g.cs
+D:\Fabiana\Desenvolvimento_Full_Stack\TCC_Aplicativo\GestaoVendas_TCC\GestaoVendas\obj\Debug\netcoreapp3.1\Razor\Views\Produtos\VisualizarComoPDF.cshtml.g.cs
+D:\Fabiana\Desenvolvimento_Full_Stack\TCC_Aplicativo\GestaoVendas_TCC\GestaoVendas\obj\Debug\netcoreapp3.1\Razor\Views\Vendas\VisualizarComoPDF.cshtml.g.cs
+D:\Fabiana\Desenvolvimento_Full_Stack\TCC_Aplicativo\GestaoVendas_TCC\GestaoVendas\obj\Debug\netcoreapp3.1\Razor\Views\Vendedores\VisualizarComoPDF.cshtml.g.cs

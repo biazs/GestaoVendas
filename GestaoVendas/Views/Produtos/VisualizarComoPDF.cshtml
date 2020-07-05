@@ -1,0 +1,74 @@
+﻿@model IEnumerable<GestaoVendas.Models.Produto>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sistema Gestão de Vendas</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+@{
+    ViewData["Title"] = "VisualizarComoPDF";
+
+    Layout = null;
+
+}
+
+<body>
+    <h1>Sistema Gestão de Vendas</h1>
+    <br /><br />
+    <h2>Lista de Produtos</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Preço Unitário</th>
+                <th>Quantidade em Estoque</th>
+                <th>Unidade de Medida</th>
+                <th>Fornecedor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Descricao)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PrecoUnitario)
+                    </td>
+                    <td>
+                        quantidade
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UnidadeMedida)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FornecedorId)
+                    </td>
+                </tr>
+            }
+                </tr>
+            </tbody>
+        </table>
+
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2020 - Sistema Gestão de Vendas
+            </div>
+        </footer>
+    </body>
+
+</html>
