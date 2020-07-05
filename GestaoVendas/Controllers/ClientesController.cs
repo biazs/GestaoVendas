@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using GestaoVendas.Data;
+using GestaoVendas.Libraries.Mensagem;
 using GestaoVendas.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Rotativa.AspNetCore;
 
 namespace GestaoVendas.Controllers
 {
@@ -60,6 +59,7 @@ namespace GestaoVendas.Controllers
             {
                 _context.Add(cliente);
                 await _context.SaveChangesAsync();
+                TempData["MSG_S"] = Mensagem.MSG_S001;
                 return RedirectToAction(nameof(Index));
             }
             return View(cliente);
@@ -149,5 +149,28 @@ namespace GestaoVendas.Controllers
         {
             return _context.Cliente.Any(e => e.Id == id);
         }
+
+
+        public IActionResult VisualizarComoPDF()
+        {
+            CarregaLista();
+
+            var pdf = new ViewAsPdf
+            {
+                ViewName = "VisualizarComoPDF",
+                IsGrayScale = true,
+                Model = ViewBag.ListaClientes
+            };
+
+            return pdf;
+        }
+
+        private void CarregaLista()
+        {
+            ViewBag.ListaClientes = _context.Cliente.ToList();
+            //ClienteModel().ListarTodosClientes();
+        }
+
+
     }
 }
