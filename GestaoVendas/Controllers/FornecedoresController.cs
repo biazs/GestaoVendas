@@ -2,12 +2,14 @@
 using System.Threading.Tasks;
 using GestaoVendas.Data;
 using GestaoVendas.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Rotativa.AspNetCore;
 
 namespace GestaoVendas.Controllers
 {
+    [Authorize]
     public class FornecedoresController : Controller
     {
         private readonly GestaoVendasContext _context;

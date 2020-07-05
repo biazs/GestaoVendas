@@ -1,9 +1,10 @@
 ﻿using GestaoVendas.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace GestaoVendas.Data
 {
-    public class GestaoVendasContext : DbContext
+    public class GestaoVendasContext : IdentityDbContext
     {
         public GestaoVendasContext(DbContextOptions<GestaoVendasContext> options)
             : base(options)
