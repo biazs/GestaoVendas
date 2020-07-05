@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "vzoBnbd2zFZkuz0rciuMAuYHerbIwE9Xbz5wbbqdfbgiHXPe9rHBEqspNhlupsw9iuRWwlT5AnY2/SZINiqA5A==",
+  "dgSpecHash": "LmVdSpbdCIzaIi5dXo/NwF2ydLTtdCS4TVE/LEXCHdfKp1JXrjM1EHth7OXSTKMzaqeA+mUeZhYgTZyGHXSVaA==",
   "success": true,
-  "projectFilePath": "D:\\Fabiana\\Desenvolvimento_Full_Stack\\TCC_Aplicativo\\GestaoVendas\\GestaoVendas\\GestaoVendas.csproj",
+  "projectFilePath": "D:\\Fabiana\\Desenvolvimento_Full_Stack\\TCC_Aplicativo\\GestaoVendas_TCC\\GestaoVendas\\GestaoVendas.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\07102793618\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\3.1.5\\microsoft.aspnetcore.cryptography.internal.3.1.5.nupkg.sha512",
     "C:\\Users\\07102793618\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\3.1.5\\microsoft.aspnetcore.cryptography.keyderivation.3.1.5.nupkg.sha512",

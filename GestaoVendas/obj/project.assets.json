@@ -8927,11 +8927,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Fabiana\\Desenvolvimento_Full_Stack\\TCC_Aplicativo\\GestaoVendas\\GestaoVendas\\GestaoVendas.csproj",
+      "projectUniqueName": "D:\\Fabiana\\Desenvolvimento_Full_Stack\\TCC_Aplicativo\\GestaoVendas_TCC\\GestaoVendas\\GestaoVendas.csproj",
       "projectName": "GestaoVendas",
-      "projectPath": "D:\\Fabiana\\Desenvolvimento_Full_Stack\\TCC_Aplicativo\\GestaoVendas\\GestaoVendas\\GestaoVendas.csproj",
+      "projectPath": "D:\\Fabiana\\Desenvolvimento_Full_Stack\\TCC_Aplicativo\\GestaoVendas_TCC\\GestaoVendas\\GestaoVendas.csproj",
       "packagesPath": "C:\\Users\\07102793618\\.nuget\\packages\\",
-      "outputPath": "D:\\Fabiana\\Desenvolvimento_Full_Stack\\TCC_Aplicativo\\GestaoVendas\\GestaoVendas\\obj\\",
+      "outputPath": "D:\\Fabiana\\Desenvolvimento_Full_Stack\\TCC_Aplicativo\\GestaoVendas_TCC\\GestaoVendas\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\",
