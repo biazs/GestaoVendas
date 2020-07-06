@@ -22,7 +22,7 @@ namespace GestaoVendas.Controllers
         // GET: Fornecedores
         public async Task<IActionResult> Index()
         {
-            var temAcesso = await UsuarioTemAcesso(4, _context);
+            var temAcesso = await UsuarioTemAcesso("Fornecedores", _context);
 
             if (!temAcesso)
             {

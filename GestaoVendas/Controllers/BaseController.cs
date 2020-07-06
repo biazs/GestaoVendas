@@ -9,7 +9,7 @@ namespace GestaoVendas.Controllers
 {
     public class BaseController : Controller
     {
-        public async Task<bool> UsuarioTemAcesso(int codigoPagina, GestaoVendasContext _context)
+        public async Task<bool> UsuarioTemAcesso(string pagina, GestaoVendasContext _context)
         {
             var usuario = User.Identity.Name;
 
@@ -17,7 +17,7 @@ namespace GestaoVendas.Controllers
                                    join AT in _context.AcessoTipoUsuario on TP.Id equals AT.IdTipoUsuario
                                    join PF in _context.PerfilUsuario on TP.Id equals PF.IdTipoUsuario
                                    join US in _context.Usuario on PF.UserId equals US.Id
-                                   where AT.Id == codigoPagina && US.Email == usuario
+                                   where AT.NomeFuncionalidade == pagina && US.Email == usuario
                                    select new
                                    {
                                        TP.Id
