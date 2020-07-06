@@ -1,4 +1,5 @@
 ﻿using GestaoVendas.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +13,6 @@ namespace GestaoVendas.Data
         }
 
         public DbSet<Fornecedor> Fornecedor { get; set; }
-
         public DbSet<Cliente> Cliente { get; set; }
         public DbSet<Vendedor> Vendedor { get; set; }
         public DbSet<Venda> Venda { get; set; }
@@ -21,15 +21,21 @@ namespace GestaoVendas.Data
         public DbSet<Estoque> Estoque { get; set; }
         public DbSet<ProdutoEstoque> ProdutoEstoque { get; set; }
 
+        public DbSet<TipoUsuario> TipoUsuario { get; set; }
+        public DbSet<AcessoTipoUsuario> AcessoTipoUsuario { get; set; }
+        public DbSet<PerfilUsuario> PerfilUsuario { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        public DbSet<IdentityUser> Usuario { get; set; }
+
+
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(builder);
 
-            modelBuilder.Entity<ItemVenda>()
+            builder.Entity<ItemVenda>()
                 .HasKey(x => new { x.ProdutoId, x.VendaId });
 
-            modelBuilder.Entity<ProdutoEstoque>()
+            builder.Entity<ProdutoEstoque>()
                 .HasKey(x => new { x.EstoqueId, x.ProdutoId });
         }
     }

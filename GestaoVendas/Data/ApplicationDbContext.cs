@@ -20,6 +20,10 @@ namespace GestaoVendas.Data
         public DbSet<Estoque> Estoque { get; set; }
         public DbSet<ProdutoEstoque> ProdutoEstoque { get; set; }
 
+        public DbSet<TipoUsuario> TipoUsuario { get; set; }
+        public DbSet<AcessoTipoUsuario> AcessoTipoUsuario { get; set; }
+        public DbSet<PerfilUsuario> PerfilUsuario { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

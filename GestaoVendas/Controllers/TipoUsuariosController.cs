@@ -2,36 +2,27 @@
 using System.Threading.Tasks;
 using GestaoVendas.Data;
 using GestaoVendas.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Rotativa.AspNetCore;
 
 namespace GestaoVendas.Controllers
 {
-    [Authorize]
-    public class FornecedoresController : BaseController
+    public class TipoUsuariosController : BaseController
     {
         private readonly GestaoVendasContext _context;
 
-        public FornecedoresController(GestaoVendasContext context)
+        public TipoUsuariosController(GestaoVendasContext context)
         {
             _context = context;
         }
 
-        // GET: Fornecedores
+        // GET: TipoUsuarios
         public async Task<IActionResult> Index()
         {
-            var temAcesso = await UsuarioTemAcesso(4, _context);
-
-            if (!temAcesso)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            return View(await _context.Fornecedor.ToListAsync());
+            return View(await _context.TipoUsuario.ToListAsync());
         }
 
-        // GET: Fornecedores/Details/5
+        // GET: TipoUsuarios/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -39,39 +30,39 @@ namespace GestaoVendas.Controllers
                 return NotFound();
             }
 
-            var fornecedor = await _context.Fornecedor
+            var tipoUsuario = await _context.TipoUsuario
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (fornecedor == null)
+            if (tipoUsuario == null)
             {
                 return NotFound();
             }
 
-            return View(fornecedor);
+            return View(tipoUsuario);
         }
 
-        // GET: Fornecedores/Create
+        // GET: TipoUsuarios/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Fornecedores/Create
+        // POST: TipoUsuarios/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,Cnpj,Contato,Telefone")] Fornecedor fornecedor)
+        public async Task<IActionResult> Create([Bind("Id,NomeTipoUsuario")] TipoUsuario tipoUsuario)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(fornecedor);
+                _context.Add(tipoUsuario);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(fornecedor);
+            return View(tipoUsuario);
         }
 
-        // GET: Fornecedores/Edit/5
+        // GET: TipoUsuarios/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -79,22 +70,22 @@ namespace GestaoVendas.Controllers
                 return NotFound();
             }
 
-            var fornecedor = await _context.Fornecedor.FindAsync(id);
-            if (fornecedor == null)
+            var tipoUsuario = await _context.TipoUsuario.FindAsync(id);
+            if (tipoUsuario == null)
             {
                 return NotFound();
             }
-            return View(fornecedor);
+            return View(tipoUsuario);
         }
 
-        // POST: Fornecedores/Edit/5
+        // POST: TipoUsuarios/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Cnpj,Contato,Telefone")] Fornecedor fornecedor)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,NomeTipoUsuario")] TipoUsuario tipoUsuario)
         {
-            if (id != fornecedor.Id)
+            if (id != tipoUsuario.Id)
             {
                 return NotFound();
             }
@@ -103,12 +94,12 @@ namespace GestaoVendas.Controllers
             {
                 try
                 {
-                    _context.Update(fornecedor);
+                    _context.Update(tipoUsuario);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FornecedorExists(fornecedor.Id))
+                    if (!TipoUsuarioExists(tipoUsuario.Id))
                     {
                         return NotFound();
                     }
@@ -119,10 +110,10 @@ namespace GestaoVendas.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(fornecedor);
+            return View(tipoUsuario);
         }
 
-        // GET: Fornecedores/Delete/5
+        // GET: TipoUsuarios/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -130,49 +121,30 @@ namespace GestaoVendas.Controllers
                 return NotFound();
             }
 
-            var fornecedor = await _context.Fornecedor
+            var tipoUsuario = await _context.TipoUsuario
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (fornecedor == null)
+            if (tipoUsuario == null)
             {
                 return NotFound();
             }
 
-            return View(fornecedor);
+            return View(tipoUsuario);
         }
 
-        // POST: Fornecedores/Delete/5
+        // POST: TipoUsuarios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var fornecedor = await _context.Fornecedor.FindAsync(id);
-            _context.Fornecedor.Remove(fornecedor);
+            var tipoUsuario = await _context.TipoUsuario.FindAsync(id);
+            _context.TipoUsuario.Remove(tipoUsuario);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool FornecedorExists(int id)
+        private bool TipoUsuarioExists(int id)
         {
-            return _context.Fornecedor.Any(e => e.Id == id);
-        }
-
-        public IActionResult VisualizarComoPDF()
-        {
-            CarregaLista();
-
-            var pdf = new ViewAsPdf
-            {
-                ViewName = "VisualizarComoPDF",
-                IsGrayScale = true,
-                Model = ViewBag.ListaFornecedores
-            };
-
-            return pdf;
-        }
-
-        private void CarregaLista()
-        {
-            ViewBag.ListaFornecedores = _context.Fornecedor.ToList();
+            return _context.TipoUsuario.Any(e => e.Id == id);
         }
     }
 }
