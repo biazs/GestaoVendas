@@ -1,3 +1,4 @@
+using GestaoVendas.Controllers;
 using GestaoVendas.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,6 +38,8 @@ namespace GestaoVendas
 
             services.AddDbContext<GestaoVendasContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("GestaoVendasContext")));
+
+            services.AddScoped<EstoquesController>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
