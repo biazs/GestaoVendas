@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using GestaoVendas.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GestaoVendas.Controllers
 {
@@ -6,6 +7,34 @@ namespace GestaoVendas.Controllers
     {
         public IActionResult Index()
         {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Vendas()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Vendas(Relatorio relatorio)
+        {
+            if (relatorio.DataDe.Year == 1)
+            {
+                //ViewBag.ListaVendas = new Venda().ListagemVendas();
+            }
+            else
+            {
+                string DataDe = relatorio.DataDe.ToString("yyyy-MM-dd");
+                string DataAte = relatorio.DataAte.ToString("yyyy-MM-dd");
+                // ViewBag.ListaVendas = new Venda().ListagemVendas(DataDe, DataAte);
+            }
+
+            if (ViewBag.ListaVendas.Count == 0)
+            {
+                // TempData["MSG_E"] = Mensagem.MSG_E007;
+            }
+
             return View();
         }
 
