@@ -1,12 +1,12 @@
 ﻿@model GestaoVendas.Models.AcessoTipoUsuario
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Cadastrar";
 }
 
-<h1>Create</h1>
+<h1>Cadastrar</h1>
 
-<h4>AcessoTipoUsuario</h4>
+<h4>Acesso Tipo Usuário</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -19,17 +19,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="IdTipoUsuario" class="control-label"></label>
-                <select asp-for="IdTipoUsuario" class ="form-control" asp-items="ViewBag.IdTipoUsuario"></select>
+                <select asp-for="IdTipoUsuario" class="form-control" asp-items="ViewBag.IdTipoUsuario"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Cadastrar" class="btn btn-block btn-success" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-block btn-primary">Listagem de acessos de tipos de usuário</a>
 </div>
 
 @section Scripts {
