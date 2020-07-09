@@ -29,9 +29,6 @@ namespace GestaoVendas.Models
         [Display(Name = "Preço Unitário")]
         public double PrecoUnitario { get; set; }
 
-        [Display(Name = "Quantidade")]
-        public int Quantidade { get; set; }
-
         [Display(Name = "Unidade de medida")]
         public string UnidadeMedida { get; set; }
 

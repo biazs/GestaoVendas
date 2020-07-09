@@ -58,19 +58,20 @@ namespace GestaoVendas.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,Descricao,PrecoUnitario,Quantidade,UnidadeMedida,LinkFoto,FornecedorId")] Produto produto)
+        public async Task<IActionResult> Create(int quantidade, [Bind("Id,Nome,Descricao,PrecoUnitario,UnidadeMedida,LinkFoto,FornecedorId")] Produto produto)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(produto);
+
+                //inserir na tabela estoque
+                var estoque = new Estoque() { Quantidade = quantidade };
+                _context.Estoque.Add(estoque);
+
                 await _context.SaveChangesAsync();
 
                 //recuperar id do produto
-
                 var id_produto = _context.Produto.OrderByDescending(o => o.Id).First().Id;
-                //inserir na tabela estoque
-                var estoque = new Estoque() { Quantidade = produto.Quantidade };
-                _context.Estoque.Add(estoque);
 
                 //recuperar id do estoque                
                 var id_estoque = _context.Estoque.OrderByDescending(o => o.Id).First().Id;
@@ -78,6 +79,8 @@ namespace GestaoVendas.Controllers
                 //inserir na tabela produto_estoque
                 var produto_estoque = new ProdutoEstoque() { EstoqueId = id_estoque, ProdutoId = id_produto };
                 _context.ProdutoEstoque.Add(produto_estoque);
+
+                await _context.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
