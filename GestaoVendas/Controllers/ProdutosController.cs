@@ -97,11 +97,18 @@ namespace GestaoVendas.Controllers
             }
 
             var produto = await _context.Produto.FindAsync(id);
+
             if (produto == null)
             {
                 return NotFound();
             }
-            ViewData["FornecedorId"] = new SelectList(_context.Fornecedor, "Id", "Cnpj", produto.FornecedorId);
+
+
+            //Buscar quantidade na tabela estoque
+            var id_estoque = _context.ProdutoEstoque.Where(e => e.ProdutoId == id).Select(e => e.EstoqueId).FirstOrDefault();
+            ViewBag.Quantidade = _context.Estoque.Where(e => e.Id == id_estoque).Select(e => e.Quantidade).FirstOrDefault();
+
+            ViewData["FornecedorId"] = new SelectList(_context.Fornecedor, "Id", "Nome", produto.FornecedorId);
             return View(produto);
         }
 
@@ -110,7 +117,7 @@ namespace GestaoVendas.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Descricao,PrecoUnitario,UnidadeMedida,LinkFoto,FornecedorId")] Produto produto)
+        public async Task<IActionResult> Edit(int id, int quantidade, [Bind("Id,Nome,Descricao,PrecoUnitario,UnidadeMedida,LinkFoto,FornecedorId")] Produto produto)
         {
             if (id != produto.Id)
             {
@@ -122,6 +129,16 @@ namespace GestaoVendas.Controllers
                 try
                 {
                     _context.Update(produto);
+
+                    //recuperar id do estoque
+                    var id_estoque = _context.ProdutoEstoque.Where(e => e.ProdutoId == id).Select(e => e.EstoqueId).FirstOrDefault();
+
+                    //inserir na tabela estoque
+                    //_context.Estoque.Where(e => e.Id == id_estoque).Update(e => e.Quantidade == quantidade);
+                    var sql = $"UPDATE Estoque SET quantidade = {quantidade} WHERE Id {id_estoque}";
+                    _context.Database.ExecuteSqlCommand(sql);
+
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -137,7 +154,7 @@ namespace GestaoVendas.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FornecedorId"] = new SelectList(_context.Fornecedor, "Id", "Cnpj", produto.FornecedorId);
+            ViewData["FornecedorId"] = new SelectList(_context.Fornecedor, "Id", "Nome", produto.FornecedorId);
             return View(produto);
         }
 
