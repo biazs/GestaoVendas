@@ -22,6 +22,9 @@
                 @Html.DisplayNameFor(model => model.Descricao)
             </th>
             <th>
+                Quantidade
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.PrecoUnitario)
             </th>
             <th>
@@ -45,6 +48,11 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Descricao)
+                </td>
+                <td>
+                    @try
+                    {@ViewBag.Quantidade}
+                catch { }
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.PrecoUnitario)

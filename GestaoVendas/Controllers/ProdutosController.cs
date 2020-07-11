@@ -24,6 +24,8 @@ namespace GestaoVendas.Controllers
         public async Task<IActionResult> Index()
         {
             var gestaoVendasContext = _context.Produto.Include(p => p.Fornecedor);
+            //TODO: BuscarQuantidade            
+
             return View(await gestaoVendasContext.ToListAsync());
         }
 
@@ -42,6 +44,9 @@ namespace GestaoVendas.Controllers
             {
                 return NotFound();
             }
+
+            //Buscar quantidade na tabela estoque
+            BuscarQuantidade(id);
 
             return View(produto);
         }
@@ -103,13 +108,25 @@ namespace GestaoVendas.Controllers
                 return NotFound();
             }
 
-
             //Buscar quantidade na tabela estoque
-            var id_estoque = _context.ProdutoEstoque.Where(e => e.ProdutoId == id).Select(e => e.EstoqueId).FirstOrDefault();
-            ViewBag.Quantidade = _context.Estoque.Where(e => e.Id == id_estoque).Select(e => e.Quantidade).FirstOrDefault();
+            BuscarQuantidade(id);
 
             ViewData["FornecedorId"] = new SelectList(_context.Fornecedor, "Id", "Nome", produto.FornecedorId);
             return View(produto);
+        }
+
+        private void BuscarQuantidade(int? id)
+        {
+            try
+            {
+                //Buscar quantidade na tabela estoque
+                var id_estoque = _context.ProdutoEstoque.Where(e => e.ProdutoId == id).Select(e => e.EstoqueId).FirstOrDefault();
+                ViewBag.Quantidade = _context.Estoque.Where(e => e.Id == id_estoque).Select(e => e.Quantidade).FirstOrDefault();
+            }
+            catch
+            {
+                ViewBag.Quantidade = 0;
+            }
         }
 
         // POST: Produtos/Edit/5
@@ -134,10 +151,8 @@ namespace GestaoVendas.Controllers
                     var id_estoque = _context.ProdutoEstoque.Where(e => e.ProdutoId == id).Select(e => e.EstoqueId).FirstOrDefault();
 
                     //inserir na tabela estoque
-                    //_context.Estoque.Where(e => e.Id == id_estoque).Update(e => e.Quantidade == quantidade);
-                    var sql = $"UPDATE Estoque SET quantidade = {quantidade} WHERE Id {id_estoque}";
-                    _context.Database.ExecuteSqlCommand(sql);
-
+                    var estoque = _context.Estoque.First(a => a.Id == id_estoque);
+                    estoque.Quantidade = quantidade;
 
                     await _context.SaveChangesAsync();
                 }
