@@ -27,9 +27,11 @@ namespace GestaoVendas.Models
         public string Descricao { get; set; }
 
         [Display(Name = "Preço Unitário")]
+        [Required(ErrorMessage = "Campo obrigatório")]
         public double PrecoUnitario { get; set; }
 
         [Display(Name = "Unidade de medida")]
+        [Required(ErrorMessage = "Campo obrigatório")]
         public string UnidadeMedida { get; set; }
 
         [Display(Name = "Link da foto")]

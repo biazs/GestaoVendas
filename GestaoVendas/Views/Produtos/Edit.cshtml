@@ -24,7 +24,7 @@
             <div class="form-group">
                 <label class="control-label">Quantidade</label>
                 <input name="quantidade" id="quantidade" required type="text" class="form-control" value="@try { @ViewBag.Quantidade } catch { }" />
-                <span class="text-danger"></span>
+                <span class="text-danger" id="msg_quantidade"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PrecoUnitario" class="control-label"></label>
@@ -47,7 +47,7 @@
                 <span asp-validation-for="FornecedorId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Salvar" class="btn btn-block btn-success" />
+                <input type="submit" value="Salvar" class="btn btn-block btn-success" onclick="Enviardados()" />
             </div>
         </form>
     </div>
@@ -60,3 +60,12 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+<script language="JavaScript">
+    function Enviardados() {
+
+        if (document.getElementById("quantidade").value == "") {
+            msg_quantidade.innerHTML = "Campo obrigatório";
+        }
+    }
+</script>

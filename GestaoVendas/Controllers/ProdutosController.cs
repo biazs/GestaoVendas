@@ -24,7 +24,15 @@ namespace GestaoVendas.Controllers
         public async Task<IActionResult> Index()
         {
             var gestaoVendasContext = _context.Produto.Include(p => p.Fornecedor);
-            //TODO: BuscarQuantidade            
+            //TODO: BuscarQuantidade 
+            /* "SELECT p.id, p.nome, p.descricao, p.preco_unitario, e.quantidade, p.unidade_medida, p.link_foto, " +
+                         "f.nome as nome_fornecedor " +
+                         "FROM produto p " +
+                         "inner join fornecedor f on p.fornecedor_id = f.id " +
+                         "inner join produto_estoque pe on p.id = pe.produto_id " +
+                         "inner join estoque e on pe.estoque_id = e.id " +
+                         "ORDER BY nome asc";
+            */
 
             return View(await gestaoVendasContext.ToListAsync());
         }
@@ -188,6 +196,9 @@ namespace GestaoVendas.Controllers
             {
                 return NotFound();
             }
+
+            //Buscar quantidade na tabela estoque
+            BuscarQuantidade(id);
 
             return View(produto);
         }
