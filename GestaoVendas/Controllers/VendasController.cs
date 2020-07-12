@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using GestaoVendas.Data;
 using GestaoVendas.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +10,8 @@ using Rotativa.AspNetCore;
 
 namespace GestaoVendas.Controllers
 {
-    public class VendasController : Controller
+    [Authorize]
+    public class VendasController : BaseController
     {
         private readonly GestaoVendasContext _context;
 
@@ -21,6 +23,15 @@ namespace GestaoVendas.Controllers
         // GET: Vendas
         public async Task<IActionResult> Index()
         {
+            var temAcesso = await UsuarioTemAcesso("Vendas", _context);
+
+            if (!temAcesso)
+            {
+                ViewBag.TemAcesso = false;
+                return RedirectToAction("Index", "Home");
+            }
+            ViewBag.TemAcesso = true;
+
             var gestaoVendasContext = _context.Venda.Include(v => v.Cliente).Include(v => v.Vendedor);
             return View(await gestaoVendasContext.ToListAsync());
         }
