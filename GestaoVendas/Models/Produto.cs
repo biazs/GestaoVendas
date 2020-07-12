@@ -49,5 +49,11 @@ namespace GestaoVendas.Models
         public virtual ICollection<ProdutoEstoque> ProdutosEstoque { get; set; }
 
         public virtual ICollection<ItemVenda> ItensVenda { get; set; }
+
+
+        [NotMapped]
+        public int Quantidade { get; set; }
     }
+
+
 }

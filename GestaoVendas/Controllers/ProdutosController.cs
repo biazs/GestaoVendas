@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using GestaoVendas.Data;
 using GestaoVendas.Models;
@@ -12,29 +15,60 @@ namespace GestaoVendas.Controllers
     public class ProdutosController : Controller
     {
         private readonly GestaoVendasContext _context;
-        private readonly EstoquesController _estoque;
 
-        public ProdutosController(GestaoVendasContext context, EstoquesController estoque)
+        public ProdutosController(GestaoVendasContext context)
         {
             _context = context;
-            _estoque = estoque;
         }
 
         // GET: Produtos
         public async Task<IActionResult> Index()
         {
-            var gestaoVendasContext = _context.Produto.Include(p => p.Fornecedor);
-            //TODO: BuscarQuantidade 
-            /* "SELECT p.id, p.nome, p.descricao, p.preco_unitario, e.quantidade, p.unidade_medida, p.link_foto, " +
-                         "f.nome as nome_fornecedor " +
-                         "FROM produto p " +
-                         "inner join fornecedor f on p.fornecedor_id = f.id " +
-                         "inner join produto_estoque pe on p.id = pe.produto_id " +
-                         "inner join estoque e on pe.estoque_id = e.id " +
-                         "ORDER BY nome asc";
-            */
+            try
+            {
+                //var gestaoVendasContext = _context.Produto.Include(p => p.Fornecedor);
 
-            return View(await gestaoVendasContext.ToListAsync());
+                // BuscarQuantidade e fornecedor
+                var listaProdutos = (from p in _context.Produto
+                                     join fo in _context.Fornecedor on p.FornecedorId equals fo.Id
+                                     join pe in _context.ProdutoEstoque on p.Id equals pe.ProdutoId
+                                     join e in _context.Estoque on pe.EstoqueId equals e.Id
+                                     orderby p.Nome
+                                     select new
+                                     {
+                                         p.Id,
+                                         p.Nome,
+                                         p.Descricao,
+                                         p.PrecoUnitario,
+                                         e.Quantidade,
+                                         p.UnidadeMedida,
+                                         p.LinkFoto
+                                     });
+                List<Produto> lista = new List<Produto>();
+                Produto item;
+
+                foreach (var ls in listaProdutos)
+                {
+                    item = new Produto
+                    {
+                        Id = ls.Id,
+                        Nome = ls.Nome,
+                        Descricao = ls.Descricao,
+                        PrecoUnitario = ls.PrecoUnitario,
+                        Quantidade = ls.Quantidade,
+                        UnidadeMedida = ls.UnidadeMedida,
+                        LinkFoto = ls.LinkFoto
+                    };
+                    lista.Add(item);
+
+                }
+
+                return View(lista);
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Error), new { message = "Erro ao carregar registros. Tente novamente mais tarde. \n\n" + e.Message });
+            }
         }
 
         // GET: Produtos/Details/5
@@ -237,5 +271,16 @@ namespace GestaoVendas.Controllers
         {
             ViewBag.ListaProdutos = _context.Produto.ToList();
         }
+
+        public IActionResult Error(string message)
+        {
+            var viewModel = new ErrorViewModel
+            {
+                Message = message,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+            return View(viewModel);
+        }
+
     }
 }

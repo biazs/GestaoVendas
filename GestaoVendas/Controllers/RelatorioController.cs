@@ -38,30 +38,30 @@ namespace GestaoVendas.Controllers
             return View();
         }
 
-        /* public IActionResult Grafico()
-         {
-             List<GraficoProdutos> lista = new GraficoProdutos().RetornarGrafico();
-             string valores = "";
-             string labels = "";
-             string cores = "";
+        /*public IActionResult Grafico()
+        {
+            List<GraficoProdutos> lista = new GraficoProdutos().RetornarGrafico();
+            string valores = "";
+            string labels = "";
+            string cores = "";
 
-             var random = new Random();
+            var random = new Random();
 
-             //Percorre a lista de itens para compor o gráfico
-             for (int i = 0; i < lista.Count; i++)
-             {
-                 valores += lista[i].QtdeVendido.ToString() + ",";
-                 labels += "'" + lista[i].DescricaoProduto.ToString() + "',";
+            //Percorre a lista de itens para compor o gráfico
+            for (int i = 0; i < lista.Count; i++)
+            {
+                valores += lista[i].QtdeVendido.ToString() + ",";
+                labels += "'" + lista[i].DescricaoProduto.ToString() + "',";
 
-                 //Escolher aleatoriamente as cores para compor o gráfico tipo torta
-                 cores += "'" + String.Format("#{0:X6}", random.Next(0x1000000)) + "',";
-             }
+                //Escolher aleatoriamente as cores para compor o gráfico tipo torta
+                cores += "'" + String.Format("#{0:X6}", random.Next(0x1000000)) + "',";
+            }
 
-             ViewBag.Valores = valores;
-             ViewBag.Labels = labels;
-             ViewBag.Cores = cores;
+            ViewBag.Valores = valores;
+            ViewBag.Labels = labels;
+            ViewBag.Cores = cores;
 
-             return View();
-         }*/
+            return View();
+        }*/
     }
 }
