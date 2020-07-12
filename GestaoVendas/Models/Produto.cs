@@ -41,6 +41,10 @@ namespace GestaoVendas.Models
         [Required(ErrorMessage = "Campo obrigatório")]
         public int FornecedorId { get; set; }
 
+        [NotMapped]
+        [Display(Name = "Quantidade")]
+        public int Quantidade { get; set; }
+
         [ForeignKey("FornecedorId")]
         public Fornecedor Fornecedor { get; set; }
 
@@ -51,8 +55,7 @@ namespace GestaoVendas.Models
         public virtual ICollection<ItemVenda> ItensVenda { get; set; }
 
 
-        [NotMapped]
-        public int Quantidade { get; set; }
+
     }
 
 
