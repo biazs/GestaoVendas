@@ -1,4 +1,6 @@
-﻿using GestaoVendas.Data;
+﻿using System.Collections.Generic;
+using GestaoVendas.Data;
+using GestaoVendas.Models;
 
 namespace GestaoVendas.Src
 {
@@ -15,12 +17,12 @@ namespace GestaoVendas.Src
         }
 
 
-        /*public List<Produto> ListarTodosProdutos()
+        public List<Produto> ListarTodosProdutos()
         {
             List<Produto> lista = new List<Produto>();
             Produto item;
             // BuscarQuantidade e fornecedor
-            var listaProdutos = (from p in _context.Produto
+            /*var listaProdutos = (from p in _context.Produto
                                  join f in _context.Fornecedor on p.FornecedorId equals f.Id
                                  join pe in _context.ProdutoEstoque on p.Id equals pe.ProdutoId
                                  join e in _context.Estoque on pe.EstoqueId equals e.Id
@@ -51,10 +53,11 @@ namespace GestaoVendas.Src
                     LinkFoto = listaProdutos.Rows[i]["link_foto"].ToString(),
                 };
                 lista.Add(item);
-            }
+            }*/
 
             return lista;
 
-        }*/
+
+        }
     }
 }
