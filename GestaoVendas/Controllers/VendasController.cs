@@ -1,7 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using GestaoVendas.Data;
 using GestaoVendas.Models;
+using GestaoVendas.Models.Dao;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -55,11 +58,19 @@ namespace GestaoVendas.Controllers
             return View(venda);
         }
 
+
+
+
         // GET: Vendas/Create
         public IActionResult Create()
         {
             ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Cpf");
             ViewData["VendedorId"] = new SelectList(_context.Vendedor, "Id", "Email");
+
+            var userId = Convert.ToInt32(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            ViewBag.Vendedor = _context.Vendedor.FirstOrDefaultAsync(m => m.Id == userId);
+            CarregarDados();
             return View();
         }
 
@@ -78,6 +89,7 @@ namespace GestaoVendas.Controllers
             }
             ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Cpf", venda.ClienteId);
             ViewData["VendedorId"] = new SelectList(_context.Vendedor, "Id", "Email", venda.VendedorId);
+            CarregarDados();
             return View(venda);
         }
 
@@ -189,6 +201,11 @@ namespace GestaoVendas.Controllers
         private void CarregaLista()
         {
             ViewBag.ListaVendas = _context.Venda.ToList();
+        }
+
+        private void CarregarDados()
+        {
+            ViewBag.ListaProdutos = new DaoVenda().RetornarListaProdutos(_context);
         }
     }
 }

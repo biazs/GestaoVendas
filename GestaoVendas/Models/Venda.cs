@@ -26,7 +26,6 @@ namespace GestaoVendas.Models
         [Required(ErrorMessage = "Campo obrigatório")]
         public double Total { get; set; }
 
-
         [Display(Name = "Vendedor")]
         [Required(ErrorMessage = "Campo obrigatório")]
         public int VendedorId { get; set; }
@@ -34,13 +33,15 @@ namespace GestaoVendas.Models
         [ForeignKey("VendedorId")]
         public Vendedor Vendedor { get; set; }
 
-
         [Display(Name = "Cliente")]
         [Required(ErrorMessage = "Campo obrigatório")]
         public int ClienteId { get; set; }
 
         [ForeignKey("ClienteId")]
         public Cliente Cliente { get; set; }
+
+        [NotMapped]
+        public string ListaProdutos { get; set; }
 
         public virtual ICollection<ItemVenda> ItensVenda { get; set; }
     }
