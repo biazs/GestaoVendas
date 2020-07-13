@@ -1,22 +1,19 @@
-﻿@model IEnumerable<GestaoVendas.Models.AcessoTipoUsuario>
+﻿@model IEnumerable<GestaoVendas.Models.Funcionalidade>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Lista de acessos dos tipos de usuários</h1>
+<h1>Funcionalidades</h1>
 
 <p>
-    <a asp-action="Create">Cadastrar novo</a>
+    <a asp-action="Create">Cadastrar nova</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.IdFuncionalidade)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TipoUsuario)
+                @Html.DisplayNameFor(model => model.NomeFuncionalidade)
             </th>
             <th></th>
         </tr>
@@ -26,10 +23,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.IdFuncionalidade)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TipoUsuario.NomeTipoUsuario)
+                    @Html.DisplayFor(modelItem => item.NomeFuncionalidade)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Alterar</a> |

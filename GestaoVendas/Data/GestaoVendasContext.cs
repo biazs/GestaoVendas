@@ -38,5 +38,8 @@ namespace GestaoVendas.Data
             builder.Entity<ProdutoEstoque>()
                 .HasKey(x => new { x.EstoqueId, x.ProdutoId });
         }
+
+
+        public DbSet<GestaoVendas.Models.Funcionalidade> Funcionalidade { get; set; }
     }
 }

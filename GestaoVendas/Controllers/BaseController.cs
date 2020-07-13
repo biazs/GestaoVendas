@@ -15,9 +15,10 @@ namespace GestaoVendas.Controllers
 
             var temAcesso = await (from TP in _context.TipoUsuario
                                    join AT in _context.AcessoTipoUsuario on TP.Id equals AT.IdTipoUsuario
+                                   join FU in _context.Funcionalidade on AT.IdFuncionalidade equals FU.Id
                                    join PF in _context.PerfilUsuario on TP.Id equals PF.IdTipoUsuario
                                    join US in _context.Usuario on PF.UserId equals US.Id
-                                   where AT.NomeFuncionalidade == pagina && US.Email == usuario
+                                   where FU.NomeFuncionalidade == pagina && US.Email == usuario
                                    select new
                                    {
                                        TP.Id

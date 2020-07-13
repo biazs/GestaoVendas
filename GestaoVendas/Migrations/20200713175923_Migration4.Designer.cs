@@ -4,14 +4,16 @@ using GestaoVendas.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GestaoVendas.Migrations
 {
     [DbContext(typeof(GestaoVendasContext))]
-    partial class GestaoVendasContextModelSnapshot : ModelSnapshot
+    [Migration("20200713175923_Migration4")]
+    partial class Migration4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,15 +28,13 @@ namespace GestaoVendas.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("IdFuncionalidade")
-                        .HasColumnType("int");
-
                     b.Property<int>("IdTipoUsuario")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<string>("NomeFuncionalidade")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("IdFuncionalidade");
+                    b.HasKey("Id");
 
                     b.HasIndex("IdTipoUsuario");
 
@@ -109,21 +109,6 @@ namespace GestaoVendas.Migrations
                     b.HasIndex("ProdutoId");
 
                     b.ToTable("Fornecedores");
-                });
-
-            modelBuilder.Entity("GestaoVendas.Models.Funcionalidade", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("NomeFuncionalidade")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Funcionalidade");
                 });
 
             modelBuilder.Entity("GestaoVendas.Models.ItemVenda", b =>
@@ -484,12 +469,6 @@ namespace GestaoVendas.Migrations
 
             modelBuilder.Entity("GestaoVendas.Models.AcessoTipoUsuario", b =>
                 {
-                    b.HasOne("GestaoVendas.Models.Funcionalidade", "Funcionalidade")
-                        .WithMany()
-                        .HasForeignKey("IdFuncionalidade")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("GestaoVendas.Models.TipoUsuario", "TipoUsuario")
                         .WithMany()
                         .HasForeignKey("IdTipoUsuario")

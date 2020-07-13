@@ -47,6 +47,8 @@ namespace GestaoVendas.Controllers
         public IActionResult Create()
         {
             ViewData["IdTipoUsuario"] = new SelectList(_context.TipoUsuario, "Id", "NomeTipoUsuario");
+            ViewData["IdFuncionalidade"] = new SelectList(_context.Funcionalidade, "Id", "NomeFuncionalidade");
+
             return View();
         }
 
@@ -55,7 +57,7 @@ namespace GestaoVendas.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,NomeFuncionalidade,IdTipoUsuario")] AcessoTipoUsuario acessoTipoUsuario)
+        public async Task<IActionResult> Create([Bind("Id,IdFuncionalidade,IdTipoUsuario")] AcessoTipoUsuario acessoTipoUsuario)
         {
             if (ModelState.IsValid)
             {
@@ -64,6 +66,7 @@ namespace GestaoVendas.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdTipoUsuario"] = new SelectList(_context.TipoUsuario, "Id", "NomeTipoUsuario", acessoTipoUsuario.IdTipoUsuario);
+            ViewData["IdFuncionalidade"] = new SelectList(_context.Funcionalidade, "Id", "NomeFuncionalidade", acessoTipoUsuario.IdFuncionalidade);
             return View(acessoTipoUsuario);
         }
 
@@ -81,6 +84,7 @@ namespace GestaoVendas.Controllers
                 return NotFound();
             }
             ViewData["IdTipoUsuario"] = new SelectList(_context.TipoUsuario, "Id", "NomeTipoUsuario", acessoTipoUsuario.IdTipoUsuario);
+            ViewData["IdFuncionalidade"] = new SelectList(_context.Funcionalidade, "Id", "NomeFuncionalidade", acessoTipoUsuario.IdFuncionalidade);
             return View(acessoTipoUsuario);
         }
 
@@ -89,7 +93,7 @@ namespace GestaoVendas.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,NomeFuncionalidade,IdTipoUsuario")] AcessoTipoUsuario acessoTipoUsuario)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,IdFuncionalidade,IdTipoUsuario")] AcessoTipoUsuario acessoTipoUsuario)
         {
             if (id != acessoTipoUsuario.Id)
             {
@@ -117,6 +121,7 @@ namespace GestaoVendas.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdTipoUsuario"] = new SelectList(_context.TipoUsuario, "Id", "NomeTipoUsuario", acessoTipoUsuario.IdTipoUsuario);
+            ViewData["IdFuncionalidade"] = new SelectList(_context.Funcionalidade, "Id", "NomeFuncionalidade", acessoTipoUsuario.IdFuncionalidade);
             return View(acessoTipoUsuario);
         }
 

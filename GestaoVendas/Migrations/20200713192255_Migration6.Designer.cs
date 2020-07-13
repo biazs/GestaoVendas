@@ -4,14 +4,16 @@ using GestaoVendas.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GestaoVendas.Migrations
 {
     [DbContext(typeof(GestaoVendasContext))]
-    partial class GestaoVendasContextModelSnapshot : ModelSnapshot
+    [Migration("20200713192255_Migration6")]
+    partial class Migration6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,6 +33,9 @@ namespace GestaoVendas.Migrations
 
                     b.Property<int>("IdTipoUsuario")
                         .HasColumnType("int");
+
+                    b.Property<string>("NomeFuncionalidade")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
