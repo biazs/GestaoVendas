@@ -13,7 +13,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.IdFuncionalidade)
+                @Html.DisplayNameFor(model => model.NomeFuncionalidade)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.TipoUsuario)
@@ -26,10 +26,10 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.IdFuncionalidade)
+                    @Html.DisplayFor(modelItem => item.NomeFuncionalidade)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TipoUsuario.NomeTipoUsuario)
+                    @Html.DisplayFor(modelItem => item.NomeTipoUsuario)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Alterar</a> |

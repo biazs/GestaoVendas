@@ -1,45 +1,44 @@
-﻿namespace GestaoVendas.Models.Dao
+﻿using System.Collections.Generic;
+using System.Linq;
+using GestaoVendas.Data;
+
+namespace GestaoVendas.Models.Dao
 {
     public class DaoAcessoTipoUsuarios
     {
-        //public List<AcessoTipoUsuario> ListarTodosAcessos(GestaoVendasContext _context)
-        //{
-        //    var listaProdutos = (from p in _context.Produto
-        //                         join fo in _context.Fornecedor on p.FornecedorId equals fo.Id
-        //                         join pe in _context.ProdutoEstoque on p.Id equals pe.ProdutoId
-        //                         join e in _context.Estoque on pe.EstoqueId equals e.Id
-        //                         orderby p.Nome
-        //                         select new
-        //                         {
-        //                             p.Id,
-        //                             p.Nome,
-        //                             p.Descricao,
-        //                             p.PrecoUnitario,
-        //                             e.Quantidade,
-        //                             p.UnidadeMedida,
-        //                             p.LinkFoto
-        //                         });
-        //    List<Produto> lista = new List<Produto>();
-        //    Produto item;
+        public List<AcessoTipoUsuario> ListarTodosAcessos(GestaoVendasContext _context)
+        {
+            var listaAcessos = (from a in _context.AcessoTipoUsuario
+                                join tu in _context.TipoUsuario on a.IdTipoUsuario equals tu.Id
+                                join fu in _context.Funcionalidade on a.IdFuncionalidade equals fu.Id
+                                orderby tu.NomeTipoUsuario, fu.NomeFuncionalidade
+                                select new
+                                {
+                                    a.Id,
+                                    a.IdTipoUsuario,
+                                    a.IdFuncionalidade,
+                                    fu.NomeFuncionalidade,
+                                    tu.NomeTipoUsuario
+                                });
+            List<AcessoTipoUsuario> lista = new List<AcessoTipoUsuario>();
+            AcessoTipoUsuario item;
 
-        //    foreach (var ls in listaProdutos)
-        //    {
-        //        item = new Produto
-        //        {
-        //            Id = ls.Id,
-        //            Nome = ls.Nome,
-        //            Descricao = ls.Descricao,
-        //            PrecoUnitario = ls.PrecoUnitario,
-        //            Quantidade = ls.Quantidade,
-        //            UnidadeMedida = ls.UnidadeMedida,
-        //            LinkFoto = ls.LinkFoto
-        //        };
-        //        lista.Add(item);
+            foreach (var ls in listaAcessos)
+            {
+                item = new AcessoTipoUsuario
+                {
+                    Id = ls.Id,
+                    IdTipoUsuario = ls.IdTipoUsuario,
+                    IdFuncionalidade = ls.IdFuncionalidade,
+                    NomeFuncionalidade = ls.NomeFuncionalidade,
+                    NomeTipoUsuario = ls.NomeTipoUsuario
+                };
+                lista.Add(item);
 
-        //    }
+            }
 
-        //    return lista;
+            return lista;
 
-        //}
+        }
     }
 }

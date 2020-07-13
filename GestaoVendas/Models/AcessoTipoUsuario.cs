@@ -19,6 +19,14 @@ namespace GestaoVendas.Models
         [Column(Order = 1)]
         public int IdFuncionalidade { get; set; }
 
+        [NotMapped]
+        [Display(Name = "Funcionalidade")]
+        public string NomeFuncionalidade { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Tipo Usuário")]
+        public string NomeTipoUsuario { get; set; }
+
         public virtual TipoUsuario TipoUsuario { get; set; }
 
         public virtual Funcionalidade Funcionalidade { get; set; }

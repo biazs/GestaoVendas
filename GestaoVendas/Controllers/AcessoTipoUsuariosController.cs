@@ -1,7 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using GestaoVendas.Data;
 using GestaoVendas.Models;
+using GestaoVendas.Models.Dao;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -20,8 +24,20 @@ namespace GestaoVendas.Controllers
         // GET: AcessoTipoUsuarios
         public async Task<IActionResult> Index()
         {
-            var gestaoVendasContext = _context.AcessoTipoUsuario.Include(a => a.TipoUsuario);
-            return View(await gestaoVendasContext.ToListAsync());
+            //var gestaoVendasContext = _context.AcessoTipoUsuario.Include(a => a.TipoUsuario);
+            //return View(await gestaoVendasContext.ToListAsync());
+
+            try
+            {
+                List<AcessoTipoUsuario> lista = new DaoAcessoTipoUsuarios().ListarTodosAcessos(_context);
+
+                return View(lista);
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Error), new { message = "Erro ao carregar registros. Tente novamente mais tarde. \n\n" + e.Message });
+            }
+
         }
 
         // GET: AcessoTipoUsuarios/Details/5
@@ -158,6 +174,16 @@ namespace GestaoVendas.Controllers
         private bool AcessoTipoUsuarioExists(int id)
         {
             return _context.AcessoTipoUsuario.Any(e => e.Id == id);
+        }
+
+        public IActionResult Error(string message)
+        {
+            var viewModel = new ErrorViewModel
+            {
+                Message = message,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+            return View(viewModel);
         }
     }
 }
