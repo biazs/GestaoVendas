@@ -65,9 +65,22 @@ namespace GestaoVendas.Controllers
             ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Nome");
             ViewData["VendedorId"] = new SelectList(_context.Vendedor, "Id", "Nome");
 
-            // var userId = Convert.ToInt32(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            // ViewBag.Vendedor = _context.Vendedor.FirstOrDefaultAsync(m => m.Id == userId);
+            //Buscar id do usuário (Vendedor) logado
+            if (User.Identity.IsAuthenticated)
+            {
+                var userName = User.Identity.Name;
+                var usuario = _context.Users.FirstOrDefault(x => x.Email == userName);
+
+                if (usuario != null)
+                {
+                    // TODO: fazer relacionamento da tabela users com Vendedores
+                    //ViewBag.Vendedor = _context.Vendedor.FirstOrDefaultAsync(m => m.Id == usuario.Id);
+                }
+
+            }
+
+
             CarregarDados();
             return View();
         }
