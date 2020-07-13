@@ -20,6 +20,10 @@ namespace GestaoVendas.Models
         [Required(ErrorMessage = "Campo obrigatório")]
         public string Email { get; set; }
 
+        [Display(Name = "Usuário")]
+        [ForeignKey("ItentityUser")]
+        [Column(Order = 1)]
+        public string UserId { get; set; }
 
         public virtual ICollection<Venda> Vendas { get; set; }
     }

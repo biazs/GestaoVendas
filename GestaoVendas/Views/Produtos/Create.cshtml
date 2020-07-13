@@ -24,7 +24,7 @@
             <div class="form-group">
                 <label class="control-label">Quantidade</label>
                 <input type="text" asp-controller="Produtos" class="form-control" name="quantidade" id="quantidade" required />
-                <span class="text-danger" id="msg_quantidade"></span>
+                <span class="text-danger" id="msg"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PrecoUnitario" class="control-label"></label>
@@ -65,7 +65,7 @@
     function Enviardados() {
 
         if (document.getElementById("quantidade").value == "") {
-            msg_quantidade.innerHTML = "Campo obrigatório";
+            msg.innerHTML = "Campo obrigatório";
         }
     }
 </script>

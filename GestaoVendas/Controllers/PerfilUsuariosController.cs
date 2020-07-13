@@ -57,11 +57,20 @@ namespace GestaoVendas.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,IdTipoUsuario,UserId")] PerfilUsuario perfilUsuario)
+        public async Task<IActionResult> Create(string nome_vendedor, [Bind("Id,IdTipoUsuario,UserId")] PerfilUsuario perfilUsuario)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(perfilUsuario);
+
+                //inserir na tabela Vendedor
+                if (nome_vendedor != "" && _context.TipoUsuario.Any(v => v.NomeTipoUsuario == "Vendedor" && v.Id == perfilUsuario.IdTipoUsuario))
+                {
+                    var email = _context.Users.FirstOrDefault(u => u.Id == perfilUsuario.UserId).Email;
+                    var vendedor = new Vendedor() { Nome = nome_vendedor, Email = email, UserId = perfilUsuario.UserId };
+                    _context.Vendedor.Add(vendedor);
+                }
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -152,6 +161,19 @@ namespace GestaoVendas.Controllers
         {
             var perfilUsuario = await _context.PerfilUsuario.FindAsync(id);
             _context.PerfilUsuario.Remove(perfilUsuario);
+
+            //deletar Vendedor da tabela
+            var isVendedor = _context.TipoUsuario.Any(v => v.NomeTipoUsuario == "Vendedor" && v.Id == perfilUsuario.IdTipoUsuario);
+            var existeVendedor = _context.Vendedor.Any(v => v.UserId == perfilUsuario.UserId);
+
+            if (isVendedor && existeVendedor)
+            {
+                var email = _context.Users.FirstOrDefault(u => u.Id == perfilUsuario.UserId).Email;
+                var vendedor = _context.Vendedor.FirstOrDefault(v => v.Email == email && v.UserId == perfilUsuario.UserId);
+
+                _context.Vendedor.Remove(vendedor);
+            }
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
