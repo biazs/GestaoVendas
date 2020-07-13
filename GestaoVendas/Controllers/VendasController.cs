@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Security.Claims;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using GestaoVendas.Data;
 using GestaoVendas.Models;
@@ -64,12 +62,12 @@ namespace GestaoVendas.Controllers
         // GET: Vendas/Create
         public IActionResult Create()
         {
-            ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Cpf");
-            ViewData["VendedorId"] = new SelectList(_context.Vendedor, "Id", "Email");
+            ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Nome");
+            ViewData["VendedorId"] = new SelectList(_context.Vendedor, "Id", "Nome");
 
-            var userId = Convert.ToInt32(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
+            // var userId = Convert.ToInt32(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            ViewBag.Vendedor = _context.Vendedor.FirstOrDefaultAsync(m => m.Id == userId);
+            // ViewBag.Vendedor = _context.Vendedor.FirstOrDefaultAsync(m => m.Id == userId);
             CarregarDados();
             return View();
         }
