@@ -85,6 +85,32 @@ namespace GestaoVendas.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Adicionar(int idProduto, int prodQuantidade, [Bind("Id,Data,Total,VendedorId,ClienteId")] Venda venda)
+        {
+            if (idProduto != null && prodQuantidade != null)
+            {
+                var produto = await _context.Produto.FindAsync(idProduto);
+
+                ViewBag.PrdodutoId = idProduto;
+                ViewBag.PrdodutoNome = produto.Nome;
+                ViewBag.PrdodutoQuantidade = prodQuantidade;
+                ViewBag.PrdodutoPrecoUnitario = produto.PrecoUnitario;
+                ViewBag.PrdodutoTotal = produto.PrecoUnitario * prodQuantidade;
+
+            }
+
+            //return RedirectToAction(nameof(Index));
+            //return RedirectToAction("Index", "Home");
+
+            ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Cpf", venda.ClienteId);
+            ViewData["VendedorId"] = new SelectList(_context.Vendedor, "Id", "Email", venda.VendedorId);
+            CarregarDados();
+            return View("Index", venda);
+        }
+
+
         // POST: Vendas/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.

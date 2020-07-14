@@ -41,7 +41,7 @@
             <label class="control-label font-weight-bold">Produtos</label><br />
             <div class="row form-group">
                 <div class="col-lg-8">
-                    <select class="form-control" id="sltProduto">
+                    <select class="form-control" id="idProduto" name="idProduto">
                         @{
                             foreach (var item in (List<Produto>)ViewBag.ListaProdutos)
                             {
@@ -52,25 +52,69 @@
                     </select>
                 </div>
                 <div class="col-lg-2">
-                    <input type="text" class="form-control" value="1" id="txtQuantidade" />
+                    <input type="text" class="form-control" value="1" id="prodQuantidade" />
                 </div>
                 <div class="col-lg-2">
-                    <button type="button" class="btn btn-block btn-primary" onclick="AdicionarProduto()">Adicionar</button>
+                    @*<button type="button" class="btn btn-block btn-primary" onclick="AdicionarProduto()">Adicionar</button>*@
+                    <input type="submit" asp-action="adicionar" value="Adicionar" name="adicionar" class="btn btn-block btn-primary" />
                 </div>
             </div>
             <br />
-            @*
-                <div class="form-group">
-                    <label asp-for="Data" class="control-label"></label>
-                    <input asp-for="Data" class="form-control" />
-                    <span asp-validation-for="Data" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Total" class="control-label"></label>
-                    <input asp-for="Total" class="form-control" />
-                    <span asp-validation-for="Total" class="text-danger"></span>
-                </div>
-            *@
+
+
+
+            @*<table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                Código
+                            </th>
+                            <th>
+                                Produto
+                            </th>
+                            <th>
+                                Quantidade
+                            </th>
+                            <th>
+                                PrecoUnitario
+                            </th>
+                            <th>
+                                Total
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Id)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Nome)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantidade)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PrecoUnitario)
+                                </td>
+                                <td>
+                                    R$ @Html.DisplayFor(modelItem => item.Total)
+                                </td>
+                                <td>
+                                    <a asp-action="Delete" asp-route-id="@item.Id">Remover</a>
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>*@
+
+
+
+
 
             <div class="form-group">
                 <input type="submit" value="Registrar" class="btn btn-block btn-success" />
