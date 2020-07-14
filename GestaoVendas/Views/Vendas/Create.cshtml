@@ -11,22 +11,28 @@
     <div class="col-md-12">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @*<div class="form-group">
+            @if (ViewBag.Vendedor == null)
+            {
+                <div class="form-group font-weight-bold">
                     <label asp-for="VendedorId" class="control-label"></label>
                     <select asp-for="VendedorId" class="form-control" asp-items="ViewBag.VendedorId"></select>
-                </div>*@
-            <label class="control-label font-weight-bold">Vendedor</label>
-            <div>
-                <span class="control-label" id="vendedor" name="vendedor">
-                    @try
-                    {
-                        @ViewBag.Vendedor.Nome
-                    }
-                    catch { }
-                </span>
-            </div>
+                </div>
+            }
+            else
+            {
+                <label class="control-label font-weight-bold">Vendedor</label>
+                <div>
+                    <span class="control-label" id="vendedor" name="vendedor">
+                        @try
+                        {
+                            @ViewBag.Vendedor.Nome
+                        }
+                        catch { }
+                    </span>
+                </div><br />
+            }
             <div class="form-group">
-                <label asp-for="ClienteId" class="control-label" font-weight-bold"></label>
+                <label asp-for="ClienteId" class="control-label font-weight-bold"></label>
                 <select asp-for="ClienteId" class="form-control" asp-items="ViewBag.ClienteId"></select>
             </div>
 

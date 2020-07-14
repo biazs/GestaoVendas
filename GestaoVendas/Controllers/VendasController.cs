@@ -75,7 +75,7 @@ namespace GestaoVendas.Controllers
                 if (usuario != null)
                 {
                     // TODO: fazer relacionamento da tabela users com Vendedores
-                    //ViewBag.Vendedor = _context.Vendedor.FirstOrDefaultAsync(m => m.Id == usuario.Id);
+                    ViewBag.Vendedor = _context.Vendedor.FirstOrDefault(m => m.Email == userName);
                 }
 
             }
