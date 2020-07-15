@@ -139,13 +139,35 @@ namespace GestaoVendas.Controllers
 
             }
 
-            //return RedirectToAction(nameof(Index));
-            //return RedirectToAction("Index", "Home");
+            // TODO: Montar Tela
 
             ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Cpf", venda.ClienteId);
             ViewData["VendedorId"] = new SelectList(_context.Vendedor, "Id", "Email", venda.VendedorId);
             CarregarDados();
             return View("Index", venda);
+        }
+
+
+        [HttpPost, ActionName("RemoverProduto")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemoverProduto(int idProduto)
+        {
+            if (idProduto != null)
+            {
+                string valor = _cookie.Consultar(Key);
+                var Lista = JsonConvert.DeserializeObject<List<CarrinhoCompra>>(valor);
+                var ItemLocalizado = Lista.SingleOrDefault(a => a.Id == idProduto);
+
+                if (ItemLocalizado != null)
+                {
+                    Lista.Remove(ItemLocalizado);
+
+                    string Valor = JsonConvert.SerializeObject(Lista);
+                    _cookie.Cadastrar(Key, Valor);
+                }
+            }
+
+            return RedirectToAction(nameof(Index));
         }
 
 
