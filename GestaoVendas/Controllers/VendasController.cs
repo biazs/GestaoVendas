@@ -111,7 +111,7 @@ namespace GestaoVendas.Controllers
                         PrecoUnitario = produto.PrecoUnitario
                     };
 
-                    if (_cookie.Existe(Key))
+                    if (_cookie.Existe(Key)) // Já existe cookie
                     {
                         string valor = _cookie.Consultar(Key);
                         Lista = JsonConvert.DeserializeObject<List<CarrinhoCompra>>(valor);
@@ -122,9 +122,9 @@ namespace GestaoVendas.Controllers
                         {
                             Lista.Add(item);
                         }
-                        else
+                        else // Produto já foi adicionado a lista, somente acrescenta a quantidade
                         {
-                            ItemLocalizado.Quantidade = ItemLocalizado.Quantidade + 1;
+                            ItemLocalizado.Quantidade = ItemLocalizado.Quantidade + prodQuantidade;
                         }
                     }
                     else
@@ -133,10 +133,9 @@ namespace GestaoVendas.Controllers
                         Lista.Add(item);
                     }
 
-                    //Salvar(Lista);
+                    string Valor = JsonConvert.SerializeObject(Lista);
+                    _cookie.Cadastrar(Key, Valor);
                 }
-
-
 
             }
 
