@@ -1,11 +1,14 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using GestaoVendas.Data;
+using GestaoVendas.Libraries.Cookie;
 using GestaoVendas.Models;
 using GestaoVendas.Models.Dao;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Rotativa.AspNetCore;
 
 namespace GestaoVendas.Controllers
@@ -14,10 +17,13 @@ namespace GestaoVendas.Controllers
     public class VendasController : BaseController
     {
         private readonly GestaoVendasContext _context;
+        private Cookie _cookie;
+        private string Key = "Carrinho.Compras";
 
-        public VendasController(GestaoVendasContext context)
+        public VendasController(GestaoVendasContext context, Cookie cookie)
         {
             _context = context;
+            _cookie = cookie;
         }
 
         // GET: Vendas
@@ -91,13 +97,46 @@ namespace GestaoVendas.Controllers
         {
             if (idProduto != null && prodQuantidade != null)
             {
+                List<CarrinhoCompra> Lista;
+
                 var produto = await _context.Produto.FindAsync(idProduto);
 
-                ViewBag.PrdodutoId = idProduto;
-                ViewBag.PrdodutoNome = produto.Nome;
-                ViewBag.PrdodutoQuantidade = prodQuantidade;
-                ViewBag.PrdodutoPrecoUnitario = produto.PrecoUnitario;
-                ViewBag.PrdodutoTotal = produto.PrecoUnitario * prodQuantidade;
+                if (produto != null)
+                {
+                    CarrinhoCompra item = new CarrinhoCompra()
+                    {
+                        Id = idProduto,
+                        Nome = produto.Nome,
+                        Quantidade = prodQuantidade,
+                        PrecoUnitario = produto.PrecoUnitario
+                    };
+
+                    if (_cookie.Existe(Key))
+                    {
+                        string valor = _cookie.Consultar(Key);
+                        Lista = JsonConvert.DeserializeObject<List<CarrinhoCompra>>(valor);
+
+                        var ItemLocalizado = Lista.SingleOrDefault(a => a.Id == item.Id);
+
+                        if (ItemLocalizado != null)
+                        {
+                            Lista.Add(item);
+                        }
+                        else
+                        {
+                            ItemLocalizado.Quantidade = ItemLocalizado.Quantidade + 1;
+                        }
+                    }
+                    else
+                    {
+                        Lista = new List<CarrinhoCompra>();
+                        Lista.Add(item);
+                    }
+
+                    //Salvar(Lista);
+                }
+
+
 
             }
 
