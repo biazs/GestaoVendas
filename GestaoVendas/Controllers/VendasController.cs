@@ -103,12 +103,14 @@ namespace GestaoVendas.Controllers
 
                 if (produto != null)
                 {
+                    var total = prodQuantidade * produto.PrecoUnitario;
                     CarrinhoCompra item = new CarrinhoCompra()
                     {
                         Id = idProduto,
                         Nome = produto.Nome,
                         Quantidade = prodQuantidade,
-                        PrecoUnitario = produto.PrecoUnitario
+                        PrecoUnitario = produto.PrecoUnitario,
+                        Total = total
                     };
 
                     if (_cookie.Existe(Key)) // Já existe cookie
