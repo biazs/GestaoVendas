@@ -91,62 +91,61 @@ namespace GestaoVendas.Controllers
             return View();
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Adicionar(int idProduto, int prodQuantidade, [Bind("Id,Data,Total,VendedorId,ClienteId")] Venda venda)
+        // [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public List<CarrinhoCompra> AdicionarProduto(int idProduto, int prodQuantidade, Venda venda)
         {
-            if (idProduto != null && prodQuantidade != null)
+            List<CarrinhoCompra> Lista;
+
+            var produto = _context.Produto.Find(idProduto);
+
+            if (produto != null)
             {
-                List<CarrinhoCompra> Lista;
-
-                var produto = await _context.Produto.FindAsync(idProduto);
-
-                if (produto != null)
+                var total = prodQuantidade * produto.PrecoUnitario;
+                CarrinhoCompra item = new CarrinhoCompra()
                 {
-                    var total = prodQuantidade * produto.PrecoUnitario;
-                    CarrinhoCompra item = new CarrinhoCompra()
-                    {
-                        Id = idProduto,
-                        Nome = produto.Nome,
-                        Quantidade = prodQuantidade,
-                        PrecoUnitario = produto.PrecoUnitario,
-                        Total = total
-                    };
+                    Id = idProduto,
+                    Nome = produto.Nome,
+                    Quantidade = prodQuantidade,
+                    PrecoUnitario = produto.PrecoUnitario,
+                    Total = total
+                };
 
-                    if (_cookie.Existe(Key)) // Já existe cookie
-                    {
-                        string valor = _cookie.Consultar(Key);
-                        Lista = JsonConvert.DeserializeObject<List<CarrinhoCompra>>(valor);
+                if (_cookie.Existe(Key)) // Já existe cookie
+                {
+                    string valor = _cookie.Consultar(Key);
+                    Lista = JsonConvert.DeserializeObject<List<CarrinhoCompra>>(valor);
 
-                        var ItemLocalizado = Lista.SingleOrDefault(a => a.Id == item.Id);
+                    var ItemLocalizado = Lista.SingleOrDefault(a => a.Id == item.Id);
 
-                        if (ItemLocalizado != null)
-                        {
-                            Lista.Add(item);
-                        }
-                        else // Produto já foi adicionado a lista, somente acrescenta a quantidade
-                        {
-                            ItemLocalizado.Quantidade = ItemLocalizado.Quantidade + prodQuantidade;
-                        }
-                    }
-                    else
+                    if (ItemLocalizado != null)
                     {
-                        Lista = new List<CarrinhoCompra>();
                         Lista.Add(item);
                     }
-
-                    string Valor = JsonConvert.SerializeObject(Lista);
-                    _cookie.Cadastrar(Key, Valor);
+                    else // Produto já foi adicionado a lista, somente acrescenta a quantidade - TODO: rever
+                    {
+                        ItemLocalizado.Quantidade = ItemLocalizado.Quantidade + prodQuantidade;
+                    }
+                    return Lista;
+                }
+                else
+                {
+                    Lista = new List<CarrinhoCompra>();
+                    Lista.Add(item);
+                    return Lista;
                 }
 
+                string Valor = JsonConvert.SerializeObject(Lista);
+                _cookie.Cadastrar(Key, Valor);
             }
 
-            // TODO: Montar Tela
+            return null;
 
-            ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Cpf", venda.ClienteId);
-            ViewData["VendedorId"] = new SelectList(_context.Vendedor, "Id", "Email", venda.VendedorId);
-            CarregarDados();
-            return View("Index", venda);
+            //ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Cpf", venda.ClienteId);
+            // ViewData["VendedorId"] = new SelectList(_context.Vendedor, "Id", "Email", venda.VendedorId);
+            //CarregarDados();
+            //return View(nameof(Create), venda);
+            //return RedirectToAction(nameof(Index));
         }
 
 
@@ -178,15 +177,34 @@ namespace GestaoVendas.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Data,Total,VendedorId,ClienteId")] Venda venda)
+        public async Task<IActionResult> Create(int idProduto, int prodQuantidade, [Bind("Id,Data,Total,VendedorId,ClienteId")] Venda venda)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(venda);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                if (Request.Form["Adicionar"].Equals("Adicionar"))
+                {
+                    List<CarrinhoCompra> Lista = AdicionarProduto(idProduto, prodQuantidade, venda);
+
+                    ViewBag.MontaTela = true;
+                    // TODO: Montar Tela                    
+
+                    ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Nome", venda.ClienteId);
+                    ViewData["VendedorId"] = new SelectList(_context.Vendedor, "Id", "Email", venda.VendedorId);
+                    CarregarDados();
+                    return View(venda);
+                }
+
+                else if (Request.Form["Registrar"].Equals("Registrar"))
+                {
+
+                    _context.Add(venda);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+
             }
-            ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Cpf", venda.ClienteId);
+            ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Nome", venda.ClienteId);
             ViewData["VendedorId"] = new SelectList(_context.Vendedor, "Id", "Email", venda.VendedorId);
             CarregarDados();
             return View(venda);

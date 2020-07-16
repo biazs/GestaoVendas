@@ -56,68 +56,76 @@
                 </div>
                 <div class="col-lg-2">
                     @*<button type="button" class="btn btn-block btn-primary" onclick="AdicionarProduto()">Adicionar</button>*@
-                    <input type="submit" asp-action="adicionar" value="Adicionar" name="adicionar" class="btn btn-block btn-primary" />
+                    <input type="submit" value="Adicionar" name="Adicionar" class="btn btn-block btn-primary" />
                 </div>
             </div>
             <br />
 
 
 
-            @*<table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>
-                                Código
-                            </th>
-                            <th>
-                                Produto
-                            </th>
-                            <th>
-                                Quantidade
-                            </th>
-                            <th>
-                                PrecoUnitario
-                            </th>
-                            <th>
-                                Total
-                            </th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>
+                            Código
+                        </th>
+                        <th>
+                            Produto
+                        </th>
+                        <th>
+                            Quantidade
+                        </th>
+                        <th>
+                            Preço Unitário
+                        </th>
+                        <th>
+                            Total
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                @if (ViewBag.MontaTela == true)
+                {
+                    @using (Html.BeginForm())
+                    {
+
+                        <tbody>
+                            @*foreach (var item in Model)
+                                {*@
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Id)
+                                    Id)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Nome)
+                                    Nome)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Quantidade)
+                                    Quantidade)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.PrecoUnitario)
+                                    PrecoUnitario)
                                 </td>
                                 <td>
-                                    R$ @Html.DisplayFor(modelItem => item.Total)
+                                    R$ Total
                                 </td>
                                 <td>
-                                    <a asp-action="Delete" asp-route-id="@item.Id">Remover</a>
+                                    <a asp-action="RemoverProduto" name="RemoverProduto" asp-route-id="??" class='btn btn-danger'>Remover</a>
 
                                 </td>
                             </tr>
-                        }
-                    </tbody>
-                </table>*@
+                            @* }*@
+                        </tbody>
+                    }
+
+                }
+            </table>
 
 
 
 
 
             <div class="form-group">
-                <input type="submit" value="Registrar" class="btn btn-block btn-success" />
+                <input type="submit" value="Registrar" name="Registrar" class="btn btn-block btn-success" />
             </div>
         </form>
     </div>
