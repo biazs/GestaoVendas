@@ -184,10 +184,9 @@ namespace GestaoVendas.Controllers
 
                 if (Request.Form["Adicionar"].Equals("Adicionar"))
                 {
-                    List<CarrinhoCompra> Lista = AdicionarProduto(idProduto, prodQuantidade, venda);
-
                     ViewBag.MontaTela = true;
-                    // TODO: Montar Tela                    
+                    // TODO: Montar Tela     
+                    ViewBag.ListaCarrinhoCompra = AdicionarProduto(idProduto, prodQuantidade, venda);
 
                     ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Nome", venda.ClienteId);
                     ViewData["VendedorId"] = new SelectList(_context.Vendedor, "Id", "Email", venda.VendedorId);
