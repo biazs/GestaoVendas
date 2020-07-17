@@ -72,6 +72,9 @@ namespace GestaoVendas.Controllers
                     .Include(v => v.Cliente)
                     .Include(v => v.Vendedor)
                     .FirstOrDefaultAsync(m => m.Id == id);
+
+                CarregaListaItemVenda(id);
+
                 if (venda == null)
                 {
                     return NotFound();
@@ -260,6 +263,13 @@ namespace GestaoVendas.Controllers
         private void CarregaLista()
         {
             ViewBag.ListaVendas = _context.Venda.ToList();
+        }
+
+        private void CarregaListaItemVenda(int? id)
+        {
+            var item_venda = _context.ItensVenda.Where(e => e.VendaId == id).OrderByDescending(e => e.VendaId).Include(e => e.Produto);
+            //var gestaoVendasContext = _context.Venda.Include(v => v.Cliente).Include(v => v.Vendedor).OrderByDescending(v => v.Data);
+            ViewBag.ItensVendas = item_venda.ToList();
         }
 
         private void CarregarDados()

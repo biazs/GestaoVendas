@@ -41,6 +41,29 @@
         </dd>
     </dl>
 </div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Produto</th>
+            <th>Quantidade</th>
+            <th>Preço Unitário</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var item in (List<ItemVenda>)ViewBag.ItensVendas)
+            {
+                <tr>
+                    <td>@item.ProdutoId</td>
+                    <td>@item.Produto.Nome</td>
+                    <td>@item.Produto.Quantidade</td>
+                    <td>R$ @item.PrecoProduco</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
 <div>
     @if (ViewBag.TemAcesso == true)
     {
