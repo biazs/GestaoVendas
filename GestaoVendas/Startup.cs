@@ -1,4 +1,5 @@
 using GestaoVendas.Data;
+using GestaoVendas.Models.Dao;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -37,6 +38,9 @@ namespace GestaoVendas
 
             services.AddDbContext<GestaoVendasContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("GestaoVendasContext")));
+
+            services.AddScoped<DaoProdutoEstoque>();
+            services.AddScoped<DaoProduto>();
 
         }
 

@@ -16,10 +16,12 @@ namespace GestaoVendas.Controllers
     public class ProdutosController : Controller
     {
         private readonly GestaoVendasContext _context;
+        private readonly DaoProduto _daoProduto;
 
-        public ProdutosController(GestaoVendasContext context)
+        public ProdutosController(GestaoVendasContext context, DaoProduto daoProduto)
         {
             _context = context;
+            _daoProduto = daoProduto;
         }
 
         // GET: Produtos
@@ -27,7 +29,7 @@ namespace GestaoVendas.Controllers
         {
             try
             {
-                List<Produto> lista = new DaoProduto().ListarTodosProdutos(_context);
+                List<Produto> lista = _daoProduto.ListarTodosProdutos();
 
                 return View(lista);
             }

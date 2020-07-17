@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using GestaoVendas.Data;
 using GestaoVendas.Models;
 using GestaoVendas.Models.Dao;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,14 +15,18 @@ using Rotativa.AspNetCore;
 
 namespace GestaoVendas.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class VendasController : BaseController
     {
         private readonly GestaoVendasContext _context;
+        private DaoProdutoEstoque _daoProdutoEstoque;
+        private DaoVenda _daoVenda;
 
-        public VendasController(GestaoVendasContext context)
+        public VendasController(GestaoVendasContext context, DaoProdutoEstoque daoProdutoEstoque, DaoVenda daoVenda)
         {
             _context = context;
+            _daoProdutoEstoque = daoProdutoEstoque;
+            _daoVenda = daoVenda;
         }
 
         // GET: Vendas
@@ -29,15 +34,21 @@ namespace GestaoVendas.Controllers
         {
             try
             {
-                /* var temAcesso = await UsuarioTemAcesso("Vendas", _context);
+                var temAcesso = await UsuarioTemAcesso("Vendas", _context);
 
-                 if (!temAcesso)
-                 {
-                     ViewBag.TemAcesso = false;
-                     return RedirectToAction("Index", "Home");
-                 }
-                 ViewBag.TemAcesso = true;
-                */
+                if (!temAcesso)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+                temAcesso = await UsuarioTemAcesso("Cancelar Venda", _context);
+
+                if (!temAcesso)
+                {
+                    ViewBag.TemAcesso = false;
+                }
+
+                ViewBag.TemAcesso = true;
                 var gestaoVendasContext = _context.Venda.Include(v => v.Cliente).Include(v => v.Vendedor).OrderByDescending(v => v.Data);
                 return View(await gestaoVendasContext.ToListAsync());
             }
@@ -147,8 +158,8 @@ namespace GestaoVendas.Controllers
 
                         _context.ItensVenda.Add(itemVenda);
 
-                        //recuperar id do estoque
-                        var id_estoque = _context.ProdutoEstoque.Where(e => e.ProdutoId == lista_produtos[i].ProdutoId).Select(e => e.EstoqueId).FirstOrDefault();
+                        //recuperar id do estoque                        
+                        var id_estoque = _daoProdutoEstoque.RetornarIdEstoque(itemVenda.ProdutoId);
 
                         //Baixar quantidade do estoque
                         var estoque = _context.Estoque.Find(id_estoque);
@@ -168,67 +179,21 @@ namespace GestaoVendas.Controllers
             ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Nome", venda.ClienteId);
             ViewData["VendedorId"] = new SelectList(_context.Vendedor, "Id", "Email", venda.VendedorId);
             CarregarDados();
-            return View(venda);
+            return RedirectToAction(nameof(Index));
         }
 
-        // GET: Vendas/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var venda = await _context.Venda.FindAsync(id);
-            if (venda == null)
-            {
-                return NotFound();
-            }
-            ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Cpf", venda.ClienteId);
-            ViewData["VendedorId"] = new SelectList(_context.Vendedor, "Id", "Email", venda.VendedorId);
-            return View(venda);
-        }
-
-        // POST: Vendas/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Data,Total,VendedorId,ClienteId")] Venda venda)
-        {
-            if (id != venda.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(venda);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!VendaExists(venda.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Cpf", venda.ClienteId);
-            ViewData["VendedorId"] = new SelectList(_context.Vendedor, "Id", "Email", venda.VendedorId);
-            return View(venda);
-        }
 
         // GET: Vendas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            var temAcesso = await UsuarioTemAcesso("Cancelar Venda", _context);
+
+            if (!temAcesso)
+            {
+                ViewBag.TemAcesso = false;
+                return RedirectToAction("Index", "Home");
+            }
+
             if (id == null)
             {
                 return NotFound();
@@ -253,6 +218,22 @@ namespace GestaoVendas.Controllers
         {
             var venda = await _context.Venda.FindAsync(id);
             _context.Venda.Remove(venda);
+
+            //Deletar itemVenda
+            List<ItemVenda> item_venda = _context.ItensVenda.Where(e => e.VendaId == id).ToList();
+            for (int i = 0; i < item_venda.Count; i++)
+            {
+                _context.ItensVenda.Remove(item_venda[i]);
+
+                //Voltar quantidade do estoque
+                //var id_estoque = _context.ProdutoEstoque.Where(e => e.ProdutoId == item_venda[i].ProdutoId).Select(e => e.EstoqueId).FirstOrDefault();
+
+                var id_estoque = _daoProdutoEstoque.RetornarIdEstoque(item_venda[i].ProdutoId);
+                var estoque = _context.Estoque.Find(id_estoque);
+                estoque.Quantidade = estoque.Quantidade + item_venda[i].QuantidadeProduto;
+                _context.Estoque.Update(estoque);
+            }
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -283,7 +264,7 @@ namespace GestaoVendas.Controllers
 
         private void CarregarDados()
         {
-            ViewBag.ListaProdutos = new DaoVenda().RetornarListaProdutos(_context);
+            ViewBag.ListaProdutos = _daoVenda.RetornarListaProdutos();
         }
 
         public IActionResult Error(string message)

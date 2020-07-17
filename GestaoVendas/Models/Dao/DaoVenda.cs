@@ -5,9 +5,18 @@ namespace GestaoVendas.Models.Dao
 {
     public class DaoVenda
     {
-        public List<Produto> RetornarListaProdutos(GestaoVendasContext _context)
+        private readonly GestaoVendasContext _context;
+        private readonly DaoProduto _daoProduto;
+
+        public DaoVenda(GestaoVendasContext context, DaoProduto daoProduto)
         {
-            return new DaoProduto().ListarTodosProdutos(_context);
+            _context = context;
+            _daoProduto = daoProduto;
+        }
+
+        public List<Produto> RetornarListaProdutos()
+        {
+            return _daoProduto.ListarTodosProdutos();
         }
     }
 }

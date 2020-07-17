@@ -7,13 +7,15 @@ namespace GestaoVendas.Models.Dao
 
     public class DaoProduto
     {
+        private readonly GestaoVendasContext _context;
 
-        public DaoProduto()
+        public DaoProduto(GestaoVendasContext context)
         {
+            _context = context;
         }
 
 
-        public List<Produto> ListarTodosProdutos(GestaoVendasContext _context)
+        public List<Produto> ListarTodosProdutos()
         {
             var listaProdutos = (from p in _context.Produto
                                  join fo in _context.Fornecedor on p.FornecedorId equals fo.Id
