@@ -1,0 +1,143 @@
+﻿@model GestaoVendas.Models.Venda
+@using GestaoVendas.Models.Dao
+@{
+    ViewData["Title"] = "Registrar";
+}
+
+<h1>Registrar Venda</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (ViewBag.Vendedor == null)
+            {
+                <div class="form-group font-weight-bold">
+                    <label asp-for="VendedorId" class="control-label"></label>
+                    <select asp-for="VendedorId" class="form-control" asp-items="ViewBag.VendedorId"></select>
+                </div>
+            }
+            else
+            {
+                <label class="control-label font-weight-bold">Vendedor</label>
+                <div>
+                    <span class="control-label" id="vendedor" name="vendedor">
+                        @try
+                        {
+                            @ViewBag.Vendedor.Nome
+                        }
+                        catch { }
+                    </span>
+                </div><br />
+            }
+            <div class="form-group">
+                <label asp-for="ClienteId" class="control-label font-weight-bold"></label>
+                <select asp-for="ClienteId" class="form-control" asp-items="ViewBag.ClienteId"></select>
+            </div>
+
+
+            @* Adicionar produtos *@
+            <label class="control-label font-weight-bold">Produtos</label><br />
+            <div class="row form-group">
+                <div class="col-lg-8">
+                    <select class="form-control" id="idProduto" name="idProduto">
+                        @{
+                            foreach (var item in (List<Produto>)ViewBag.ListaProdutos)
+                            {
+                                <option value="@item.Id">@item.Nome | @item.PrecoUnitario</option>
+                            }
+                        }
+
+                    </select>
+                </div>
+                <div class="col-lg-2">
+                    <input type="text" class="form-control" value="1" id="prodQuantidade" name="prodQuantidade" />
+                </div>
+                <div class="col-lg-2">
+                    @*<button type="button" class="btn btn-block btn-primary" onclick="AdicionarProduto()">Adicionar</button>*@
+                    <input type="submit" value="Adicionar" name="Adicionar" class="btn btn-block btn-primary" />
+                </div>
+            </div>
+            <br />
+
+
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>
+                            Código
+                        </th>
+                        <th>
+                            Produto
+                        </th>
+                        <th>
+                            Quantidade
+                        </th>
+                        <th>
+                            Preço Unitário
+                        </th>
+                        <th>
+                            Total
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                @if (ViewBag.MontaTela == true)
+                {
+
+                    @using (Html.BeginForm())
+                    {
+                        @*@Html.EditorFor(o => o.ListaProdutos)*@
+                        <tbody>
+                            @*@foreach (var item in Model)*@
+                            @foreach (var item in (List<CarrinhoCompra>)ViewBag.ListaCarrinhoCompra)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.Id
+                                    </td>
+                                    <td>
+                                        @*@Html.EditorFor(o => o.)*@
+                                        @item.Nome
+                                    </td>
+                                    <td>
+                                        @item.Quantidade
+                                    </td>
+                                    <td>
+                                        @item.PrecoUnitario
+                                    </td>
+                                    <td>
+                                        @item.Total
+                                    </td>
+                                    <td>
+                                        <a asp-action="RemoverProduto" name="RemoverProduto" asp-route-id="??" class='btn btn-danger'>Remover</a>
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    }
+
+                }
+            </table>
+
+
+
+
+
+            <div class="form-group">
+                <input type="submit" value="Registrar" name="Registrar" class="btn btn-block btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-block btn-primary">Listagem de Vendas</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

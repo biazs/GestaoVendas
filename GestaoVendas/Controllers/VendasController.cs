@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GestaoVendas.Data;
@@ -29,37 +30,51 @@ namespace GestaoVendas.Controllers
         // GET: Vendas
         public async Task<IActionResult> Index()
         {
-            /* var temAcesso = await UsuarioTemAcesso("Vendas", _context);
+            try
+            {
+                /* var temAcesso = await UsuarioTemAcesso("Vendas", _context);
 
-             if (!temAcesso)
-             {
-                 ViewBag.TemAcesso = false;
-                 return RedirectToAction("Index", "Home");
-             }
-             ViewBag.TemAcesso = true;
-            */
-            var gestaoVendasContext = _context.Venda.Include(v => v.Cliente).Include(v => v.Vendedor).OrderByDescending(v => v.Data);
-            return View(await gestaoVendasContext.ToListAsync());
+                 if (!temAcesso)
+                 {
+                     ViewBag.TemAcesso = false;
+                     return RedirectToAction("Index", "Home");
+                 }
+                 ViewBag.TemAcesso = true;
+                */
+                var gestaoVendasContext = _context.Venda.Include(v => v.Cliente).Include(v => v.Vendedor).OrderByDescending(v => v.Data);
+                return View(await gestaoVendasContext.ToListAsync());
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Error), new { message = "Erro ao carregar registros. Tente novamente mais tarde. \n\n" + e.Message });
+            }
         }
 
         // GET: Vendas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+            try
             {
-                return NotFound();
-            }
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-            var venda = await _context.Venda
-                .Include(v => v.Cliente)
-                .Include(v => v.Vendedor)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (venda == null)
+                var venda = await _context.Venda
+                    .Include(v => v.Cliente)
+                    .Include(v => v.Vendedor)
+                    .FirstOrDefaultAsync(m => m.Id == id);
+                if (venda == null)
+                {
+                    return NotFound();
+                }
+
+                return View(venda);
+            }
+            catch (Exception e)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Erro ao detalhar registros. Tente novamente mais tarde. \n\n" + e.Message });
             }
-
-            return View(venda);
         }
 
 
@@ -68,108 +83,34 @@ namespace GestaoVendas.Controllers
         // GET: Vendas/Create
         public IActionResult Create()
         {
-            ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Nome");
-            ViewData["VendedorId"] = new SelectList(_context.Vendedor, "Id", "Nome");
-
-
-            //Buscar id do usuário (Vendedor) logado
-            if (User.Identity.IsAuthenticated)
+            try
             {
-                var userName = User.Identity.Name;
-                var usuario = _context.Users.FirstOrDefault(x => x.Email == userName);
+                ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Nome");
+                ViewData["VendedorId"] = new SelectList(_context.Vendedor, "Id", "Nome");
 
-                if (usuario != null)
+                //Buscar id do usuário(Vendedor) logado
+                if (User.Identity.IsAuthenticated)
                 {
-                    // TODO: fazer relacionamento da tabela users com Vendedores
-                    ViewBag.Vendedor = _context.Vendedor.FirstOrDefault(m => m.Email == userName);
-                }
+                    var userName = User.Identity.Name;
+                    var usuario = _context.Users.FirstOrDefault(x => x.Email == userName);
 
-            }
-
-
-            CarregarDados();
-            return View();
-        }
-
-        // [HttpPost]
-        //[ValidateAntiForgeryToken]
-        public List<CarrinhoCompra> AdicionarProduto(int idProduto, int prodQuantidade, Venda venda)
-        {
-            List<CarrinhoCompra> Lista;
-
-            var produto = _context.Produto.Find(idProduto);
-
-            if (produto != null)
-            {
-                var total = prodQuantidade * produto.PrecoUnitario;
-                CarrinhoCompra item = new CarrinhoCompra()
-                {
-                    Id = idProduto,
-                    Nome = produto.Nome,
-                    Quantidade = prodQuantidade,
-                    PrecoUnitario = produto.PrecoUnitario,
-                    Total = total
-                };
-
-                if (_cookie.Existe(Key)) // Já existe cookie
-                {
-                    string valor = _cookie.Consultar(Key);
-                    Lista = JsonConvert.DeserializeObject<List<CarrinhoCompra>>(valor);
-
-                    var ItemLocalizado = Lista.SingleOrDefault(a => a.Id == item.Id);
-
-                    if (ItemLocalizado != null)
+                    if (usuario != null)
                     {
-                        Lista.Add(item);
+                        // TODO: fazer relacionamento da tabela users com Vendedores
+                        ViewBag.Vendedor = _context.Vendedor.FirstOrDefault(m => m.Email == userName);
                     }
-                    else // Produto já foi adicionado a lista, somente acrescenta a quantidade - TODO: rever
-                    {
-                        ItemLocalizado.Quantidade = ItemLocalizado.Quantidade + prodQuantidade;
-                    }
-                    return Lista;
-                }
-                else
-                {
-                    Lista = new List<CarrinhoCompra>();
-                    Lista.Add(item);
-                    return Lista;
                 }
 
-                string Valor = JsonConvert.SerializeObject(Lista);
-                _cookie.Cadastrar(Key, Valor);
+                CarregarDados();
+                return View();
             }
-
-            return null;
-
-            //ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Cpf", venda.ClienteId);
-            // ViewData["VendedorId"] = new SelectList(_context.Vendedor, "Id", "Email", venda.VendedorId);
-            //CarregarDados();
-            //return View(nameof(Create), venda);
-            //return RedirectToAction(nameof(Index));
-        }
-
-
-        [HttpPost, ActionName("RemoverProduto")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RemoverProduto(int idProduto)
-        {
-            if (idProduto != null)
+            catch (Exception e)
             {
-                string valor = _cookie.Consultar(Key);
-                var Lista = JsonConvert.DeserializeObject<List<CarrinhoCompra>>(valor);
-                var ItemLocalizado = Lista.SingleOrDefault(a => a.Id == idProduto);
-
-                if (ItemLocalizado != null)
-                {
-                    Lista.Remove(ItemLocalizado);
-
-                    string Valor = JsonConvert.SerializeObject(Lista);
-                    _cookie.Cadastrar(Key, Valor);
-                }
+                return RedirectToAction(nameof(Error), new { message = "Erro no registro de vendas. Tente novamente mais tarde. \n\n" + e.Message });
             }
-
-            return RedirectToAction(nameof(Index));
         }
+
+
 
 
         // POST: Vendas/Create
@@ -177,32 +118,56 @@ namespace GestaoVendas.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(int idProduto, int prodQuantidade, [Bind("Id,Data,Total,VendedorId,ClienteId")] Venda venda)
+        public async Task<IActionResult> Create([Bind("Id,Data,Total,VendedorId,ClienteId,ListaProdutos")] Venda venda)
         {
             if (ModelState.IsValid)
             {
-
-                if (Request.Form["Adicionar"].Equals("Adicionar"))
+                try
                 {
-                    ViewBag.MontaTela = true;
-                    // TODO: Montar Tela     
-                    ViewBag.ListaCarrinhoCompra = AdicionarProduto(idProduto, prodQuantidade, venda);
+                    venda.Data = DateTime.Now;
 
-                    ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Nome", venda.ClienteId);
-                    ViewData["VendedorId"] = new SelectList(_context.Vendedor, "Id", "Email", venda.VendedorId);
-                    CarregarDados();
-                    return View(venda);
-                }
-
-                else if (Request.Form["Registrar"].Equals("Registrar"))
-                {
-
+                    //inserir na tabela venda
                     _context.Add(venda);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
 
+                    await _context.SaveChangesAsync();
+
+                    //recuperar id da venda
+                    var id_venda = _context.Venda.OrderByDescending(o => o.Id).First().Id;
+
+
+                    //Serializar o JSON da lista de produtos selecionados e gravar na tabela itens_venda
+                    List<ItemVenda> lista_produtos = JsonConvert.DeserializeObject<List<ItemVenda>>(venda.ListaProdutos);
+                    for (var i = 0; i < lista_produtos.Count; i++)
+                    {
+                        //inserir na tabela ItensVenda
+                        var itemVenda = new ItemVenda()
+                        {
+                            VendaId = id_venda,
+                            ProdutoId = lista_produtos[i].ProdutoId,
+                            QuantidadeProduto = lista_produtos[i].QuantidadeProduto,
+                            PrecoProduco = lista_produtos[i].PrecoProduco
+                        };
+
+                        _context.ItensVenda.Add(itemVenda);
+
+                        //recuperar id do estoque
+                        var id_estoque = _context.ProdutoEstoque.Where(e => e.ProdutoId == lista_produtos[i].ProdutoId).Select(e => e.EstoqueId).FirstOrDefault();
+
+                        //Baixar quantidade do estoque
+                        var estoque = _context.Estoque.Find(id_estoque);
+
+                        estoque.Quantidade = estoque.Quantidade - itemVenda.QuantidadeProduto;
+                        _context.Estoque.Update(estoque);
+
+                        await _context.SaveChangesAsync();
+                    }
+                }
+                catch (Exception e)
+                {
+                    return RedirectToAction(nameof(Error), new { message = "Erro ao registar venda. Tente novamente mais tarde. \n\n" + e.Message });
+                }
             }
+
             ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Nome", venda.ClienteId);
             ViewData["VendedorId"] = new SelectList(_context.Vendedor, "Id", "Email", venda.VendedorId);
             CarregarDados();
@@ -323,5 +288,96 @@ namespace GestaoVendas.Controllers
         {
             ViewBag.ListaProdutos = new DaoVenda().RetornarListaProdutos(_context);
         }
+
+        public IActionResult Error(string message)
+        {
+            var viewModel = new ErrorViewModel
+            {
+                Message = message,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+            return View(viewModel);
+        }
+
+        /*
+        // [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public void AdicionarProduto(int idProduto, int prodQuantidade, Venda venda)
+        {
+            List<CarrinhoCompra> Lista;
+
+            var produto = _context.Produto.Find(idProduto);
+
+            if (produto != null)
+            {
+                var total = prodQuantidade * produto.PrecoUnitario;
+                CarrinhoCompra item = new CarrinhoCompra()
+                {
+                    Id = idProduto,
+                    Nome = produto.Nome,
+                    Quantidade = prodQuantidade,
+                    PrecoUnitario = produto.PrecoUnitario,
+                    Total = total
+                };
+
+                if (_cookie.Existe(Key)) // Já existe cookie
+                {
+                    string valor = _cookie.Consultar(Key);
+                    Lista = JsonConvert.DeserializeObject<List<CarrinhoCompra>>(valor);
+
+                    var ItemLocalizado = Lista.SingleOrDefault(a => a.Id == item.Id);
+
+                    if (ItemLocalizado != null)
+                    {
+                        Lista.Add(item);
+                    }
+                    else // Produto já foi adicionado a lista, somente acrescenta a quantidade - TODO: rever
+                    {
+                        ItemLocalizado.Quantidade = ItemLocalizado.Quantidade + prodQuantidade;
+                    }
+                }
+                else
+                {
+                    Lista = new List<CarrinhoCompra>();
+                    Lista.Add(item);
+                }
+
+                string Valor = JsonConvert.SerializeObject(Lista);
+                _cookie.Cadastrar(Key, Valor);
+            }
+
+
+            //ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Cpf", venda.ClienteId);
+            // ViewData["VendedorId"] = new SelectList(_context.Vendedor, "Id", "Email", venda.VendedorId);
+            //CarregarDados();
+            //return View(nameof(Create), venda);
+            //return RedirectToAction(nameof(Index));
+        }
+
+
+        [HttpPost, ActionName("RemoverProduto")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemoverProduto(int idProduto)
+        {
+            if (idProduto != null)
+            {
+                string valor = _cookie.Consultar(Key);
+                var Lista = JsonConvert.DeserializeObject<List<CarrinhoCompra>>(valor);
+                var ItemLocalizado = Lista.SingleOrDefault(a => a.Id == idProduto);
+
+                if (ItemLocalizado != null)
+                {
+                    Lista.Remove(ItemLocalizado);
+
+                    string Valor = JsonConvert.SerializeObject(Lista);
+                    _cookie.Cadastrar(Key, Valor);
+                }
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+        */
+
+
     }
 }

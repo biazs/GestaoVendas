@@ -26,6 +26,7 @@
                         @try
                         {
                             @ViewBag.Vendedor.Nome
+                            <input type="hidden" asp-for="VendedorId" value="@ViewBag.Vendedor.Id"   />                                                        
                         }
                         catch { }
                     </span>
@@ -41,7 +42,7 @@
             <label class="control-label font-weight-bold">Produtos</label><br />
             <div class="row form-group">
                 <div class="col-lg-8">
-                    <select class="form-control" id="idProduto" name="idProduto">
+                    <select class="form-control" id="sltProduto" name="sltProduto">
                         @{
                             foreach (var item in (List<Produto>)ViewBag.ListaProdutos)
                             {
@@ -52,79 +53,37 @@
                     </select>
                 </div>
                 <div class="col-lg-2">
-                    <input type="text" class="form-control" value="1" id="prodQuantidade" name="prodQuantidade" />
+                    <input type="text" class="form-control" value="1" id="txtQuantidade" name="txtQuantidade" />
                 </div>
                 <div class="col-lg-2">
-                    @*<button type="button" class="btn btn-block btn-primary" onclick="AdicionarProduto()">Adicionar</button>*@
-                    <input type="submit" value="Adicionar" name="Adicionar" class="btn btn-block btn-primary" />
+                    <button type="button" class="btn btn-block btn-primary" onclick="AdicionarProduto()">Adicionar</button>
+                    @*<input type="submit" value="Adicionar" name="Adicionar" class="btn btn-block btn-primary" />*@
                 </div>
             </div>
             <br />
 
 
 
-            <table class="table table-bordered">
+            <table class="table table-bordered js-tabela">
                 <thead>
                     <tr>
-                        <th>
-                            Código
-                        </th>
-                        <th>
-                            Produto
-                        </th>
-                        <th>
-                            Quantidade
-                        </th>
-                        <th>
-                            Preço Unitário
-                        </th>
-                        <th>
-                            Total
-                        </th>
+                        <th>Código</th>
+                        <th> Produto</th>
+                        <th> Quantidade</th>
+                        <th>Preço Unitário</th>
+                        <th>Total</th>
                         <th></th>
                     </tr>
                 </thead>
-                @if (ViewBag.MontaTela == true)
-                {
-
-                    @using (Html.BeginForm())
-                    {
-                        @*@Html.EditorFor(o => o.ListaProdutos)*@
-                        <tbody>
-                            @*@foreach (var item in Model)*@
-                            @foreach (var item in (List<CarrinhoCompra>)ViewBag.ListaCarrinhoCompra)
-                            {
-                                <tr>
-                                    <td>
-                                        @item.Id
-                                    </td>
-                                    <td>
-                                        @*@Html.EditorFor(o => o.)*@
-                                        @item.Nome
-                                    </td>
-                                    <td>
-                                        @item.Quantidade
-                                    </td>
-                                    <td>
-                                        @item.PrecoUnitario
-                                    </td>
-                                    <td>
-                                        @item.Total
-                                    </td>
-                                    <td>
-                                        <a asp-action="RemoverProduto" name="RemoverProduto" asp-route-id="??" class='btn btn-danger'>Remover</a>
-
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    }
-
-                }
+                <tbody id="listaProdutos">
+                </tbody>
             </table>
+            <div style="float:left; font-size:22px;">Total: R$</div>
+            <div style="float:left; font-size:22px; margin-left:5px;" id="divTotal">0.00</div>
+            <br />
 
-
-
+            <input type="hidden" asp-for="Total" id="txtTotal" />
+            <textarea style="display:none;" asp-for="ListaProdutos" id="ListaProdutosJSON"></textarea>
 
 
             <div class="form-group">
@@ -141,3 +100,49 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+
+<script>
+    var Itens = new Object();
+    Itens.Produtos = new Array();
+
+    var CodigoProduto = document.getElementById("sltProduto");
+    var QtdeProduto = document.getElementById("txtQuantidade");
+    var ListaProdutos = document.getElementById("listaProdutos");
+    var TotalVenda = document.getElementById("divTotal");
+    var ListaProdutosJSON = document.getElementById("ListaProdutosJSON");
+    var txtTotal = document.getElementById("txtTotal");
+
+    function AdicionarProduto() {
+
+        var DescricaoPreco = CodigoProduto.options[CodigoProduto.selectedIndex].text;
+        var arrayDescricaoPreco = DescricaoPreco.split('|');
+        var total = (arrayDescricaoPreco[1].replace(",", ".") * QtdeProduto.value);
+        total = Math.round(total * 100) / 100;
+
+        Itens.Produtos.push({
+            "ProdutoId": CodigoProduto.value,
+            //"Descricao": arrayDescricaoPreco[0],
+            "QuantidadeProduto": QtdeProduto.value,
+            "PrecoProduco": arrayDescricaoPreco[1],
+            "Total": total
+        });
+
+        ListaProdutosJSON.innerHTML = JSON.stringify(Itens.Produtos);
+
+        var produto = "<tr>" +
+            "<td>" + CodigoProduto.value + "</td>" +
+            "<td>" + arrayDescricaoPreco[0] + "</td>" +
+            "<td>" + QtdeProduto.value + "</td>" +
+            "<td> R$" + arrayDescricaoPreco[1] + "</td>" +
+            "<td> R$" + total + "</td>" +
+            "</tr>";
+
+        ListaProdutos.innerHTML += produto;
+
+        var totalGeral = Math.round((TotalVenda.innerText * 1 + total) * 100) / 100;
+        TotalVenda.innerHTML = totalGeral;
+        txtTotal.value = totalGeral.toString().replace(".", ",");
+    }
+
+</script>
