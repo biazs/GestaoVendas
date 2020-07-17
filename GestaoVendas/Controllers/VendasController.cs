@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using GestaoVendas.Data;
-using GestaoVendas.Libraries.Cookie;
 using GestaoVendas.Models;
 using GestaoVendas.Models.Dao;
 using Microsoft.AspNetCore.Mvc;
@@ -18,13 +18,10 @@ namespace GestaoVendas.Controllers
     public class VendasController : BaseController
     {
         private readonly GestaoVendasContext _context;
-        private Cookie _cookie;
-        private string Key = "Carrinho.Compras";
 
-        public VendasController(GestaoVendasContext context, Cookie cookie)
+        public VendasController(GestaoVendasContext context)
         {
             _context = context;
-            _cookie = cookie;
         }
 
         // GET: Vendas

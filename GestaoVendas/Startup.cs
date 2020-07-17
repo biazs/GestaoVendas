@@ -37,7 +37,6 @@ namespace GestaoVendas
 
             services.AddDbContext<GestaoVendasContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("GestaoVendasContext")));
-            services.AddScoped<GestaoVendas.Libraries.Cookie.Cookie>();
 
         }
 
@@ -57,7 +56,6 @@ namespace GestaoVendas
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseCookiePolicy();
 
             app.UseRouting();
 

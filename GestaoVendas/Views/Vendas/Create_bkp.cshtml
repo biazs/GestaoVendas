@@ -66,61 +66,51 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>
-                            Código
-                        </th>
-                        <th>
-                            Produto
-                        </th>
-                        <th>
-                            Quantidade
-                        </th>
-                        <th>
-                            Preço Unitário
-                        </th>
-                        <th>
-                            Total
-                        </th>
+                        <th>Código</th>
+                        <th> Produto</th>
+                        <th> Quantidade</th>
+                        <th>Preço Unitário</th>
+                        <th>Total</th>
                         <th></th>
                     </tr>
                 </thead>
-                @if (ViewBag.MontaTela == true)
-                {
-
-                    @using (Html.BeginForm())
+                @*@if (ViewBag.MontaTela == true)
                     {
-                        @*@Html.EditorFor(o => o.ListaProdutos)*@
-                        <tbody>
-                            @*@foreach (var item in Model)*@
-                            @foreach (var item in (List<CarrinhoCompra>)ViewBag.ListaCarrinhoCompra)
-                            {
-                                <tr>
-                                    <td>
-                                        @item.Id
-                                    </td>
-                                    <td>
-                                        @*@Html.EditorFor(o => o.)*@
-                                        @item.Nome
-                                    </td>
-                                    <td>
-                                        @item.Quantidade
-                                    </td>
-                                    <td>
-                                        @item.PrecoUnitario
-                                    </td>
-                                    <td>
-                                        @item.Total
-                                    </td>
-                                    <td>
-                                        <a asp-action="RemoverProduto" name="RemoverProduto" asp-route-id="??" class='btn btn-danger'>Remover</a>
 
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    }
+                        @using (Html.BeginForm())
+                        {
+                            @Html.EditorFor(o => o.ListaProdutos)
+                            <tbody>
+                                @foreach (var item in Model)
+                                @foreach (var item in (List<CarrinhoCompra>)ViewBag.ListaCarrinhoCompra)
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.Id
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(o => o.)
+                                            @item.Nome
+                                        </td>
+                                        <td>
+                                            @item.Quantidade
+                                        </td>
+                                        <td>
+                                            @item.PrecoUnitario
+                                        </td>
+                                        <td>
+                                            @item.Total
+                                        </td>
+                                        <td>
+                                            <a asp-action="RemoverProduto" name="RemoverProduto" asp-route-id="??" class='btn btn-danger'>Remover</a>
 
-                }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        }
+
+                    }*@
             </table>
 
 
