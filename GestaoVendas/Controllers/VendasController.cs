@@ -220,17 +220,17 @@ namespace GestaoVendas.Controllers
             _context.Venda.Remove(venda);
 
             //Deletar itemVenda
-            List<ItemVenda> item_venda = _context.ItensVenda.Where(e => e.VendaId == id).ToList();
-            for (int i = 0; i < item_venda.Count; i++)
+            var item_venda = _context.ItensVenda.Where(e => e.VendaId == id).OrderByDescending(e => e.VendaId);
+            List<ItemVenda> itemVendas = item_venda.ToList();
+
+            for (int i = 0; i < itemVendas.Count; i++)
             {
-                _context.ItensVenda.Remove(item_venda[i]);
+                _context.ItensVenda.Remove(itemVendas[i]);
 
-                //Voltar quantidade do estoque
-                //var id_estoque = _context.ProdutoEstoque.Where(e => e.ProdutoId == item_venda[i].ProdutoId).Select(e => e.EstoqueId).FirstOrDefault();
-
-                var id_estoque = _daoProdutoEstoque.RetornarIdEstoque(item_venda[i].ProdutoId);
+                //Voltar quantidade do estoque                
+                var id_estoque = _daoProdutoEstoque.RetornarIdEstoque(itemVendas[i].ProdutoId);
                 var estoque = _context.Estoque.Find(id_estoque);
-                estoque.Quantidade = estoque.Quantidade + item_venda[i].QuantidadeProduto;
+                estoque.Quantidade = estoque.Quantidade + itemVendas[i].QuantidadeProduto;
                 _context.Estoque.Update(estoque);
             }
 
@@ -276,86 +276,6 @@ namespace GestaoVendas.Controllers
             };
             return View(viewModel);
         }
-
-        /*
-        // [HttpPost]
-        //[ValidateAntiForgeryToken]
-        public void AdicionarProduto(int idProduto, int prodQuantidade, Venda venda)
-        {
-            List<CarrinhoCompra> Lista;
-
-            var produto = _context.Produto.Find(idProduto);
-
-            if (produto != null)
-            {
-                var total = prodQuantidade * produto.PrecoUnitario;
-                CarrinhoCompra item = new CarrinhoCompra()
-                {
-                    Id = idProduto,
-                    Nome = produto.Nome,
-                    Quantidade = prodQuantidade,
-                    PrecoUnitario = produto.PrecoUnitario,
-                    Total = total
-                };
-
-                if (_cookie.Existe(Key)) // Já existe cookie
-                {
-                    string valor = _cookie.Consultar(Key);
-                    Lista = JsonConvert.DeserializeObject<List<CarrinhoCompra>>(valor);
-
-                    var ItemLocalizado = Lista.SingleOrDefault(a => a.Id == item.Id);
-
-                    if (ItemLocalizado != null)
-                    {
-                        Lista.Add(item);
-                    }
-                    else // Produto já foi adicionado a lista, somente acrescenta a quantidade - TODO: rever
-                    {
-                        ItemLocalizado.Quantidade = ItemLocalizado.Quantidade + prodQuantidade;
-                    }
-                }
-                else
-                {
-                    Lista = new List<CarrinhoCompra>();
-                    Lista.Add(item);
-                }
-
-                string Valor = JsonConvert.SerializeObject(Lista);
-                _cookie.Cadastrar(Key, Valor);
-            }
-
-
-            //ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Cpf", venda.ClienteId);
-            // ViewData["VendedorId"] = new SelectList(_context.Vendedor, "Id", "Email", venda.VendedorId);
-            //CarregarDados();
-            //return View(nameof(Create), venda);
-            //return RedirectToAction(nameof(Index));
-        }
-
-
-        [HttpPost, ActionName("RemoverProduto")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RemoverProduto(int idProduto)
-        {
-            if (idProduto != null)
-            {
-                string valor = _cookie.Consultar(Key);
-                var Lista = JsonConvert.DeserializeObject<List<CarrinhoCompra>>(valor);
-                var ItemLocalizado = Lista.SingleOrDefault(a => a.Id == idProduto);
-
-                if (ItemLocalizado != null)
-                {
-                    Lista.Remove(ItemLocalizado);
-
-                    string Valor = JsonConvert.SerializeObject(Lista);
-                    _cookie.Cadastrar(Key, Valor);
-                }
-            }
-
-            return RedirectToAction(nameof(Index));
-        }
-        */
-
 
     }
 }

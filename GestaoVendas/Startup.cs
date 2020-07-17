@@ -41,6 +41,7 @@ namespace GestaoVendas
 
             services.AddScoped<DaoProdutoEstoque>();
             services.AddScoped<DaoProduto>();
+            services.AddScoped<DaoVenda>();
 
         }
 
