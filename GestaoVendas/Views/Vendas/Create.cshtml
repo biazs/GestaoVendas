@@ -26,7 +26,7 @@
                         @try
                         {
                             @ViewBag.Vendedor.Nome
-                            <input type="hidden" asp-for="VendedorId" value="@ViewBag.Vendedor.Id"   />                                                        
+                            <input type="hidden" asp-for="VendedorId" value="@ViewBag.Vendedor.Id" />
                         }
                         catch { }
                     </span>
@@ -56,11 +56,12 @@
                     <input type="text" class="form-control" value="1" id="txtQuantidade" name="txtQuantidade" />
                 </div>
                 <div class="col-lg-2">
-                    <button type="button" class="btn btn-block btn-primary" onclick="AdicionarProduto()">Adicionar</button>                    
+                    <button type="button" class="btn btn-block btn-primary" onclick="AdicionarProduto()">Adicionar</button>
                 </div>
             </div>
             <br />
 
+            <p style="color:darkred;" id="ProdutoRepetido"></p>
 
 
             <table class="table table-bordered js-tabela">
@@ -119,6 +120,28 @@
         var total = (arrayDescricaoPreco[1].replace(",", ".") * QtdeProduto.value);
         total = Math.round(total * 100) / 100;
 
+
+        //Verificar se produto já foi inserido
+        var trs = document.querySelectorAll('.js-tabela tbody .produto_inserido');
+        var x = 0;
+        while (trs[x]) {
+
+            var conteudo = trs[x].innerHTML;
+            var conteudoDividido = conteudo.split('</td>');
+            var CodigoProd = conteudoDividido[0].replace("<td>", "");
+
+            if (CodigoProd != null) {
+                if (CodigoProd == CodigoProduto.value) {
+                    ProdutoRepetido.innerHTML = "Este produto Já foi adicionado à lista.";
+                    return;
+                }
+                else {
+                    ProdutoRepetido.innerHTML = "";
+                }
+            }
+            x++
+        }
+
         Itens.Produtos.push({
             "ProdutoId": CodigoProduto.value,
             //"Descricao": arrayDescricaoPreco[0],
@@ -129,7 +152,7 @@
 
         ListaProdutosJSON.innerHTML = JSON.stringify(Itens.Produtos);
 
-        var produto = "<tr>" +
+        var produto = "<tr class='produto_inserido'>" +
             "<td>" + CodigoProduto.value + "</td>" +
             "<td>" + arrayDescricaoPreco[0] + "</td>" +
             "<td>" + QtdeProduto.value + "</td>" +
