@@ -1,5 +1,6 @@
 using GestaoVendas.Data;
 using GestaoVendas.Models.Dao;
+using GestaoVendas.Models.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -42,6 +43,7 @@ namespace GestaoVendas
             services.AddScoped<DaoProdutoEstoque>();
             services.AddScoped<DaoProduto>();
             services.AddScoped<DaoVenda>();
+            services.AddScoped<RelatorioService>();
 
         }
 

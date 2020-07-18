@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using GestaoVendas.Libraries.Mensagem;
 using GestaoVendas.Models;
 using GestaoVendas.Models.Dao;
+using GestaoVendas.Models.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GestaoVendas.Controllers
@@ -9,10 +11,12 @@ namespace GestaoVendas.Controllers
     public class RelatorioController : BaseController
     {
         private readonly DaoVenda _daoVenda;
+        private readonly RelatorioService _relatorio;
 
-        public RelatorioController(DaoVenda daoVenda)
+        public RelatorioController(DaoVenda daoVenda, RelatorioService relatorio)
         {
             _daoVenda = daoVenda;
+            _relatorio = relatorio;
         }
         public IActionResult Index()
         {
@@ -47,9 +51,9 @@ namespace GestaoVendas.Controllers
             return View();
         }
 
-        /*public IActionResult Grafico()
+        public IActionResult Grafico()
         {
-            List<GraficoProdutos> lista = new GraficoProdutos().RetornarGrafico();
+            List<GraficoProdutos> lista = _relatorio.RetornarGrafico();
             string valores = "";
             string labels = "";
             string cores = "";
@@ -71,6 +75,6 @@ namespace GestaoVendas.Controllers
             ViewBag.Cores = cores;
 
             return View();
-        }*/
+        }
     }
 }
