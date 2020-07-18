@@ -1,10 +1,19 @@
-﻿using GestaoVendas.Models;
+﻿using System;
+using GestaoVendas.Libraries.Mensagem;
+using GestaoVendas.Models;
+using GestaoVendas.Models.Dao;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GestaoVendas.Controllers
 {
-    public class RelatorioController : Controller
+    public class RelatorioController : BaseController
     {
+        private readonly DaoVenda _daoVenda;
+
+        public RelatorioController(DaoVenda daoVenda)
+        {
+            _daoVenda = daoVenda;
+        }
         public IActionResult Index()
         {
             return View();
@@ -21,18 +30,18 @@ namespace GestaoVendas.Controllers
         {
             if (relatorio.DataDe.Year == 1)
             {
-                //ViewBag.ListaVendas = new Venda().ListagemVendas();
+                ViewBag.ListaVendas = _daoVenda.ListagemVendas();
             }
             else
             {
-                string DataDe = relatorio.DataDe.ToString("yyyy-MM-dd");
-                string DataAte = relatorio.DataAte.ToString("yyyy-MM-dd");
-                // ViewBag.ListaVendas = new Venda().ListagemVendas(DataDe, DataAte);
+                DateTime dataDe = relatorio.DataDe;
+                DateTime dataAte = relatorio.DataAte.AddDays(1);
+                ViewBag.ListaVendas = _daoVenda.ListagemVendas(dataDe, dataAte);
             }
 
             if (ViewBag.ListaVendas.Count == 0)
             {
-                // TempData["MSG_E"] = Mensagem.MSG_E007;
+                TempData["MSG_E"] = Mensagem.MSG_E007;
             }
 
             return View();
