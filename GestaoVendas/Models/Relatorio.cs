@@ -15,4 +15,10 @@ namespace GestaoVendas.Models
         public string DescricaoProduto { get; set; }
 
     }
+
+    public class VendasPorVendedor
+    {
+        public string Vendedor { get; set; }
+        public double QtdeVendido { get; set; }
+    }
 }

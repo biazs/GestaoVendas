@@ -76,5 +76,20 @@ namespace GestaoVendas.Controllers
 
             return View();
         }
+
+
+        [HttpGet]
+        public IActionResult VendasPorVendedor()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult VendasPorVendedor(Relatorio relatorio)
+        {
+            var listaVendasPorVendedor = _relatorio.RetornarVendasPorVendedor();
+            return Json(listaVendasPorVendedor);
+        }
+
     }
 }
