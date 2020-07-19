@@ -85,10 +85,39 @@ namespace GestaoVendas.Controllers
         }
 
         [HttpPost]
-        public JsonResult VendasPorVendedor(Relatorio relatorio)
+        public IActionResult VendasPorVendedor(int mes, int ano)
         {
-            var listaVendasPorVendedor = _relatorio.RetornarVendasPorVendedor();
-            return Json(listaVendasPorVendedor);
+            var lista = _relatorio.RetornarVendasPorVendedor(mes, ano);
+
+
+            if (lista.Count == 0)
+            {
+                TempData["MSG_E"] = Mensagem.MSG_E007;
+                return View();
+            }
+
+            string valores = "";
+            string labels = "";
+            string cores = "";
+
+
+            var random = new Random();
+
+            //Percorre a lista de itens para compor o gráfico
+            for (int i = 0; i < lista.Count; i++)
+            {
+                valores += lista[i].QtdeVendido.ToString() + ",";
+                labels += "'" + lista[i].Vendedor.ToString() + "',";
+
+                //Escolher aleatoriamente as cores para compor o gráfico tipo torta
+                cores += "'" + String.Format("#{0:X6}", random.Next(0x1000000)) + "',";
+            }
+
+            ViewBag.Valores = valores;
+            ViewBag.Labels = labels;
+            ViewBag.Cores = cores;
+
+            return View();
         }
 
     }

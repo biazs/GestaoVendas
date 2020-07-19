@@ -18,6 +18,8 @@ namespace GestaoVendas.Models
 
     public class VendasPorVendedor
     {
+        public string Ano { get; set; }
+        public string Mes { get; set; }
         public string Vendedor { get; set; }
         public double QtdeVendido { get; set; }
     }
