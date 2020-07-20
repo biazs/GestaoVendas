@@ -89,6 +89,8 @@ namespace GestaoVendas.Controllers
         {
             var lista = _relatorio.RetornarVendasPorVendedor(mes, ano);
 
+            ViewBag.Ano = ano;
+            ViewBag.Mes = mes;
 
             if (lista.Count == 0)
             {
