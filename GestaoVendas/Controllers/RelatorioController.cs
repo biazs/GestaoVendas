@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using GestaoVendas.Data;
 using GestaoVendas.Libraries.Mensagem;
 using GestaoVendas.Models;
 using GestaoVendas.Models.Dao;
@@ -12,11 +14,13 @@ namespace GestaoVendas.Controllers
     {
         private readonly DaoVenda _daoVenda;
         private readonly RelatorioService _relatorio;
+        private readonly GestaoVendasContext _context;
 
-        public RelatorioController(DaoVenda daoVenda, RelatorioService relatorio)
+        public RelatorioController(DaoVenda daoVenda, RelatorioService relatorio, GestaoVendasContext context)
         {
             _daoVenda = daoVenda;
             _relatorio = relatorio;
+            _context = context;
         }
         public IActionResult Index()
         {
@@ -108,8 +112,10 @@ namespace GestaoVendas.Controllers
             //Percorre a lista de itens para compor o gráfico
             for (int i = 0; i < lista.Count; i++)
             {
+                var nomeVendedor = _context.Vendedor.Where(e => e.Id == Convert.ToInt32(lista[i].Vendedor)).Select(e => e.Nome).FirstOrDefault();
+
                 valores += lista[i].QtdeVendido.ToString() + ",";
-                labels += "'" + lista[i].Vendedor.ToString() + "',";
+                labels += "'" + nomeVendedor.ToString() + "',";
 
                 //Escolher aleatoriamente as cores para compor o gráfico tipo torta
                 cores += "'" + String.Format("#{0:X6}", random.Next(0x1000000)) + "',";
