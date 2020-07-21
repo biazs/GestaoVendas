@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using GestaoVendas.Data;
 using GestaoVendas.Models.Dao;
@@ -58,8 +59,7 @@ namespace GestaoVendas.Models.Services
                                  select new
                                  {
                                      v2.Nome,
-                                     v1.VendedorId,
-                                     //i.QuantidadeProduto
+                                     v1.VendedorId
                                  })
                                 .GroupBy(t => t.VendedorId)
                                 .Select(gp => new
@@ -77,6 +77,41 @@ namespace GestaoVendas.Models.Services
                 item = new VendasPorVendedor();
                 item.Vendedor = ls.Nome.ToString();
                 item.QtdeVendido = ls.QtdeVendido;
+
+
+                lista.Add(item);
+            }
+
+            return lista;
+        }
+
+        public List<EstoqueProduto> RetornarListaEstoque()
+        {
+            var listaProdutosEstoque = (from p in _context.Produto
+                                        join pe in _context.ProdutoEstoque on p.Id equals pe.ProdutoId
+                                        orderby p.Nome
+                                        select new
+                                        {
+                                            p.Id,
+                                            p.Nome,
+                                            pe.EstoqueId
+                                        }).ToList();
+
+
+
+
+            List<EstoqueProduto> lista = new List<EstoqueProduto>();
+            EstoqueProduto item;
+
+            foreach (var ls in listaProdutosEstoque)
+            {
+                item = new EstoqueProduto();
+                item.Id = Convert.ToInt32(ls.Id);
+                item.Nome = ls.Nome.ToString();
+
+                var qtde = _context.Estoque.FirstOrDefault(m => m.Id == ls.EstoqueId).Quantidade;
+
+                item.Quantidade = qtde;
 
 
                 lista.Add(item);

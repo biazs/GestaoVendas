@@ -128,5 +128,17 @@ namespace GestaoVendas.Controllers
             return View();
         }
 
+        public IActionResult Estoque()
+        {
+            ViewBag.ListaEstoque = _relatorio.RetornarListaEstoque();
+
+            if (ViewBag.ListaEstoque.Count == 0)
+            {
+                TempData["MSG_E"] = Mensagem.MSG_E008;
+            }
+
+            return View();
+        }
+
     }
 }

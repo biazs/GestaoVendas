@@ -23,4 +23,11 @@ namespace GestaoVendas.Models
         public string Vendedor { get; set; }
         public double QtdeVendido { get; set; }
     }
+
+    public class EstoqueProduto
+    {
+        public int Id { get; set; }
+        public string Nome { get; set; }
+        public int Quantidade { get; set; }
+    }
 }

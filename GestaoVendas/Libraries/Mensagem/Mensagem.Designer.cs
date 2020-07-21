@@ -124,6 +124,15 @@ namespace GestaoVendas.Libraries.Mensagem {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Não há produto(s) cadastrado(s)..
+        /// </summary>
+        public static string MSG_E008 {
+            get {
+                return ResourceManager.GetString("MSG_E008", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Registro salvo com sucesso..
         /// </summary>
         public static string MSG_S001 {

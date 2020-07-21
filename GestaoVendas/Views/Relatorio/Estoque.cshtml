@@ -1,0 +1,44 @@
+﻿@model Relatorio
+
+<h2>Relatório de estoque de produtos</h2>
+<br />
+
+@{
+    if (TempData["MSG_E"] != null)
+    {
+        <p class="alert alert-warning">@TempData["MSG_E"]</p>
+    }
+    else
+    {
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Produto</th>
+                    <th>Quantidade em estoque</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    try
+                    {
+                        if (ViewBag.ListaEstoque != null)
+                        {
+                            foreach (var item in (List<EstoqueProduto>)ViewBag.ListaEstoque)
+                            {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td>@item.Nome</td>
+                                    <td>@item.Quantidade</td>
+                                </tr>
+                            }
+                        }
+                    }
+                    catch { }
+                }
+            </tbody>
+        </table>
+
+    }
+}
