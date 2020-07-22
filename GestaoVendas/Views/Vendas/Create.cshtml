@@ -32,9 +32,12 @@
                     </span>
                 </div><br />
             }
-            <div class="form-group">
-                <label asp-for="ClienteId" class="control-label font-weight-bold"></label>
-                <select asp-for="ClienteId" class="form-control" asp-items="ViewBag.ClienteId"></select>
+            <label asp-for="ClienteId" class="control-label font-weight-bold"></label>
+            <div class="row form-group">
+                <div class="col-lg-10">
+                    <select asp-for="ClienteId" class="form-control" asp-items="ViewBag.ClienteId"></select>
+                </div>
+                <div class="col-lg-2"><a asp-action="Create" asp-controller="Clientes" class="btn btn-block btn-info">Cadastrar Cliente</a></div>
             </div>
 
 
