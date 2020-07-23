@@ -99,7 +99,7 @@ namespace GestaoVendas.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FornecedorId"] = new SelectList(_context.Fornecedor, "Id", "Cnpj", produto.FornecedorId);
+            ViewData["FornecedorId"] = new SelectList(_context.Fornecedor, "Id", "Nome", produto.FornecedorId);
             return View(produto);
         }
 

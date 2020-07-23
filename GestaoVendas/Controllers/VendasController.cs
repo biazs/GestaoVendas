@@ -273,7 +273,34 @@ namespace GestaoVendas.Controllers
 
         private void CarregarDados()
         {
-            ViewBag.ListaProdutos = _daoVenda.RetornarListaProdutos();
+            List<Produto> listaProdutos = _daoVenda.RetornarListaProdutos();
+
+            List<Produto> lista = new List<Produto>();
+            Produto item;
+            int id_estoque = 0;
+            Estoque estoque;
+            foreach (var ls in listaProdutos)
+            {
+                id_estoque = _daoProdutoEstoque.RetornarIdEstoque(ls.Id);
+                estoque = _context.Estoque.Find(id_estoque);
+
+                if (estoque.Quantidade > 0)
+                {
+                    item = new Produto
+                    {
+                        Id = ls.Id,
+                        Nome = ls.Nome,
+                        Descricao = ls.Descricao,
+                        PrecoUnitario = ls.PrecoUnitario,
+                        Quantidade = ls.Quantidade,
+                        UnidadeMedida = ls.UnidadeMedida,
+                        LinkFoto = ls.LinkFoto
+                    };
+                    lista.Add(item);
+                }
+            }
+
+            ViewBag.ListaProdutos = lista;
         }
 
         public IActionResult Error(string message)
