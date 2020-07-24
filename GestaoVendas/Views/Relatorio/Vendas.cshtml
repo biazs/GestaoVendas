@@ -41,13 +41,13 @@
                     {
                         if (ViewBag.ListaVendas != null)
                         {
-                            foreach (var item in (List<Venda>)ViewBag.ListaVendas)
+                            foreach (var item in (List<VendasPorPeriodo>)ViewBag.ListaVendas)
                             {
                                 <tr>
                                     <td>@item.Id</td>
                                     <td>@item.Data</td>
-                                    <td>@item.Id</td>
-                                    <td>@item.Id</td>
+                                    <td>@item.Vendedor</td>
+                                    <td>@item.Cliente</td>
                                     <td>R$ @item.Total</td>
                                 </tr>
                             }

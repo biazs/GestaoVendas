@@ -45,8 +45,8 @@ namespace GestaoVendas.Models.Dao
                                   v1.Id,
                                   v1.Data,
                                   v1.Total,
-                                  v2.Nome,
-                                  c.Cpf
+                                  v1.VendedorId,
+                                  v1.ClienteId
                               };
 
             List<Venda> lista = new List<Venda>();
@@ -59,8 +59,8 @@ namespace GestaoVendas.Models.Dao
                     Id = ls.Id,
                     Data = ls.Data,
                     Total = ls.Total,
-                    ClienteId = ls.Id,
-                    VendedorId = ls.Id
+                    ClienteId = ls.ClienteId,
+                    VendedorId = ls.VendedorId
                 };
                 lista.Add(item);
 

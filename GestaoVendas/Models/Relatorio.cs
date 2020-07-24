@@ -24,6 +24,15 @@ namespace GestaoVendas.Models
         public double QtdeVendido { get; set; }
     }
 
+    public class VendasPorPeriodo
+    {
+        public int Id { get; set; }
+        public DateTime Data { get; set; }
+        public string Vendedor { get; set; }
+        public string Cliente { get; set; }
+        public double Total { get; set; }
+    }
+
     public class EstoqueProduto
     {
         public int Id { get; set; }

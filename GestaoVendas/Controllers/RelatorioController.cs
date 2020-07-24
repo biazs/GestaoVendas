@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using GestaoVendas.Data;
 using GestaoVendas.Libraries.Mensagem;
@@ -36,23 +37,46 @@ namespace GestaoVendas.Controllers
         [HttpPost]
         public IActionResult Vendas(Relatorio relatorio)
         {
-            if (relatorio.DataDe.Year == 1)
-            {
-                ViewBag.ListaVendas = _daoVenda.ListagemVendas();
-            }
-            else
+            try
             {
                 DateTime dataDe = relatorio.DataDe;
                 DateTime dataAte = relatorio.DataAte.AddDays(1);
-                ViewBag.ListaVendas = _daoVenda.ListagemVendas(dataDe, dataAte);
-            }
+                List<Venda> listaVendas = _daoVenda.ListagemVendas(dataDe, dataAte);
 
-            if (ViewBag.ListaVendas.Count == 0)
+                List<VendasPorPeriodo> lista = new List<VendasPorPeriodo>();
+                VendasPorPeriodo item;
+                var cliente = "";
+                var vendedor = "";
+                foreach (var ls in listaVendas)
+                {
+                    cliente = _context.Cliente.Where(e => e.Id == Convert.ToInt32(ls.ClienteId)).Select(e => e.Nome).FirstOrDefault();
+                    vendedor = _context.Vendedor.Where(e => e.Id == Convert.ToInt32(ls.VendedorId)).Select(e => e.Nome).FirstOrDefault();
+
+                    item = new VendasPorPeriodo
+                    {
+                        Id = ls.Id,
+                        Data = ls.Data,
+                        Vendedor = cliente,
+                        Cliente = vendedor,
+                        Total = ls.Total
+                    };
+                    lista.Add(item);
+                }
+
+                ViewBag.ListaVendas = lista;
+
+
+                if (ViewBag.ListaVendas.Count == 0)
+                {
+                    TempData["MSG_E"] = Mensagem.MSG_E007;
+                }
+
+                return View();
+            }
+            catch (Exception e)
             {
-                TempData["MSG_E"] = Mensagem.MSG_E007;
+                return RedirectToAction(nameof(Error), new { message = "Erro ao gerar relatório. Tente novamente mais tarde. \n\n" + e.Message });
             }
-
-            return View();
         }
 
         public IActionResult Grafico()
@@ -140,5 +164,15 @@ namespace GestaoVendas.Controllers
             return View();
         }
 
+
+        public IActionResult Error(string message)
+        {
+            var viewModel = new ErrorViewModel
+            {
+                Message = message,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+            return View(viewModel);
+        }
     }
 }
