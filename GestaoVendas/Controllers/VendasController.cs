@@ -263,6 +263,32 @@ namespace GestaoVendas.Controllers
         private void CarregaLista()
         {
             ViewBag.ListaVendas = _context.Venda.ToList();
+
+            /* TODO: Exibir nome de cliente e vendedor no PDF
+            List<Venda> listaVendas = _context.Venda.ToList();
+
+            List<Venda> lista = new List<Venda>();
+            Venda item;
+            var cliente = "";
+            var vendedor = "";
+            foreach (var ls in listaVendas)
+            {
+                cliente = _context.Cliente.Where(e => e.Id == Convert.ToInt32(ls.ClienteId)).Select(e => e.Nome).FirstOrDefault();
+                vendedor = _context.Vendedor.Where(e => e.Id == Convert.ToInt32(ls.VendedorId)).Select(e => e.Nome).FirstOrDefault();
+
+                item = new Venda
+                {
+                    Id = ls.Id,
+                    Data = ls.Data,
+                    Cliente = cliente,
+                    Vendedor = vendedor,
+                    
+                    Total = ls.Total,
+                };
+                lista.Add(item);
+            }
+
+            ViewBag.ListaVendas = lista;*/
         }
 
         private void CarregaListaItemVenda(int? id)

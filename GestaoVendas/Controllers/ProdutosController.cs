@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using GestaoVendas.Data;
@@ -29,7 +30,30 @@ namespace GestaoVendas.Controllers
         {
             try
             {
-                List<Produto> lista = _daoProduto.ListarTodosProdutos();
+                List<Produto> listaProdutos = _daoProduto.ListarTodosProdutos();
+
+
+                //string.Format(CultureInfo.GetCultureInfo("pt-BR"), "{0:C}", @Html.DisplayFor(modelItem => item.PrecoUnitario))
+
+                List<Produto> lista = new List<Produto>();
+                Produto item;
+                foreach (var ls in listaProdutos)
+                {
+                    var x = string.Format(CultureInfo.GetCultureInfo("pt-BR"), "{0:C}", ls.PrecoUnitario);
+                    item = new Produto
+                    {
+                        Id = ls.Id,
+                        Nome = ls.Nome,
+                        Descricao = ls.Descricao,
+                        //PrecoUnitario = Convert.ToDouble(x, CultureInfo.InvariantCulture),
+                        //PrecoUnitario = double.Parse(x),
+                        PrecoUnitario = ls.PrecoUnitario,
+                        Quantidade = ls.Quantidade,
+                        UnidadeMedida = ls.UnidadeMedida,
+                        LinkFoto = ls.LinkFoto
+                    };
+                    lista.Add(item);
+                }
 
                 return View(lista);
             }
@@ -64,7 +88,7 @@ namespace GestaoVendas.Controllers
         // GET: Produtos/Create
         public IActionResult Create()
         {
-            ViewData["FornecedorId"] = new SelectList(_context.Fornecedor, "Id", "Cnpj");
+            ViewData["FornecedorId"] = new SelectList(_context.Fornecedor, "Id", "Nome");
             return View();
         }
 
