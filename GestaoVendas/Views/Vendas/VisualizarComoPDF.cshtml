@@ -1,4 +1,5 @@
-﻿@model IEnumerable<GestaoVendas.Models.Venda>
+﻿@model IEnumerable<GestaoVendas.Models.VendaPdf>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,15 +43,14 @@
                         @Html.DisplayFor(modelItem => item.Data)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.VendedorId)
+                        @Html.DisplayFor(modelItem => item.NomeVendedor)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.ClienteId)
+                        @Html.DisplayFor(modelItem => item.NomeCliente)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Total)
                     </td>
-
                 </tr>
             }
                 </tr>

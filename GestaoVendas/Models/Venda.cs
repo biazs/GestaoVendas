@@ -45,4 +45,13 @@ namespace GestaoVendas.Models
 
         public virtual ICollection<ItemVenda> ItensVenda { get; set; }
     }
+
+    public class VendaPdf
+    {
+        public int Id { get; set; }
+        public DateTime Data { get; set; }
+        public double Total { get; set; }
+        public string NomeVendedor { get; set; }
+        public string NomeCliente { get; set; }
+    }
 }
