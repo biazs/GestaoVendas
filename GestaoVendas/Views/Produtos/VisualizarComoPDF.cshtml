@@ -50,13 +50,13 @@
                         @Html.DisplayFor(modelItem => item.PrecoUnitario)
                     </td>
                     <td>
-                        quantidade
+                        @Html.DisplayFor(modelItem => item.Quantidade)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.UnidadeMedida)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.FornecedorId)
+                        @Html.DisplayFor(modelItem => item.Fornecedor.Nome)
                     </td>
                 </tr>
             }

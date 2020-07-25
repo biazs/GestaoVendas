@@ -20,11 +20,13 @@ namespace GestaoVendas.Controllers
     {
         private readonly GestaoVendasContext _context;
         private readonly DaoProduto _daoProduto;
+        private DaoProdutoEstoque _daoProdutoEstoque;
 
-        public ProdutosController(GestaoVendasContext context, DaoProduto daoProduto)
+        public ProdutosController(GestaoVendasContext context, DaoProduto daoProduto, DaoProdutoEstoque daoProdutoEstoque)
         {
             _context = context;
             _daoProduto = daoProduto;
+            _daoProdutoEstoque = daoProdutoEstoque;
         }
 
         // GET: Produtos
@@ -309,7 +311,37 @@ namespace GestaoVendas.Controllers
 
         private void CarregaLista()
         {
-            ViewBag.ListaProdutos = _context.Produto.ToList();
+            List<Produto> listaProdutos = _context.Produto.ToList();
+
+
+            List<Produto> lista = new List<Produto>();
+            Produto item;
+            int id_estoque = 0;
+            Estoque estoque;
+            Fornecedor fornecedor;
+            foreach (var ls in listaProdutos)
+            {
+                id_estoque = _daoProdutoEstoque.RetornarIdEstoque(ls.Id);
+                estoque = _context.Estoque.Find(id_estoque);
+                fornecedor = _context.Fornecedor.Find(ls.FornecedorId);
+
+                item = new Produto
+                {
+                    Id = ls.Id,
+                    Nome = ls.Nome,
+                    Descricao = ls.Descricao,
+                    PrecoUnitario = ls.PrecoUnitario,
+                    Quantidade = estoque.Quantidade,
+                    UnidadeMedida = ls.UnidadeMedida,
+                    LinkFoto = ls.LinkFoto,
+                    Fornecedor = fornecedor
+                };
+                lista.Add(item);
+            }
+
+
+
+            ViewBag.ListaProdutos = lista;
         }
 
         public async Task<bool> TemAcesso(string funcionalidade)
