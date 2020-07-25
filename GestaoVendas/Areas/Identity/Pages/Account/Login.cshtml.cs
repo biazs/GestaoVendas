@@ -39,11 +39,13 @@ namespace GestaoVendas.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
+            [EmailAddress(ErrorMessage = "Campo E-mail não é um e-mail válido.")]
+            [Display(Name = "E-mail")]
+            [Required(ErrorMessage = "Campo E-mail obrigatório.")]
             public string Email { get; set; }
 
-            [Required]
+            [Display(Name = "Senha")]
+            [Required(ErrorMessage = "Campo Senha obrigatório.")]
             [DataType(DataType.Password)]
             public string Password { get; set; }
 

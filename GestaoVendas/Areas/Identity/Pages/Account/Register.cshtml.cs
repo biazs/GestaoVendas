@@ -44,20 +44,20 @@ namespace GestaoVendas.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage = "Campo E-mail obrigatório.")]
+            [EmailAddress(ErrorMessage = "Campo E-mail não é um e-mail válido.")]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            [Required]
-            [StringLength(100, ErrorMessage = "O {0} deve ter pelo menos {2} e no máximo {1} caracteres.", MinimumLength = 6)]
+            [Required(ErrorMessage = "Campo Senha obrigatório.")]
+            [StringLength(100, ErrorMessage = "O {0} deve ter no mínimo {2} e no máximo {1} caracteres.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Senha")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
             [Display(Name = "Confirme a senha")]
-            [Compare("Password", ErrorMessage = "A senha e a senha de confirmação não correspondem.")]
+            [Compare("Password", ErrorMessage = "Senha de confirmação não é igual.")]
             public string ConfirmPassword { get; set; }
         }
 
