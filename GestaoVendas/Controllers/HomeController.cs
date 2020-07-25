@@ -1,27 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Threading.Tasks;
+using GestaoVendas.Data;
+using GestaoVendas.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using GestaoVendas.Models;
 
 namespace GestaoVendas.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly GestaoVendasContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, GestaoVendasContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
         {
+            /*
+             * TODO: Verificar se há usuário logado no sistema
+             * Se não estiver logado, exibe tela de login return RedirectToAction("Login", "Home");
+             */
+
+            /*
+             * TODO: Validar quais funcionalidades o perfil logado poderá acessar
+             */
             return View();
+
         }
+
+        public async Task<bool> TemAcesso(string funcionalidade)
+        {
+            var temAcesso = await UsuarioTemAcesso(funcionalidade, _context);
+
+            if (!temAcesso)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
+        }
+
 
         public IActionResult Privacy()
         {
