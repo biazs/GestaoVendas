@@ -15,10 +15,12 @@ namespace GestaoVendas.Controllers
     public class AcessoTipoUsuariosController : BaseController
     {
         private readonly GestaoVendasContext _context;
+        private readonly DaoAcessoTipoUsuarios _daoAcessoTipoUsuarios;
 
-        public AcessoTipoUsuariosController(GestaoVendasContext context)
+        public AcessoTipoUsuariosController(GestaoVendasContext context, DaoAcessoTipoUsuarios daoAcessoTipoUsuarios)
         {
             _context = context;
+            _daoAcessoTipoUsuarios = daoAcessoTipoUsuarios;
         }
 
         // GET: AcessoTipoUsuarios
@@ -29,7 +31,7 @@ namespace GestaoVendas.Controllers
 
             try
             {
-                List<AcessoTipoUsuario> lista = new DaoAcessoTipoUsuarios().ListarTodosAcessos(_context);
+                List<AcessoTipoUsuario> lista = _daoAcessoTipoUsuarios.ListarTodosAcessos();
 
                 return View(lista);
             }

@@ -20,7 +20,7 @@ namespace GestaoVendas.Controllers
         // GET: PerfilUsuarios
         public async Task<IActionResult> Index()
         {
-            var gestaoVendasContext = _context.PerfilUsuario.Include(p => p.ItentityUser).Include(p => p.TipoUsuario);
+            var gestaoVendasContext = _context.PerfilUsuario.Include(p => p.ItentityUser).Include(p => p.TipoUsuario).OrderBy(p => p.TipoUsuario);
             return View(await gestaoVendasContext.ToListAsync());
         }
 

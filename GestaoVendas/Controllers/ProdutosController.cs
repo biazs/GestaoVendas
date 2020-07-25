@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using GestaoVendas.Data;
 using GestaoVendas.Models;
 using GestaoVendas.Models.Dao;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +15,8 @@ using Rotativa.AspNetCore;
 
 namespace GestaoVendas.Controllers
 {
-    public class ProdutosController : Controller
+    [Authorize]
+    public class ProdutosController : BaseController
     {
         private readonly GestaoVendasContext _context;
         private readonly DaoProduto _daoProduto;
@@ -30,8 +32,29 @@ namespace GestaoVendas.Controllers
         {
             try
             {
-                List<Produto> listaProdutos = _daoProduto.ListarTodosProdutos();
+                if (TemAcesso("Listar produto").Result.Equals(false))
+                {
+                    ViewBag.TemAcesso = false;
+                    return RedirectToAction("Index", "Home");
+                }
 
+                if (TemAcesso("Cadastrar produto").Result.Equals(false))
+                    ViewBag.TemAcessoCadastrar = false;
+                else
+                    ViewBag.TemAcessoCadastrar = true;
+
+                if (TemAcesso("Editar produto").Result.Equals(false))
+                    ViewBag.TemAcessoEditar = false;
+                else
+                    ViewBag.TemAcessoEditar = true;
+
+                if (TemAcesso("Remover produto").Result.Equals(false))
+                    ViewBag.TemAcessoRemover = false;
+                else
+                    ViewBag.TemAcessoRemover = true;
+
+
+                List<Produto> listaProdutos = _daoProduto.ListarTodosProdutos();
 
                 //string.Format(CultureInfo.GetCultureInfo("pt-BR"), "{0:C}", @Html.DisplayFor(modelItem => item.PrecoUnitario))
 
@@ -88,6 +111,14 @@ namespace GestaoVendas.Controllers
         // GET: Produtos/Create
         public IActionResult Create()
         {
+            var x = TemAcesso("Cadastrar produto");
+            if (x.Result.Equals(false))
+            {
+                ViewBag.TemAcesso = false;
+                return RedirectToAction("Index", "Home");
+            }
+            ViewBag.TemAcesso = true;
+
             ViewData["FornecedorId"] = new SelectList(_context.Fornecedor, "Id", "Nome");
             return View();
         }
@@ -130,6 +161,14 @@ namespace GestaoVendas.Controllers
         // GET: Produtos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            var x = TemAcesso("Editar produto");
+            if (x.Result.Equals(false))
+            {
+                ViewBag.TemAcesso = false;
+                return RedirectToAction("Index", "Home");
+            }
+            ViewBag.TemAcesso = true;
+
             if (id == null)
             {
                 return NotFound();
@@ -207,9 +246,18 @@ namespace GestaoVendas.Controllers
             return View(produto);
         }
 
+
         // GET: Produtos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            var x = TemAcesso("Remover produto");
+            if (x.Result.Equals(false))
+            {
+                ViewBag.TemAcesso = false;
+                return RedirectToAction("Index", "Home");
+            }
+            ViewBag.TemAcesso = true;
+
             if (id == null)
             {
                 return NotFound();
@@ -262,6 +310,21 @@ namespace GestaoVendas.Controllers
         private void CarregaLista()
         {
             ViewBag.ListaProdutos = _context.Produto.ToList();
+        }
+
+        public async Task<bool> TemAcesso(string funcionalidade)
+        {
+            var temAcesso = await UsuarioTemAcesso(funcionalidade, _context);
+
+            if (!temAcesso)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
         }
 
         public IActionResult Error(string message)

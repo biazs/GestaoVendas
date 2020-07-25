@@ -6,12 +6,19 @@ namespace GestaoVendas.Models.Dao
 {
     public class DaoAcessoTipoUsuarios
     {
-        public List<AcessoTipoUsuario> ListarTodosAcessos(GestaoVendasContext _context)
+        private readonly GestaoVendasContext _context;
+
+        public DaoAcessoTipoUsuarios(GestaoVendasContext context)
+        {
+            _context = context;
+        }
+
+        public List<AcessoTipoUsuario> ListarTodosAcessos()
         {
             var listaAcessos = (from a in _context.AcessoTipoUsuario
                                 join tu in _context.TipoUsuario on a.IdTipoUsuario equals tu.Id
                                 join fu in _context.Funcionalidade on a.IdFuncionalidade equals fu.Id
-                                orderby tu.NomeTipoUsuario, fu.NomeFuncionalidade
+                                orderby tu.NomeTipoUsuario descending, fu.NomeFuncionalidade
                                 select new
                                 {
                                     a.Id,
