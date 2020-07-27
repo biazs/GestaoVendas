@@ -45,13 +45,14 @@
             @Html.DisplayNameFor(model => model.LinkFoto)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.LinkFoto)
+            @*@Html.DisplayFor(model => model.LinkFoto)*@
+            <img src="@Model.LinkFoto" width="150" height="150" />
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Fornecedor.Nome)
+            Fornecedor
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Fornecedor.Cnpj)
+            @Html.DisplayFor(model => model.Fornecedor.Nome)
         </dd>
     </dl>
 </div>

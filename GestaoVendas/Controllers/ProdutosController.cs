@@ -339,8 +339,6 @@ namespace GestaoVendas.Controllers
                 lista.Add(item);
             }
 
-
-
             ViewBag.ListaProdutos = lista;
         }
 

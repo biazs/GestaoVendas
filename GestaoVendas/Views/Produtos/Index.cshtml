@@ -25,9 +25,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Nome)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descricao)
-            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Descricao)
+                </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Quantidade)
             </th>
@@ -50,9 +50,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Nome)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Descricao)
-                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Descricao)
+                    </td>*@
                 <td>
                     @Html.DisplayFor(modelItem => item.Quantidade)
                 </td>
@@ -63,7 +63,7 @@
                     @Html.DisplayFor(modelItem => item.UnidadeMedida)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.LinkFoto)
+                    <img src="@item.LinkFoto" width="150" height="150" />
                 </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
