@@ -1,15 +1,19 @@
-﻿using System.Linq;
+﻿using System;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using GestaoVendas.Data;
 using GestaoVendas.Libraries.Mensagem;
 using GestaoVendas.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Rotativa.AspNetCore;
 
 namespace GestaoVendas.Controllers
 {
-    public class ClientesController : Controller
+    [Authorize]
+    public class ClientesController : BaseController
     {
         private readonly GestaoVendasContext _context;
 
@@ -21,7 +25,24 @@ namespace GestaoVendas.Controllers
         // GET: Clientes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Cliente.ToListAsync());
+            try
+            {
+                var temAcesso = await UsuarioTemAcesso("Clientes", _context);
+
+                if (!temAcesso)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+                ViewBag.TemAcesso = true;
+
+                return View(await _context.Cliente.ToListAsync());
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Error), new { message = "Erro ao carregar registros. Tente novamente mais tarde. \n\n" + e.Message });
+            }
+
         }
 
         // GET: Clientes/Details/5
@@ -171,6 +192,15 @@ namespace GestaoVendas.Controllers
             //ClienteModel().ListarTodosClientes();
         }
 
+        public IActionResult Error(string message)
+        {
+            var viewModel = new ErrorViewModel
+            {
+                Message = message,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+            return View(viewModel);
+        }
 
     }
 }
