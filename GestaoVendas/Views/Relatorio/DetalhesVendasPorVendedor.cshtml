@@ -1,0 +1,60 @@
+﻿@model Relatorio
+
+<h2>Detalhe de vendas por vendedor</h2>
+
+<form asp-controller="Relatorio" asp-action="DetalhesVendasPorVendedor" method="post">
+
+    <div class="form-group">
+        <label>Vendedor</label>
+        @*<input asp-for="Vendedor" type="date" class="form-control col-md-2" required />*@
+    </div>
+    <button type="submit" class="btn btn-block btn-success">Pesquisar</button>
+</form>
+
+<br />
+
+<br />
+
+@{
+    if (TempData["MSG_E"] != null)
+    {
+        <p class="alert alert-warning">@TempData["MSG_E"]</p>
+    }
+    else
+    {
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Data</th>
+            <th>Vendedor</th>
+            <th>Cliente</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            try
+            {
+                if (ViewBag.ListaVendas != null)
+                {
+                    foreach (var item in (List<VendasPorPeriodo>)ViewBag.ListaVendas)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.Data</td>
+                            <td>@item.Vendedor</td>
+                            <td>@item.Cliente</td>
+                            <td>R$ @item.Total</td>
+                        </tr>
+                    }
+                }
+            }
+            catch { }
+        }
+    </tbody>
+</table>
+
+    }
+}

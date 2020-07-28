@@ -56,9 +56,9 @@ namespace GestaoVendas.Controllers
                     {
                         Id = ls.Id,
                         Data = ls.Data,
-                        Vendedor = cliente,
-                        Cliente = vendedor,
-                        Total = ls.Total
+                        Vendedor = vendedor,
+                        Cliente = cliente,
+                        Total = ls.Total,
                     };
                     lista.Add(item);
                 }
@@ -151,6 +151,58 @@ namespace GestaoVendas.Controllers
 
             return View();
         }
+
+
+        [HttpGet]
+        public IActionResult DetalhesVendasPorVendedor()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult DetalhesVendasPorVendedor(int id, Relatorio relatorio)
+        {
+            try
+            {
+                List<Venda> listaVendas = _relatorio.RetornarDetalhesVendasPorVendedor(1);
+
+                List<VendasPorPeriodo> lista = new List<VendasPorPeriodo>();
+                VendasPorPeriodo item;
+                var cliente = "";
+                var vendedor = "";
+                foreach (var ls in listaVendas)
+                {
+                    cliente = _context.Cliente.Where(e => e.Id == Convert.ToInt32(ls.ClienteId)).Select(e => e.Nome).FirstOrDefault();
+                    vendedor = _context.Vendedor.Where(e => e.Id == Convert.ToInt32(ls.VendedorId)).Select(e => e.Nome).FirstOrDefault();
+
+                    item = new VendasPorPeriodo
+                    {
+                        Id = ls.Id,
+                        Data = ls.Data,
+                        Vendedor = vendedor,
+                        Cliente = cliente,
+                        Total = ls.Total
+                    };
+                    lista.Add(item);
+                }
+
+                ViewBag.ListaVendas = lista;
+
+
+                if (ViewBag.ListaVendas.Count == 0)
+                {
+                    TempData["MSG_E"] = Mensagem.MSG_E007;
+                }
+
+                return View();
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Error), new { message = "Erro ao gerar relatório. Tente novamente mais tarde. \n\n" + e.Message });
+            }
+        }
+
+
 
         public IActionResult Estoque()
         {

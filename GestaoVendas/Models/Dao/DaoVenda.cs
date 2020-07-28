@@ -67,7 +67,6 @@ namespace GestaoVendas.Models.Dao
             }
 
             return lista;
-
         }
 
     }
