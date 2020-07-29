@@ -13,14 +13,14 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="IdTipoUsuario" class="control-label"></label>
-                <select asp-for="IdTipoUsuario" class="form-control" asp-items="ViewBag.IdTipoUsuario"></select>
+                <select asp-for="IdTipoUsuario" class="form-control" asp-items="ViewBag.IdTipoUsuario" id="tipoUsuario"></select>
             </div>
             <div class="form-group">
                 <label asp-for="UserId" class="control-label"></label>
                 <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" name="nomeVendedor" id="nomeVendedor" style="display:none;">
                 <label class="control-label">Nome</label>
                 <input type="text" asp-controller="PerfilUsuario" class="form-control" name="nome_vendedor" id="nome_vendedor" required />
                 <span class="text-danger" id="msg"></span>
@@ -42,11 +42,30 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 
-<script language="JavaScript">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+        crossorigin="anonymous"></script>
+
+<script>
+    $("#tipoUsuario").change(function () {
+        $('#nomeVendedor').hide();
+        if (this.value == "2")
+            $('#nomeVendedor').show();
+        else {
+            $('#nomeVendedor').hide();
+        }
+
+    });
+
     function Enviardados() {
 
-        if (document.getElementById("nome_vendedor").value == "") {
-            msg.innerHTML = "Campo obrigatório";
+        if (document.getElementById("tipoUsuario").value == "2") {
+
+            if (document.getElementById("nome_vendedor").value == "") {
+                msg.innerHTML = "Campo obrigatório";
+            }
         }
     }
+
+
 </script>
