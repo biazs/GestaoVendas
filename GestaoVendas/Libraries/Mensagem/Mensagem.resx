@@ -141,6 +141,9 @@
   <data name="MSG_E008" xml:space="preserve">
     <value>Não há produto(s) cadastrado(s).</value>
   </data>
+  <data name="MSG_E009" xml:space="preserve">
+    <value>Não foram encontradas vendas registradas para o vendedor e período informado.</value>
+  </data>
   <data name="MSG_S001" xml:space="preserve">
     <value>Registro salvo com sucesso.</value>
   </data>

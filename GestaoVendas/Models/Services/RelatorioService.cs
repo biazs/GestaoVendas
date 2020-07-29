@@ -85,40 +85,75 @@ namespace GestaoVendas.Models.Services
             return lista;
         }
 
-        public List<Venda> RetornarDetalhesVendasPorVendedor(int id)
+
+
+        public List<Venda> RetornarDetalhesVendasPorVendedor(int id, int mes, int ano)
         {
-            var listaVendas = from v1 in _context.Venda
-                              join v2 in _context.Vendedor on v1.VendedorId equals v2.Id
-                              where v2.Id == id
-                              orderby v1.Data descending, v1.Id, v1.Total
-                              select new
-                              {
-                                  v1.Id,
-                                  v1.Data,
-                                  v1.Total,
-                                  v1.VendedorId,
-                                  v1.ClienteId
-                              };
 
             List<Venda> lista = new List<Venda>();
             Venda item;
 
-            foreach (var ls in listaVendas)
+            if (mes == 0) // Mês não preenchido
             {
-                item = new Venda
-                {
-                    Id = ls.Id,
-                    Data = ls.Data,
-                    Total = ls.Total,
-                    ClienteId = ls.ClienteId,
-                    VendedorId = ls.VendedorId
-                };
-                lista.Add(item);
+                var listaVendas = from v1 in _context.Venda
+                                  join v2 in _context.Vendedor on v1.VendedorId equals v2.Id
+                                  where v2.Id == id && v1.Data.Year == ano
+                                  orderby v1.Data descending, v1.Id, v1.Total
+                                  select new
+                                  {
+                                      v1.Id,
+                                      v1.Data,
+                                      v1.Total,
+                                      v1.VendedorId,
+                                      v1.ClienteId
+                                  };
 
+                foreach (var ls in listaVendas)
+                {
+                    item = new Venda
+                    {
+                        Id = ls.Id,
+                        Data = ls.Data,
+                        Total = ls.Total,
+                        ClienteId = ls.ClienteId,
+                        VendedorId = ls.VendedorId
+                    };
+                    lista.Add(item);
+
+                }
+
+            }
+            else
+            {
+                var listaVendas = from v1 in _context.Venda
+                                  join v2 in _context.Vendedor on v1.VendedorId equals v2.Id
+                                  where v2.Id == id && v1.Data.Month == mes && v1.Data.Year == ano
+                                  orderby v1.Data descending, v1.Id, v1.Total
+                                  select new
+                                  {
+                                      v1.Id,
+                                      v1.Data,
+                                      v1.Total,
+                                      v1.VendedorId,
+                                      v1.ClienteId
+                                  };
+
+                foreach (var ls in listaVendas)
+                {
+                    item = new Venda
+                    {
+                        Id = ls.Id,
+                        Data = ls.Data,
+                        Total = ls.Total,
+                        ClienteId = ls.ClienteId,
+                        VendedorId = ls.VendedorId
+                    };
+                    lista.Add(item);
+
+                }
             }
 
             return lista;
-
         }
 
 

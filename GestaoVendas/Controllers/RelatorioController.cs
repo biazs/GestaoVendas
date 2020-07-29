@@ -8,6 +8,7 @@ using GestaoVendas.Models;
 using GestaoVendas.Models.Dao;
 using GestaoVendas.Models.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GestaoVendas.Controllers
 {
@@ -156,20 +157,26 @@ namespace GestaoVendas.Controllers
         [HttpGet]
         public IActionResult DetalhesVendasPorVendedor()
         {
+            ViewData["VendedorId"] = new SelectList(_context.Vendedor, "Id", "Nome");
+            ViewBag.Vendedor = _context.Vendedor.ToList();
             return View();
         }
 
         [HttpPost]
-        public IActionResult DetalhesVendasPorVendedor(int id, Relatorio relatorio)
+        public IActionResult DetalhesVendasPorVendedor(int id_vendedor, int mes, int ano)
         {
             try
             {
-                List<Venda> listaVendas = _relatorio.RetornarDetalhesVendasPorVendedor(1);
+                List<Venda> listaVendas = _relatorio.RetornarDetalhesVendasPorVendedor(id_vendedor, mes, ano);
+                ViewBag.Ano = ano;
+                ViewBag.Mes = mes;
+                ViewBag.IdVendedor = id_vendedor;
 
                 List<VendasPorPeriodo> lista = new List<VendasPorPeriodo>();
                 VendasPorPeriodo item;
                 var cliente = "";
                 var vendedor = "";
+                var total = 0;
                 foreach (var ls in listaVendas)
                 {
                     cliente = _context.Cliente.Where(e => e.Id == Convert.ToInt32(ls.ClienteId)).Select(e => e.Nome).FirstOrDefault();
@@ -184,14 +191,19 @@ namespace GestaoVendas.Controllers
                         Total = ls.Total
                     };
                     lista.Add(item);
+                    total += Convert.ToInt32(item.Total);
                 }
 
+                ViewBag.TotalVendas = total;
+
                 ViewBag.ListaVendas = lista;
+
+                ViewBag.Vendedor = _context.Vendedor.ToList();
 
 
                 if (ViewBag.ListaVendas.Count == 0)
                 {
-                    TempData["MSG_E"] = Mensagem.MSG_E007;
+                    TempData["MSG_E"] = Mensagem.MSG_E009;
                 }
 
                 return View();
