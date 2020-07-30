@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using GestaoVendas.Data;
+using GestaoVendas.Libraries.Mensagem;
 using GestaoVendas.Models;
 using GestaoVendas.Models.Dao;
 using Microsoft.AspNetCore.Authorization;
@@ -134,6 +135,14 @@ namespace GestaoVendas.Controllers
         {
             if (ModelState.IsValid)
             {
+                //Verificar se produto já existe
+                if (ProdutoExists(produto.Nome))
+                {
+                    TempData["MSG_A"] = Mensagem.MSG_A001;
+                    int id = _context.Produto.Where(m => m.Nome == produto.Nome).Select(e => e.Id).FirstOrDefault();
+                    return RedirectToRoute(new { controller = "Produtos", action = "Edit", id = id });
+                }
+
                 _context.Add(produto);
 
                 //inserir na tabela estoque
@@ -293,6 +302,11 @@ namespace GestaoVendas.Controllers
         private bool ProdutoExists(int id)
         {
             return _context.Produto.Any(e => e.Id == id);
+        }
+
+        private bool ProdutoExists(string nome)
+        {
+            return _context.Produto.Any(e => e.Nome == nome);
         }
 
         public IActionResult VisualizarComoPDF()

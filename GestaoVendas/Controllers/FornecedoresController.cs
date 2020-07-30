@@ -65,7 +65,7 @@ namespace GestaoVendas.Controllers
         {
             if (ModelState.IsValid)
             {
-                //Verificar se cliente já existe
+                //Verificar se fornecedor já existe
                 if (FornecedorExists(fornecedor.Cnpj))
                 {
                     TempData["MSG_A"] = Mensagem.MSG_A001;
