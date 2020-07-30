@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using GestaoVendas.Data;
+using GestaoVendas.Libraries.Mensagem;
 using GestaoVendas.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -64,6 +65,14 @@ namespace GestaoVendas.Controllers
         {
             if (ModelState.IsValid)
             {
+                //Verificar se cliente já existe
+                if (FornecedorExists(fornecedor.Cnpj))
+                {
+                    TempData["MSG_A"] = Mensagem.MSG_A001;
+                    int id = _context.Fornecedor.Where(m => m.Cnpj == fornecedor.Cnpj).Select(e => e.Id).FirstOrDefault();
+                    return RedirectToRoute(new { controller = "Fornecedores", action = "Edit", id = id });
+                }
+
                 _context.Add(fornecedor);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -154,6 +163,11 @@ namespace GestaoVendas.Controllers
         private bool FornecedorExists(int id)
         {
             return _context.Fornecedor.Any(e => e.Id == id);
+        }
+
+        private bool FornecedorExists(string cnpj)
+        {
+            return _context.Fornecedor.Any(e => e.Cnpj == cnpj);
         }
 
         public IActionResult VisualizarComoPDF()
