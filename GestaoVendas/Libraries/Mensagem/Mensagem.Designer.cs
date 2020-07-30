@@ -61,6 +61,15 @@ namespace GestaoVendas.Libraries.Mensagem {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Registro já existente. Deseja alterá-lo?.
+        /// </summary>
+        public static string MSG_A001 {
+            get {
+                return ResourceManager.GetString("MSG_A001", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O campo {0} é obrigatório..
         /// </summary>
         public static string MSG_E001 {

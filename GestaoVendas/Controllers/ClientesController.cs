@@ -78,6 +78,14 @@ namespace GestaoVendas.Controllers
         {
             if (ModelState.IsValid)
             {
+                //Verificar se cliente já existe
+                if (ClienteExists(cliente.Email))
+                {
+                    TempData["MSG_A"] = Mensagem.MSG_A001;
+                    int id = _context.Cliente.Where(m => m.Email == cliente.Email).Select(e => e.Id).FirstOrDefault();
+                    return RedirectToRoute(new { controller = "Clientes", action = "Edit", id = id });
+                }
+
                 _context.Add(cliente);
                 await _context.SaveChangesAsync();
                 TempData["MSG_S"] = Mensagem.MSG_S001;
@@ -169,6 +177,11 @@ namespace GestaoVendas.Controllers
         private bool ClienteExists(int id)
         {
             return _context.Cliente.Any(e => e.Id == id);
+        }
+
+        private bool ClienteExists(string email)
+        {
+            return _context.Cliente.Any(e => e.Email == email);
         }
 
 
