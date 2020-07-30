@@ -102,6 +102,10 @@ namespace GestaoVendas.Areas.Identity.Pages.Account
                 }
                 foreach (var error in result.Errors)
                 {
+                    if (error.Code == "DuplicateUserName")
+                    {
+                        error.Description = "Usuário 'rita@gmail.com' já é cadastrado no sistema.";
+                    }
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
