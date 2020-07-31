@@ -9,22 +9,22 @@
 <h4>Perfil Usuário</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-12">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
+            <div class="form-group col-md-4">
                 <label asp-for="IdTipoUsuario" class="control-label"></label>
                 <select asp-for="IdTipoUsuario" class="form-control" asp-items="ViewBag.IdTipoUsuario"></select>
                 <span asp-validation-for="IdTipoUsuario" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-4">
                 <label asp-for="UserId" class="control-label"></label>
                 <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
                 <span asp-validation-for="UserId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Salvar" class="btn btn-block btn-success" />
+                <input type="submit" value="Salvar" class="btn btn-block button-save" />
             </div>
         </form>
     </div>

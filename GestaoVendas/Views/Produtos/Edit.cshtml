@@ -17,32 +17,32 @@
     </div>
 }
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-12">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
+            <div class="form-group col-md-4">
                 <label asp-for="Nome" class="control-label"></label>
                 <input asp-for="Nome" class="form-control" id="nome" />
                 <span asp-validation-for="Nome" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-4">
                 <label asp-for="Descricao" class="control-label"></label>
                 @*<input asp-for="Descricao" class="form-control" />*@
                 @Html.TextArea("Descricao", @Model.Descricao, new { @class = "form-control" })
                 <span asp-validation-for="Descricao" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-4">
                 <label class="control-label">Quantidade</label>
                 <input name="quantidade" id="quantidade" required type="text" class="form-control" value="@try { @ViewBag.Quantidade } catch { }" />
                 <span class="text-danger" id="msg_quantidade"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-4">
                 <label asp-for="PrecoUnitario" class="control-label"></label>
                 <input asp-for="PrecoUnitario" class="form-control" id="precoUnitario" />
                 <span asp-validation-for="PrecoUnitario" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-4">
                 <label asp-for="UnidadeMedida" class="control-label"></label>
                 <select asp-for="UnidadeMedida" class="form-control" id="unidadeMedida">
                     @if (@Model.UnidadeMedida == "Unidade")
@@ -99,7 +99,7 @@
             </div>
 
 
-            <div class="form-group">
+            <div class="form-group col-md-4">
 
                 <label>Foto</label>
                 <br />
@@ -111,13 +111,13 @@
                 <span asp-validation-for="LinkFoto" class="text-danger"></span>
 
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-4">
                 <label asp-for="FornecedorId" class="control-label"></label>
                 <select asp-for="FornecedorId" class="form-control" asp-items="ViewBag.FornecedorId" id="fornecedor"></select>
                 <span asp-validation-for="FornecedorId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Salvar" class="btn btn-block btn-success" onclick="Enviardados()" />
+                <input type="submit" value="Salvar" class="btn btn-block button-save" onclick="Enviardados()" />
             </div>
         </form>
     </div>
