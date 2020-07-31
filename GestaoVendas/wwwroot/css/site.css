@@ -107,3 +107,15 @@ body {
     transition: all .5s;
     cursor: pointer;
 }
+
+.button-delete {
+    background-color: #f15757;
+    border: 3px solid #f15757;
+    color: white;
+    padding: .75em 1.5em;
+    border-radius: 5px;
+    font-size: .9em;
+    width: auto;
+    transition: all .5s;
+    cursor: pointer;
+}
