@@ -6,9 +6,6 @@
 
 <h1>Vendedores</h1>
 
-<p>
-    <a href="../Vendedores/VisualizarComoPDF/" target="_blank"><img src="../img/pdf.png" alt="Gerar PDF" width="26" height="34" />Gerar PDF</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -32,9 +29,10 @@
                     @Html.DisplayFor(modelItem => item.Email)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Alterar</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a>|
-                    <a asp-action="Delete" asp-route-id="@item.Id">Remover</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn"><img src="../img/lapis.png" alt="Alterar" title="Alterar" width="26" height="26" /></a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn"><img src="../img/lupa2.png" alt="Detalhar" title="Detalhar" width="26" height="26" /></a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn"><img src="../img/cancelar.png" alt="Remover" title="Remover" width="26" height="26" /></a>
+                    <a href="../Vendedores/VisualizarComoPDF/" target="_blank" class="btn"><img src="../img/pdf.png" title="Gerar PDF" alt="Gerar PDF" width="30" height="30" /></a>
                 </td>
             </tr>
         }
