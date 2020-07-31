@@ -30,7 +30,14 @@
                                 <tr>
                                     <td>@item.Id</td>
                                     <td>@item.Nome</td>
-                                    <td>@item.Quantidade</td>
+                                    @if (item.Quantidade <= 10)
+                                    {
+                                        <td style="color: #db1c1c;">@item.Quantidade</td>
+                                    }
+                                    else
+                                    {
+                                        <td>@item.Quantidade</td>
+                                    }
                                 </tr>
                             }
                         }
