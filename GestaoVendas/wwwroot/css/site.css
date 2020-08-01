@@ -119,3 +119,37 @@ body {
     transition: all .5s;
     cursor: pointer;
 }
+
+.button-altera {
+    background-color: #49bf9d;
+    border: 3px solid #49bf9d;
+    color: white;
+    border-radius: 5px;
+    font-size: .9em;
+    width: 70px;
+    transition: all .5s;
+    cursor: pointer;
+}
+
+.button-detalhe {
+    background-color: #538bd3;
+    border: 3px solid #538bd3;
+    color: white;
+    border-radius: 5px;
+    font-size: .9em;
+    width: 70px;
+    transition: all .5s;
+    cursor: pointer;   
+    
+}
+
+.button-remove {
+    background-color: #f15757;
+    border: 3px solid #f15757;
+    color: white;
+    border-radius: 5px;
+    font-size: .9em;
+    width: 70px;
+    transition: all .5s;
+    cursor: pointer;
+}

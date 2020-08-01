@@ -25,10 +25,10 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.NomeTipoUsuario)
                 </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn"><img src="../img/lapis.png" alt="Alterar" title="Alterar" width="26" height="26" /></a>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn"><img src="../img/lupa2.png" alt="Detalhar" title="Detalhar" width="26" height="26" /></a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn"><img src="../img/cancelar.png" alt="Remover" title="Remover" width="26" height="26" /></a>
+                <td align="center">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn button-altera">Alterar</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn button-detalhe">Detalhes</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn button-remove">Remover</a>
                 </td>
             </tr>
         }

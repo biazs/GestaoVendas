@@ -60,19 +60,19 @@
                 <td>
                     <img src="@item.LinkFoto" width="150" height="150" />
                 </td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn"><img src="../img/lupa2.png" alt="Detalhar" title="Detalhar" width="26" height="26" /></a>
+                <td align="center">
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn button-detalhe">Detalhes</a>
 
                     @if (ViewBag.TemAcessoEditar == true)
                     {
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn"><img src="../img/lapis.png" alt="Alterar" title="Alterar" width="26" height="26" /></a>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn button-altera">Alterar</a>
                     }
                     @if (ViewBag.TemAcessoRemover == true)
                     {
-                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn"><img src="../img/cancelar.png" alt="Remover" title="Remover" width="26" height="26" /></a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn button-remove">Remover</a>
                     }
 
-                    <a href="../Vendedores/VisualizarComoPDF/" target="_blank" class="btn"><img src="../img/pdf.png" title="Gerar PDF" alt="Gerar PDF" width="30" height="30" /></a>
+                    <a href="../Produtos/VisualizarComoPDF/" target="_blank" class="btn"><img src="../img/pdf.png" title="Gerar PDF" alt="Gerar PDF" width="40" height="40" /></a>
                 </td>
 
             </tr>

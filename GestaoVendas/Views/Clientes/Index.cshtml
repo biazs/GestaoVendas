@@ -10,10 +10,7 @@
     <p class="alert alert-success">@TempData["MSG_S"]</p>
 }
 <p>
-    <a asp-action="Create">Cadastrar novo</a>
-</p>
-<p>
-    <a href="../Clientes/VisualizarComoPDF/" target="_blank"><img src="../img/pdf.png" alt="Gerar PDF" width="26" height="34" />Gerar PDF</a>
+    <a asp-action="Create"><img src="../img/novo.png" alt="Cadastrar novo cliente" title="Cadastrar novo cliente" /></a>
 </p>
 <table class="table">
     <thead>
@@ -43,10 +40,11 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Email)
                 </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Alterar</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Remover</a>
+                <td align="center">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn button-altera">Alterar</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn button-detalhe">Detalhes</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn button-remove">Remover</a>
+                    <a href="../Clientes/VisualizarComoPDF/" target="_blank" class="btn"><img src="../img/pdf.png" title="Gerar PDF" alt="Gerar PDF" width="40" height="40" /></a>
                 </td>
             </tr>
         }
