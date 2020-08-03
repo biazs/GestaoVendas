@@ -29,7 +29,8 @@ namespace GestaoVendas.Models
 
         [Display(Name = "Preço Unitário")]
         [Required(ErrorMessage = "Campo obrigatório")]
-        [Range(0, int.MaxValue, ErrorMessage = "Dever ser preenchido com um número")]
+        [Range(0, double.MaxValue, ErrorMessage = "Dever ser preenchido com um número")]
+        //[RegularExpression(@"[0-9]{0,}\.[0-9]{2}", ErrorMessage = "Dever ser preenchido com um número no formato 0000.00")]
         public double PrecoUnitario { get; set; }
 
         [Display(Name = "Unidade de medida")]

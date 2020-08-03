@@ -49,7 +49,7 @@
                         @{
                             foreach (var item in (List<Produto>)ViewBag.ListaProdutos)
                             {
-                                <option value="@item.Id">@item.Nome | @item.PrecoUnitario</option>
+                                <option value="@item.Id">@item.Nome | R$ @item.PrecoUnitario</option>
                             }
                         }
 
