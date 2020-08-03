@@ -135,6 +135,11 @@ namespace GestaoVendas.Controllers
         {
             if (ModelState.IsValid)
             {
+                //Inserir ponto em PrecoUnitario
+                var tam = produto.PrecoUnitario.ToString().Count() - 2;
+                var preco = produto.PrecoUnitario.ToString().Insert(tam, ",");
+                produto.PrecoUnitario = Convert.ToDouble(preco);
+
                 //Verificar se produto já existe
                 if (ProdutoExists(produto.Nome))
                 {
