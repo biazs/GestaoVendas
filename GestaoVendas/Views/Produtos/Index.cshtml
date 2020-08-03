@@ -14,7 +14,7 @@
     </p>
 }
 
-<table class="table">
+<table class="table" id="table">
     <thead>
         <tr>
             <th>
@@ -39,6 +39,7 @@
         </tr>
     </thead>
     <tbody>
+
         @foreach (var item in Model)
         {
             <tr>
@@ -51,7 +52,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Quantidade)
                 </td>
-                <td>
+                <td id="PrecoUnitario" onload="MascaraValor()">
                     @Html.DisplayFor(modelItem => item.PrecoUnitario)
                 </td>
                 <td>
@@ -74,8 +75,30 @@
 
                     <a href="../Produtos/VisualizarComoPDF/" target="_blank" class="btn"><img src="../img/pdf.png" title="Gerar PDF" alt="Gerar PDF" width="40" height="40" /></a>
                 </td>
-
             </tr>
         }
     </tbody>
 </table>
+
+
+<script>
+    function MascaraValor() {
+        /*TODO
+         * Exibir .00 quando registro nao existir 2 digitos após o ponto
+         * Exibir .X0 quando só existir 1 digito após o ponto
+         */
+        //var table = document.getElementById("table");
+
+        //var totalRowCount = table.rows.length;
+        //var tbodyRowCount = table.tBodies[0].rows.length;
+
+        //for (var i = 0; i < tbodyRowCount; i++) {
+        //    if (document.getElementById("PrecoUnitario_" + i).indexOf(",") == -1) // nao existe vírgula
+        //    {
+        //        var resultado = document.getElementById("PrecoUnitario_" + i).value + ",00";
+        //        document.getElementById("PrecoUnitario_" + i).value = resultado;
+        //    }
+        //}
+
+    }
+</script>

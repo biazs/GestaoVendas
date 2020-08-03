@@ -11,8 +11,8 @@
     <div id="alteraDiv">
         <p id="altera" class="alert alert-warning">
             @TempData["MSG_A"]
-            <input type="button" value="Sim" onclick="habilita();" class="btn btn-primary" />
-            <a asp-action="Index" value="Não" class="btn btn-secondary">Não</a>
+            <input type="button" value="Sim" onclick="habilita();" class="btn button-sim" />
+            <a asp-action="Index" value="Não" class="btn button-nao">Não</a>
         </p>
     </div>
 }
@@ -20,104 +20,102 @@
     <div class="col-md-12">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group col-md-4">
-                <label asp-for="Nome" class="control-label"></label>
-                <input asp-for="Nome" class="form-control" id="nome" />
-                <span asp-validation-for="Nome" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-4">
-                <label asp-for="Descricao" class="control-label"></label>
-                @*<input asp-for="Descricao" class="form-control" />*@
-                @Html.TextArea("Descricao", @Model.Descricao, new { @class = "form-control" })
-                <span asp-validation-for="Descricao" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-4">
-                <label class="control-label">Quantidade</label>
-                <input name="quantidade" id="quantidade" required type="text" class="form-control" value="@try { @ViewBag.Quantidade } catch { }" />
-                <span class="text-danger" id="msg_quantidade"></span>
-            </div>
-            <div class="form-group col-md-4">
-                <label asp-for="PrecoUnitario" class="control-label"></label>
-                <input asp-for="PrecoUnitario" class="form-control" id="precoUnitario" />
-                <span asp-validation-for="PrecoUnitario" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-4">
-                <label asp-for="UnidadeMedida" class="control-label"></label>
-                <select asp-for="UnidadeMedida" class="form-control" id="unidadeMedida">
-                    @if (@Model.UnidadeMedida == "Unidade")
-                    {
-                        <option value="Unidade" selected>Unidade</option>
-                    }
-                    else
-                    {
-                        <option value="Unidade">Unidade</option>
-                    }
-                    @if (@Model.UnidadeMedida == "Caixa")
-                    {
-                        <option value="Caixa" selected>Caixa</option>
-                    }
-                    else
-                    {
-                        <option value="Caixa">Caixa</option>
-                    }
-                    @if (@Model.UnidadeMedida == "Kg")
-                    {
-                        <option value="Kg" selected>Kg</option>
-                    }
-                    else
-                    {
-                        <option value="Kg">Kg</option>
-                    }
-                    @if (@Model.UnidadeMedida == "Grama")
-                    {
-                        <option value="Grama" selected>Grama</option>
-                    }
-                    else
-                    {
-                        <option value="Grama">Grama</option>
-                    }
-                    @if (@Model.UnidadeMedida == "Litro")
-                    {
-                        <option value="Litro" selected>Litro</option>
-                    }
-                    else
-                    {
-                        <option value="Litro">Litro</option>
-                    }
-                    @if (@Model.UnidadeMedida == "Tonelada")
-                    {
-                        <option value="Tonelada" selected>Tonelada</option>
-                    }
-                    else
-                    {
-                        <option value="Tonelada">Tonelada</option>
-                    }
-                </select>
+            <div class="row">
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group col-md-6">
+                    <label asp-for="Nome" class="control-label"></label>
+                    <input asp-for="Nome" class="form-control" id="nome" />
+                    <span asp-validation-for="Nome" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="Descricao" class="control-label"></label>
+                    @*<input asp-for="Descricao" class="form-control" />*@
+                    @Html.TextArea("Descricao", @Model.Descricao, new { @class = "form-control" })
+                    <span asp-validation-for="Descricao" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="PrecoUnitario" class="control-label"></label>
+                    (0000.00)<input asp-for="PrecoUnitario" class="form-control" id="PrecoUnitario" onblur="AtualizaMascaraValor();" />
+                    <span asp-validation-for="PrecoUnitario" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="control-label">Quantidade</label>
+                    <input name="quantidade" id="quantidade" required type="text" class="form-control" value="@try { @ViewBag.Quantidade } catch { }" />
+                    <span class="text-danger" id="msg_quantidade"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="UnidadeMedida" class="control-label"></label>
+                    <select asp-for="UnidadeMedida" class="form-control" id="unidadeMedida">
+                        @if (@Model.UnidadeMedida == "Unidade")
+                        {
+                            <option value="Unidade" selected>Unidade</option>
+                        }
+                        else
+                        {
+                            <option value="Unidade">Unidade</option>
+                        }
+                        @if (@Model.UnidadeMedida == "Caixa")
+                        {
+                            <option value="Caixa" selected>Caixa</option>
+                        }
+                        else
+                        {
+                            <option value="Caixa">Caixa</option>
+                        }
+                        @if (@Model.UnidadeMedida == "Kg")
+                        {
+                            <option value="Kg" selected>Kg</option>
+                        }
+                        else
+                        {
+                            <option value="Kg">Kg</option>
+                        }
+                        @if (@Model.UnidadeMedida == "Grama")
+                        {
+                            <option value="Grama" selected>Grama</option>
+                        }
+                        else
+                        {
+                            <option value="Grama">Grama</option>
+                        }
+                        @if (@Model.UnidadeMedida == "Litro")
+                        {
+                            <option value="Litro" selected>Litro</option>
+                        }
+                        else
+                        {
+                            <option value="Litro">Litro</option>
+                        }
+                        @if (@Model.UnidadeMedida == "Tonelada")
+                        {
+                            <option value="Tonelada" selected>Tonelada</option>
+                        }
+                        else
+                        {
+                            <option value="Tonelada">Tonelada</option>
+                        }
+                    </select>
 
-                <span asp-validation-for="UnidadeMedida" class="text-danger"></span>
-            </div>
+                    <span asp-validation-for="UnidadeMedida" class="text-danger"></span>
+                </div>
 
-
-            <div class="form-group col-md-4">
-
-                <label>Foto</label>
-                <br />
-                @if (Model != null)
-                {
-                    <img src="@Model.LinkFoto" width="150" height="150" />
-                }
-                <input asp-for="LinkFoto" type="text" class="form-control" value="@if(Model!=null) { @Model.LinkFoto }" id="linkFoto" />
-                <span asp-validation-for="LinkFoto" class="text-danger"></span>
-
-            </div>
-            <div class="form-group col-md-4">
-                <label asp-for="FornecedorId" class="control-label"></label>
-                <select asp-for="FornecedorId" class="form-control" asp-items="ViewBag.FornecedorId" id="fornecedor"></select>
-                <span asp-validation-for="FornecedorId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Salvar" class="btn btn-block button-save" onclick="Enviardados()" />
+                <div class="form-group col-md-6">
+                    <label asp-for="FornecedorId" class="control-label"></label>
+                    <select asp-for="FornecedorId" class="form-control" asp-items="ViewBag.FornecedorId" id="fornecedor"></select>
+                    <span asp-validation-for="FornecedorId" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Foto</label>
+                    <input asp-for="LinkFoto" type="text" class="form-control" value="@if(Model!=null) { @Model.LinkFoto }" id="linkFoto" />
+                    @if (Model != null)
+                    {
+                        <img src="@Model.LinkFoto" width="150" height="150" />
+                    }
+                    <span asp-validation-for="LinkFoto" class="text-danger"></span>
+                </div>
+                <div class="col-md-12 form-group">
+                    <input type="submit" value="Salvar" class="btn btn-block button-save" onclick="Enviardados()" />
+                </div>
             </div>
         </form>
     </div>
@@ -132,19 +130,13 @@
 }
 
 <script language="JavaScript">
-    function Enviardados() {
-
-        if (document.getElementById("quantidade").value == "") {
-            msg_quantidade.innerHTML = "Campo obrigatório";
-        }
-    }
 
     var altera = document.getElementById("altera");
     if (altera != null) {
         document.getElementById("nome").disabled = true;
         document.getElementById("Descricao").disabled = true;
         document.getElementById("quantidade").disabled = true;
-        document.getElementById("precoUnitario").disabled = true;
+        document.getElementById("PrecoUnitario").disabled = true;
         document.getElementById("unidadeMedida").disabled = true;
         document.getElementById("linkFoto").disabled = true;
         document.getElementById("fornecedor").disabled = true;
@@ -154,7 +146,7 @@
         document.getElementById("nome").disabled = false;
         document.getElementById("Descricao").disabled = false;
         document.getElementById("quantidade").disabled = false;
-        document.getElementById("precoUnitario").disabled = false;
+        document.getElementById("PrecoUnitario").disabled = false;
         document.getElementById("unidadeMedida").disabled = false;
         document.getElementById("linkFoto").disabled = false;
         document.getElementById("fornecedor").disabled = false;
@@ -163,17 +155,42 @@
     }
 
 
-    $.validator.methods.range = function (value, element, param) {
-        var globalizedValue = value.replace(".", "");
-        globalizedValue = globalizedValue.replace(",", ".");
-        return this.optional(element) ||
-            (globalizedValue >= param[0] &&
-                globalizedValue <= param[1]);
-    };
+    window.onload = function CarregaMascaraValor() {
+        document.getElementById("PrecoUnitario").value = document.getElementById("PrecoUnitario").value.replace(",", ".");
 
-    $.validator.methods.number = function (value, element) {
-        return this.optional(element) ||
-            /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/
-                .test(value);
-    };
+        /* SE nao existir ponto - preencher com .00 */
+        if (document.getElementById("PrecoUnitario").value.indexOf(".") == -1) // nao existe ponto
+        {
+            var resultado = document.getElementById("PrecoUnitario").value + ".00";
+            document.getElementById("PrecoUnitario").value = resultado;
+        }
+
+        else {
+            /* SE existir somente um caracter depois do ponto - preencher com .X0 */
+            var temPonto = document.getElementById("PrecoUnitario").value.substr(-2);
+            if (temPonto.indexOf(".") == 0) {
+                var resultado = document.getElementById("PrecoUnitario").value + "0";
+                document.getElementById("PrecoUnitario").value = resultado;
+            }
+        }
+
+    }
+
+
+    function AtualizaMascaraValor() {
+        var preco = document.getElementById("PrecoUnitario").value.replace(',', '');
+        var preco = preco.replace('.', '');
+        var tam = preco.length - 2;
+        var resultado = preco.substr(0, tam) + "." + preco.substr(-2);
+
+        document.getElementById("PrecoUnitario").value = resultado;
+    }
+
+    function Enviardados() {
+
+        if (document.getElementById("quantidade").value == "") {
+            msg_quantidade.innerHTML = "Campo obrigatório";
+        }
+    }
+
 </script>

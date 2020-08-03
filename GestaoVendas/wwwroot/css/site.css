@@ -139,8 +139,7 @@ body {
     font-size: .9em;
     width: 70px;
     transition: all .5s;
-    cursor: pointer;   
-    
+    cursor: pointer;       
 }
 
 .button-remove {
@@ -150,6 +149,28 @@ body {
     border-radius: 5px;
     font-size: .9em;
     width: 70px;
+    transition: all .5s;
+    cursor: pointer;
+}
+
+.button-sim {
+    background-color: #538bd3;
+    border: 3px solid #538bd3;
+    color: white;
+    border-radius: 5px;
+    font-size: .9em;
+    width: 90px;
+    transition: all .5s;
+    cursor: pointer;
+}
+
+.button-nao {
+    background-color: #9e9c9c;
+    border: 3px solid #9e9c9c;
+    color: white;
+    border-radius: 5px;
+    font-size: .9em;
+    width: 90px;
     transition: all .5s;
     cursor: pointer;
 }
