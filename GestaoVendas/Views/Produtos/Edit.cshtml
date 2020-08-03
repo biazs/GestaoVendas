@@ -177,14 +177,32 @@
     }
 
 
-    function AtualizaMascaraValor() {
-        var preco = document.getElementById("PrecoUnitario").value.replace(',', '');
-        var preco = preco.replace('.', '');
-        var tam = preco.length - 2;
-        var resultado = preco.substr(0, tam) + "." + preco.substr(-2);
+    //function AtualizaMascaraValor() {
 
-        document.getElementById("PrecoUnitario").value = resultado;
-    }
+    //    if (document.getElementById("PrecoUnitario").value.indexOf(".") == -1 && document.getElementById("PrecoUnitario").value.indexOf(",") == -1) // nao existe ponto, nem virgula
+    //    {
+    //        var resultado = document.getElementById("PrecoUnitario").value + ".00";
+    //        document.getElementById("PrecoUnitario").value = resultado;
+    //    }
+
+    //    else {
+
+    //        /* SE existir somente um caracter depois do ponto - preencher com .X0 */
+    //        var temPonto = document.getElementById("PrecoUnitario").value.substr(-2);
+    //        if (temPonto.indexOf(".") == 0) {
+    //            var resultado = document.getElementById("PrecoUnitario").value + "0";
+    //            document.getElementById("PrecoUnitario").value = resultado;
+    //        }
+    //        else {
+    //            var preco = document.getElementById("PrecoUnitario").value.replace(',', '');
+    //            var preco = preco.replace('.', '');
+    //            var tam = preco.length - 2;
+    //            var resultado = preco.substr(0, tam) + "." + preco.substr(-2);
+
+    //            document.getElementById("PrecoUnitario").value = resultado;
+    //        }
+    //    }
+    //}
 
     function Enviardados() {
 

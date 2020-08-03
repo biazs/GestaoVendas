@@ -24,7 +24,7 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label asp-for="PrecoUnitario" class="control-label"></label>
-                    (0000.00)<input asp-for="PrecoUnitario" class="form-control" id="PrecoUnitario" onblur="MascaraValor();" />
+                    (0000.00)<input asp-for="PrecoUnitario" class="form-control" id="PrecoUnitario" onblur="AtualizaMascaraValor();" />
                     <span asp-validation-for="PrecoUnitario" class="text-danger"></span>
                 </div>
                 <div class="form-group col-md-6">
@@ -78,31 +78,31 @@
         }
     }
 
-    function MascaraValor() {
+    //function AtualizaMascaraValor() {
 
-        if (document.getElementById("PrecoUnitario").value.indexOf(".") == -1 && document.getElementById("PrecoUnitario").value.indexOf(",") == -1) // nao existe ponto, nem virgula
-        {
-            var resultado = document.getElementById("PrecoUnitario").value + ".00";
-            document.getElementById("PrecoUnitario").value = resultado;
-        }
+    //    if (document.getElementById("PrecoUnitario").value.indexOf(".") == -1 && document.getElementById("PrecoUnitario").value.indexOf(",") == -1) // nao existe ponto, nem virgula
+    //    {
+    //        var resultado = document.getElementById("PrecoUnitario").value + ".00";
+    //        document.getElementById("PrecoUnitario").value = resultado;
+    //    }
 
-        else {
+    //    else {
 
-            /* SE existir somente um caracter depois do ponto - preencher com .X0 */
-            var temPonto = document.getElementById("PrecoUnitario").value.substr(-2);
-            if (temPonto.indexOf(".") == 0) {
-                var resultado = document.getElementById("PrecoUnitario").value + "0";
-                document.getElementById("PrecoUnitario").value = resultado;
-            }
-            else {
-                var preco = document.getElementById("PrecoUnitario").value.replace(',', '');
-                var preco = preco.replace('.', '');
-                var tam = preco.length - 2;
-                var resultado = preco.substr(0, tam) + "." + preco.substr(-2);
+    //        /* SE existir somente um caracter depois do ponto - preencher com .X0 */
+    //        var temPonto = document.getElementById("PrecoUnitario").value.substr(-2);
+    //        if (temPonto.indexOf(".") == 0) {
+    //            var resultado = document.getElementById("PrecoUnitario").value + "0";
+    //            document.getElementById("PrecoUnitario").value = resultado;
+    //        }
+    //        else {
+    //            var preco = document.getElementById("PrecoUnitario").value.replace(',', '');
+    //            var preco = preco.replace('.', '');
+    //            var tam = preco.length - 2;
+    //            var resultado = preco.substr(0, tam) + "." + preco.substr(-2);
 
-                document.getElementById("PrecoUnitario").value = resultado;
-            }
-        }
-    }
+    //            document.getElementById("PrecoUnitario").value = resultado;
+    //        }
+    //    }
+    //}
 
 </script>
