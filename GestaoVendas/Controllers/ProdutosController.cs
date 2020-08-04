@@ -127,15 +127,6 @@ namespace GestaoVendas.Controllers
         }
 
 
-        private double MascaraValor(double precoUnitario)
-        {
-            //Inserir ponto em PrecoUnitario
-            var tam = precoUnitario.ToString().Count() - 2;
-            var preco = precoUnitario.ToString().Insert(tam, ",");
-            return Convert.ToDouble(preco); //float.Parse(preco, CultureInfo.InvariantCulture);
-        }
-
-
         // POST: Produtos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -145,8 +136,6 @@ namespace GestaoVendas.Controllers
         {
             if (ModelState.IsValid)
             {
-                produto.PrecoUnitario = MascaraValor(produto.PrecoUnitario);
-
                 //Verificar se produto já existe
                 if (ProdutoExists(produto.Nome))
                 {
@@ -241,8 +230,6 @@ namespace GestaoVendas.Controllers
             {
                 try
                 {
-                    produto.PrecoUnitario = MascaraValor(produto.PrecoUnitario);
-
                     _context.Update(produto);
 
                     //recuperar id do estoque
