@@ -132,7 +132,7 @@ namespace GestaoVendas.Controllers
             //Inserir ponto em PrecoUnitario
             var tam = precoUnitario.ToString().Count() - 2;
             var preco = precoUnitario.ToString().Insert(tam, ",");
-            return Convert.ToDouble(preco);
+            return Convert.ToDouble(preco); //float.Parse(preco, CultureInfo.InvariantCulture);
         }
 
 
