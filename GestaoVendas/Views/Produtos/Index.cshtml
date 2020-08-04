@@ -6,13 +6,16 @@
 
 <h1>Produtos</h1>
 
-
-@if (ViewBag.TemAcessoCadastrar == true)
-{
+<div class="row">
     <p>
-        <a asp-action="Create"><img src="../img/novo.png" alt="Cadastrar novo produto" title="Cadastrar novo produto" /></a>
+        @if (ViewBag.TemAcessoCadastrar == true)
+        {
+            <a asp-action="Create" class="btn btn-outline-success"><img src="../img/novo.png" alt="Cadastrar novo produto" title="Cadastrar novo produto" width="40" height="40" />Cadastrar novo</a>
+        }
+        <a href="../Clientes/VisualizarComoPDF/" class="btn btn-outline-danger" target="_blank"><img src="../img/pdf.png" title="Gerar PDF" alt="Gerar PDF" width="40" height="40" />Gerar PDF</a>
     </p>
-}
+</div>
+
 
 <table class="table" id="table">
     <thead>
@@ -67,7 +70,6 @@
                         <a asp-action="Delete" asp-route-id="@item.Id" class="btn button-remove">Remover</a>
                     }
 
-                    <a href="../Produtos/VisualizarComoPDF/" target="_blank" class="btn"><img src="../img/pdf.png" title="Gerar PDF" alt="Gerar PDF" width="40" height="40" /></a>
                 </td>
             </tr>
         }

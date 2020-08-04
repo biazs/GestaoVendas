@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using GestaoVendas.Libraries.Mensagem;
 
 namespace GestaoVendas.Models
 {
@@ -9,19 +10,20 @@ namespace GestaoVendas.Models
     {
         [Key]
         [Display(Name = "Código")]
-        [Required(ErrorMessage = "Campo obrigatório")]
+        [Required(ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "MSG_E001")]
         public int Id { get; set; }
 
         [Display(Name = "Nome")]
-        [Required(ErrorMessage = "Campo obrigatório")]
+        [Required(ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "MSG_E001")]
         public string Nome { get; set; }
 
         [Display(Name = "CPF")]
-        [Required(ErrorMessage = "Campo obrigatório")]
+        [Required(ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "MSG_E001")]
         public string Cpf { get; set; }
 
         [Display(Name = "E-mail")]
-        [Required(ErrorMessage = "Campo obrigatório")]
+        [Required(ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "MSG_E001")]
+        [EmailAddress(ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "MSG_E004")]
         public string Email { get; set; }
 
         public virtual ICollection<Venda> Vendas { get; set; }

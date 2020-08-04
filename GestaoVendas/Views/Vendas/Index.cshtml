@@ -7,9 +7,12 @@
 <h1>Vendas</h1>
 
 <br />
-<p>
-    <a asp-action="Create" class="btn btn-block button-save">Registrar Venda</a>
-</p>
+<div class="row">
+    <p>
+        <a asp-action="Create" class="btn button-save">Registrar Venda</a>
+        <a href="../Clientes/VisualizarComoPDF/" class="btn btn-outline-danger" target="_blank"><img src="../img/pdf.png" title="Gerar PDF" alt="Gerar PDF" width="40" height="40" />Gerar PDF</a>
+    </p>
+</div>
 <br />
 <table class="table table-bordered">
     <thead>
@@ -57,8 +60,6 @@
                     {
                         <a asp-action="Delete" asp-route-id="@item.Id" class="btn button-remove">Cancelar</a>
                     }
-
-                    <a href="../Vendas/VisualizarComoPDF/" target="_blank" class="btn"><img src="../img/pdf.png" title="Gerar PDF" alt="Gerar PDF" width="40" height="40" /></a>
 
                 </td>
             </tr>

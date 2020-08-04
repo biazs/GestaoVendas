@@ -9,9 +9,12 @@
 {
     <p class="alert alert-success">@TempData["MSG_S"]</p>
 }
-<p>
-    <a asp-action="Create"><img src="../img/novo.png" alt="Cadastrar novo cliente" title="Cadastrar novo cliente" /></a>
-</p>
+<div class="row">
+    <p>
+        <a asp-action="Create" class="btn btn-outline-success"><img src="../img/novo.png" alt="Cadastrar novo cliente" title="Cadastrar novo cliente" width="40" height="40" />Cadastrar novo</a>
+        <a href="../Clientes/VisualizarComoPDF/" class="btn btn-outline-danger" target="_blank"><img src="../img/pdf.png" title="Gerar PDF" alt="Gerar PDF" width="40" height="40" />Gerar PDF</a>
+    </p>
+</div>
 <table class="table">
     <thead>
         <tr>
@@ -44,7 +47,6 @@
                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn button-altera">Alterar</a>
                     <a asp-action="Details" asp-route-id="@item.Id" class="btn button-detalhe">Detalhes</a>
                     <a asp-action="Delete" asp-route-id="@item.Id" class="btn button-remove">Remover</a>
-                    <a href="../Clientes/VisualizarComoPDF/" target="_blank" class="btn"><img src="../img/pdf.png" title="Gerar PDF" alt="Gerar PDF" width="40" height="40" /></a>
                 </td>
             </tr>
         }
