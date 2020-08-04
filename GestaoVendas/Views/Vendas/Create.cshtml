@@ -119,7 +119,7 @@
     function AdicionarProduto() {
 
         var DescricaoPreco = CodigoProduto.options[CodigoProduto.selectedIndex].text;
-        var arrayDescricaoPreco = DescricaoPreco.split('|');
+        var arrayDescricaoPreco = DescricaoPreco.split('| R$');
         var total = (arrayDescricaoPreco[1].replace(",", ".") * QtdeProduto.value);
         total = Math.round(total * 100) / 100;
 
