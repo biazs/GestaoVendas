@@ -174,3 +174,26 @@ body {
     transition: all .5s;
     cursor: pointer;
 }
+.button-novo {
+    background-color: #56cfad;
+    border: 3px solid #56cfad;
+    color: white;
+    border-radius: 5px;
+    font-size: .9em;
+    width: 170px;
+    height: 50px;
+    transition: all .5s;
+    cursor: pointer;
+}
+
+.button-pdf {
+    background-color: #f37d7d;
+    border: 3px solid #f37d7d;
+    color: white;
+    border-radius: 5px;
+    font-size: .9em;
+    width: 170px;
+    height: 50px;
+    transition: all .5s;
+    cursor: pointer;
+}

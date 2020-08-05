@@ -5,7 +5,9 @@
 }
 
 <h1>Vendedores</h1>
-
+<p>
+    <a href="../Fornecedores/VisualizarComoPDF/" class="btn button-pdf" target="_blank"><img src="../img/pdf.png" title="Gerar PDF" alt="Gerar PDF" width="35" height="35" />Gerar PDF</a>
+</p>
 <table class="table">
     <thead>
         <tr>
@@ -32,7 +34,6 @@
                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn button-altera">Alterar</a>
                     <a asp-action="Details" asp-route-id="@item.Id" class="btn button-detalhe">Detalhes</a>
                     <a asp-action="Delete" asp-route-id="@item.Id" class="btn button-remove">Remover</a>
-                    <a href="../Fornecedores/VisualizarComoPDF/" target="_blank" class="btn"><img src="../img/pdf.png" title="Gerar PDF" alt="Gerar PDF" width="40" height="40" /></a>
                 </td>
             </tr>
         }
