@@ -5,7 +5,7 @@
     <meta name="description" content="Gestão de Vendas">
     <meta name="author" content="Fabiana Zoroastro de Souza">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Gestão Vendas</title>
+    <title>@ViewData["Title"] - Gestão de Vendas</title>
     <link rel="stylesheet" href="~/lib/bootstrap-4.2.1-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap-ecommerce-uikit/css/ui.css" />
@@ -16,7 +16,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Gestão Vendas</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="../img/logo.png" title="Página inicial" alt="Gestão de Vendas"  width="90" height="77" /></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -24,7 +24,7 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
-                        @if (User.Identity.IsAuthenticated)
+                        @*@if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Clientes" asp-action="Index">Cliente</a>
@@ -44,7 +44,7 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Configuracao" asp-action="Index">Configuracao</a>
                             </li>
-                        }
+                        }*@
 
                     </ul>
                 </div>
