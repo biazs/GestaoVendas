@@ -2,49 +2,49 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
-<ul class="navbar-nav">
+<ul class="navbar-nav menu_ul">
     @if (SignInManager.IsSignedIn(User))
     {
 
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Clientes" asp-action="Index">Cliente</a>
+        <li class="menu_li">
+            <a class="btn menu_a" asp-area="" asp-controller="Clientes" asp-action="Index">Cliente</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Vendedores" asp-action="Index">Vendedor</a>
+        <li class="menu_li">
+            <a class="btn menu_a" asp-area="" asp-controller="Vendedores" asp-action="Index">Vendedor</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Fornecedores" asp-action="Index">Fornecedor</a>
+        <li class="nav-item menu_li">
+            <a class="btn menu_a" asp-area="" asp-controller="Fornecedores" asp-action="Index">Fornecedor</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Produtos" asp-action="Index">Produto</a>
+        <li class="nav-item menu_li">
+            <a class="btn menu_a" asp-area="" asp-controller="Produtos" asp-action="Index">Produto</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Vendas" asp-action="Index">Venda</a>
+        <li class="nav-item menu_li">
+            <a class="btn menu_a" asp-area="" asp-controller="Vendas" asp-action="Index">Venda</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Configuracao" asp-action="Index">Relatório</a>
+        <li class="nav-item menu_li">
+            <a class="btn menu_a" asp-area="" asp-controller="Relatorio" asp-action="Index">Relatório</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Configuracao" asp-action="Index">Configuracao</a>
+        <li class="nav-item menu_li">
+            <a class="btn menu_a" asp-area="" asp-controller="Configuracao" asp-action="Index">Configuracao</a>
         </li>
 
 
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Olá @User.Identity.Name!</a>
+            <a class="nav-link text-info" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Olá @User.Identity.Name!</a>
         </li>
         <li class="nav-item">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button type="submit" class="nav-link btn btn-link text-dark">Sair</button>
+                <button type="submit" class="nav-link btn btn-link text-info">Sair</button>
             </form>
         </li>
     }
     else
     {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Registrar</a>
+        <li class="nav-item menu_li">
+            <a class="btn menu_a" asp-area="Identity" asp-page="/Account/Register">Registrar</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        <li class="nav-item menu_li">
+            <a class="btn menu_a" asp-area="Identity" asp-page="/Account/Login">Login</a>
         </li>
     }
 </ul>
