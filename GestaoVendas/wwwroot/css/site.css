@@ -199,6 +199,15 @@ body {
 }
 
 
+.item-menu {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 14px;
+    font-weight: bold;
+    color: rgb(90, 88, 88);
+}
+
+
 
 .menu_ul {
     text-align: left;
@@ -206,14 +215,14 @@ body {
 }
 
 .menu_li {
-    display: inline-block;    
+    display: inline-block;
     list-style: 'none';
     margin-left: 8px;
     /*border: 1px solid rgba(0,0,0, 0.3);*/
 }
 
 .menu_a {
-    background: rgba(72,190,202);
+    background: rgb(72,190,202);
     display: block;
     padding: 10px;
     color: white;
@@ -224,5 +233,6 @@ body {
 }
 
     .menu_a:hover {
-        background: rgb(44, 125, 134, 0.5);
+        background: rgba(44, 125, 134, 0.5);
     }
+

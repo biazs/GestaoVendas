@@ -1,12 +1,12 @@
 ﻿@{
-    if (ViewData.TryGetValue("ParentLayout", out var parentLayout))
-    {
-        Layout = (string)parentLayout;
-    }
-    else
-    {
-        Layout = "/Views/Shared/_Layout.cshtml";
-    }
+    //if (ViewData.TryGetValue("ParentLayout", out var parentLayout))
+    //{
+    //    Layout = (string)parentLayout;
+    //}
+    //else
+    //{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    @*}*@
 }
 
 <h2>Gerencie sua conta</h2>
