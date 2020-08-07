@@ -122,8 +122,6 @@ namespace GestaoVendas.Controllers
         }
 
 
-
-
         // POST: Vendas/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -136,6 +134,11 @@ namespace GestaoVendas.Controllers
                 try
                 {
                     venda.Data = DateTime.Now;
+
+                    var tam = venda.Total.ToString().Count() - 2;
+                    var total = venda.Total.ToString().Insert(tam, ".");
+
+                    venda.Total = Convert.ToDouble(total);
 
                     //inserir na tabela venda
                     _context.Add(venda);
