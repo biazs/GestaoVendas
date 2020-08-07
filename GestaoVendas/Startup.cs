@@ -35,9 +35,13 @@ namespace GestaoVendas
             services.AddDbContext<GestaoVendasContext>(options =>
                  options.UseSqlServer(connectionString));
 
-
-
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<IdentityUser>(options =>
+                {
+                    options.SignIn.RequireConfirmedAccount = false;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                })
                 .AddEntityFrameworkStores<GestaoVendasContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();

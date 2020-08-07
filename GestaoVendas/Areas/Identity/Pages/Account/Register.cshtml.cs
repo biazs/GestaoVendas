@@ -52,6 +52,7 @@ namespace GestaoVendas.Areas.Identity.Pages.Account
             [Required(ErrorMessage = "Campo Senha obrigatório.")]
             [StringLength(100, ErrorMessage = "O {0} deve ter no mínimo {2} e no máximo {1} caracteres.", MinimumLength = 6)]
             [DataType(DataType.Password)]
+            //[RegularExpression(@"^(?=.*[a-z])$", ErrorMessage = "Dever ter pelo menos: 1 letra minúscula, 1 letra maiúscula e 1 caracter especial.")]
             [Display(Name = "Senha")]
             public string Password { get; set; }
 

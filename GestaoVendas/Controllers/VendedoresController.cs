@@ -2,13 +2,15 @@
 using System.Threading.Tasks;
 using GestaoVendas.Data;
 using GestaoVendas.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Rotativa.AspNetCore;
 
 namespace GestaoVendas.Controllers
 {
-    public class VendedoresController : Controller
+    [Authorize]
+    public class VendedoresController : BaseController
     {
         private readonly GestaoVendasContext _context;
 
@@ -20,6 +22,12 @@ namespace GestaoVendas.Controllers
         // GET: Vendedores
         public async Task<IActionResult> Index()
         {
+            var temAcesso = await UsuarioTemAcesso("Vendedores", _context);
+
+            if (!temAcesso)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View(await _context.Vendedor.ToListAsync());
         }
 

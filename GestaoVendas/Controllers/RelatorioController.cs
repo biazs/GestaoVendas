@@ -2,16 +2,19 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using GestaoVendas.Data;
 using GestaoVendas.Libraries.Mensagem;
 using GestaoVendas.Models;
 using GestaoVendas.Models.Dao;
 using GestaoVendas.Models.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GestaoVendas.Controllers
 {
+    [Authorize]
     public class RelatorioController : BaseController
     {
         private readonly DaoVenda _daoVenda;
@@ -24,10 +27,18 @@ namespace GestaoVendas.Controllers
             _relatorio = relatorio;
             _context = context;
         }
-        public IActionResult Index()
+
+        public async Task<IActionResult> Index()
         {
+            var temAcesso = await UsuarioTemAcesso("Relatorios", _context);
+
+            if (!temAcesso)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
+
 
         [HttpGet]
         public IActionResult Vendas()
