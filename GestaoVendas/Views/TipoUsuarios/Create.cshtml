@@ -14,8 +14,9 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group col-md-4">
                 <label asp-for="NomeTipoUsuario" class="control-label"></label>
-                <input asp-for="NomeTipoUsuario" class="form-control" />
+                <input asp-for="NomeTipoUsuario" class="form-control" required id="tipoUsuario" />
                 <span asp-validation-for="NomeTipoUsuario" class="text-danger"></span>
+                <span class="text-danger" id="msg"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Cadastrar" class="btn btn-block button-save" />
