@@ -181,7 +181,14 @@ namespace GestaoVendas.Controllers
                     return RedirectToAction(nameof(Error), new { message = "Erro ao registar venda. Tente novamente mais tarde. \n\n" + e.Message });
                 }
             }
-
+            else if (venda.ListaProdutos == null)
+            {
+                TempData["MSG"] = "Lista de produtos vazia. Adicione algum item para registrar a venda.";
+                ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Nome", venda.ClienteId);
+                ViewData["VendedorId"] = new SelectList(_context.Vendedor, "Id", "Email", venda.VendedorId);
+                CarregarDados();
+                return View();
+            }
             ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Nome", venda.ClienteId);
             ViewData["VendedorId"] = new SelectList(_context.Vendedor, "Id", "Email", venda.VendedorId);
             CarregarDados();

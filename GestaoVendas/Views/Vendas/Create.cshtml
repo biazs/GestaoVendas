@@ -5,7 +5,6 @@
 }
 
 <h1>Registrar Venda</h1>
-
 <hr />
 <div class="row">
     <div class="col-md-12">
@@ -63,10 +62,18 @@
                 </div>
             </div>
             <br />
+            @if (TempData["MSG"] != null)
+            {
+                <div>
+                    <p class="alert alert-danger">
+                        @TempData["MSG"]
+                    </p>
+                </div>
+            }
 
             <p style="color:darkred;" id="ProdutoRepetido"></p>
 
-
+            <span class="text-danger" id="msg"></span>
             <table class="table table-bordered js-tabela">
                 <thead>
                     <tr>
