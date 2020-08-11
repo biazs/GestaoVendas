@@ -75,10 +75,19 @@ body {
     line-height: 1.7;
 }
 
+.login {
+    width: 100vw;
+    height: 60vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
 
-.img-login {
-    background-image: url('../../img/bg.jpg');
-    background-repeat: no-repeat;
+.box {
+    height: 300px;
+    width: 385px;
+    margin: 30px auto;
 }
 
 .footer {
@@ -99,6 +108,13 @@ body {
     font-size: .9em;
        
     width: auto;
+    transition: all .5s;
+    cursor: pointer;
+}
+
+.button-login {
+    background-color: #538bd3;
+    color: white;
     transition: all .5s;
     cursor: pointer;
 }
@@ -203,6 +219,15 @@ body {
     height: 50px;
     transition: all .5s;
     cursor: pointer;
+}
+
+
+.item-login {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 16px;
+    font-weight: bold;
+    color: rgb(90, 88, 88);
 }
 
 

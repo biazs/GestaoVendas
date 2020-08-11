@@ -2,27 +2,25 @@
 @model LoginModel
 
 @{
-    ViewData["Title"] = "Sistema Gestão de Vendas";
+    ViewData["Title"] = "Acesse o sistema";
 }
 
-<h1>@ViewData["Title"]</h1>
-<div class="login-form">
-    <div class="col-md-4">
+<h1 class="center item-login">@ViewData["Title"]</h1>
+<div class="login-form login-area">
+    <div class="col-md-12 ">
         <section>
             <form id="account" method="post">
-                <hr />
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Input.Email">E-mail</label>
-                    <input asp-for="Input.Email" class="form-control" />
+                <hr class="center col-md-4" />
+                <div asp-validation-summary="All" class="text-danger center col-md-4"></div>
+                <div class="form-group center col-md-4">
+                    <input asp-for="Input.Email" class="form-control" placeholder="E-mail" />
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Input.Password">Senha</label>
-                    <input asp-for="Input.Password" class="form-control" />
+                <div class="form-group center col-md-4">
+                    <input asp-for="Input.Password" class="form-control" placeholder="Senha" />
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
-                <div class="form-group">
+                <div class="form-group center">
                     <div class="checkbox">
                         <label asp-for="Input.RememberMe">
                             <input asp-for="Input.RememberMe" />
@@ -30,10 +28,10 @@
                         </label>
                     </div>
                 </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-block button-list">Entrar</button>
+                <div class="form-group center col-md-4">
+                    <button type="submit" class="btn btn-block button-login">Entrar</button>
                 </div>
-                <div class="form-group">
+                <div class="form-group center">
                     <p>
                         <a id="forgot-password" asp-page="./ForgotPassword">Esqueceu sua senha?</a>
                     </p>
