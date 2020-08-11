@@ -57,6 +57,9 @@
     </dl>
 </div>
 <div class="col-sm-12">
-    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-block button-save">Alterar</a>
+    @if (ViewBag.TemAcessoEditar == true)
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-block button-save">Alterar</a>
+    }
     <a asp-action="Index" class="btn btn-block button-list">Listagem de Produtos</a>
 </div>

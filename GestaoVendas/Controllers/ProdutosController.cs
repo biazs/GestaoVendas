@@ -97,6 +97,11 @@ namespace GestaoVendas.Controllers
                 return NotFound();
             }
 
+            if (TemAcesso("Editar produto").Result.Equals(false))
+                ViewBag.TemAcessoEditar = false;
+            else
+                ViewBag.TemAcessoEditar = true;
+
             var produto = await _context.Produto
                 .Include(p => p.Fornecedor)
                 .FirstOrDefaultAsync(m => m.Id == id);
