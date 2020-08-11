@@ -6,17 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Areas\Identity\img\logo.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Areas\Identity\img\logo.png">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="jQuery.InputMask" Version="5.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.5" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.5" />

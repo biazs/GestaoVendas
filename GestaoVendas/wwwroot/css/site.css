@@ -74,6 +74,13 @@ body {
     color: rgb(54, 54, 54);
     line-height: 1.7;
 }
+
+
+.img-login {
+    background-image: url('../../img/bg.jpg');
+    background-repeat: no-repeat;
+}
+
 .footer {
   position: absolute;
   bottom: 0;

@@ -4,49 +4,70 @@
 
 <br />
 <div class="row">
-    <div class="col-lg-3 card">
-        <div class="row center">
-            <a href="../Clientes/Index"><img src="~/img/clientes.png" width="150" height="150" /></a>
+    @if (ViewBag.TemAcessoClientes == true)
+    {
+        <div class="col-lg-3 card">
+            <div class="row center">
+                <a href="../Clientes/Index"><img src="~/img/clientes.png" width="150" height="150" /></a>
+            </div>
+            <span class="item-menu">Clientes</span>
         </div>
-        <span class="item-menu">Clientes</span>
-    </div>
-    <div class="col-lg-3 card">
-        <div class="row center">
-            <a href="../Vendedores/Index"><img src="~/img/vendedores.png" width="150" height="150" /></a>
+    }
+    @if (ViewBag.TemAcessoVendedores == true)
+    {
+        <div class="col-lg-3 card">
+            <div class="row center">
+                <a href="../Vendedores/Index"><img src="~/img/vendedores.png" width="150" height="150" /></a>
+            </div>
+            <span class="item-menu">Vendedores</span>
         </div>
-        <span class="item-menu">Vendedores</span>
-    </div>
-    <div class="col-lg-3 card">
-        <div class="row center">
-            <a href="../Produtos/Index"><img src="~/img/produtos.png" width="150" height="150" /></a>
+    }
+    @if (ViewBag.TemAcessoProdutos == true)
+    {
+        <div class="col-lg-3 card">
+            <div class="row center">
+                <a href="../Produtos/Index"><img src="~/img/produtos.png" width="150" height="150" /></a>
+            </div>
+            <span class="item-menu">Produtos</span>
         </div>
-        <span class="item-menu">Produtos</span>
-    </div>
-    <div class="col-lg-3 card">
-        <div class="row center">
-            <a href="../Fornecedores/Index"><img src="~/img/fornecedores.png" width="150" height="150" /></a>
+    }
+    @if (ViewBag.TemAcessoFornecedores == true)
+    {
+        <div class="col-lg-3 card">
+            <div class="row center">
+                <a href="../Fornecedores/Index"><img src="~/img/fornecedores.png" width="150" height="150" /></a>
+            </div>
+            <span class="item-menu">Fornecedores</span>
         </div>
-        <span class="item-menu">Fornecedores</span>
-    </div>
+    }
 </div>
 <br />
 <div class="row">
-    <div class="col-lg-3 card">
-        <div class="row center">
-            <a href="../Vendas/Index"><img src="~/img/vendas.png" width="150" height="150" /></a>
+    @if (ViewBag.TemAcessoVendas == true)
+    {
+        <div class="col-lg-3 card">
+            <div class="row center">
+                <a href="../Vendas/Index"><img src="~/img/vendas.png" width="150" height="150" /></a>
+            </div>
+            <span class="item-menu">Registro de Vendas</span>
         </div>
-        <span class="item-menu">Registro de Vendas</span>
-    </div>
-    <div class="col-lg-3 card">
-        <div class="row center">
-            <a href="../Relatorio/Index"><img src="~/img/relatorios.png" width="150" height="150" /></a>
+    }
+    @if (ViewBag.TemAcessoRelatorios == true)
+    {
+        <div class="col-lg-3 card">
+            <div class="row center">
+                <a href="../Relatorio/Index"><img src="~/img/relatorios.png" width="150" height="150" /></a>
+            </div>
+            <span class="item-menu">Relatórios</span>
         </div>
-        <span class="item-menu">Relatórios</span>
-    </div>
-    <div class="col-lg-3 card">
-        <div class="row center">
-            <a href="../Configuracao/Index"><img src="~/img/configuracoes.png" width="150" height="150" /></a>
+    }
+    @if (ViewBag.TemAcessoConfiguracao == true)
+    {
+        <div class="col-lg-3 card">
+            <div class="row center">
+                <a href="../Configuracao/Index"><img src="~/img/configuracoes.png" width="150" height="150" /></a>
+            </div>
+            <span class="item-menu">Configurações do sistema</span>
         </div>
-        <span class="item-menu">Configurações do sistema</span>
-    </div>
+    }
 </div>
