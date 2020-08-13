@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using GestaoVendas.Data;
+using GestaoVendas.Libraries.Mensagem;
 using GestaoVendas.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -73,6 +74,7 @@ namespace GestaoVendas.Controllers
                 }
 
                 await _context.SaveChangesAsync();
+                TempData["MSG_S"] = Mensagem.MSG_S001;
                 return RedirectToAction(nameof(Index));
             }
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Email", perfilUsuario.UserId);
@@ -116,6 +118,7 @@ namespace GestaoVendas.Controllers
                 {
                     _context.Update(perfilUsuario);
                     await _context.SaveChangesAsync();
+                    TempData["MSG_S"] = Mensagem.MSG_S001;
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -176,6 +179,7 @@ namespace GestaoVendas.Controllers
             }
 
             await _context.SaveChangesAsync();
+            TempData["MSG_S"] = Mensagem.MSG_S002;
             return RedirectToAction(nameof(Index));
         }
 

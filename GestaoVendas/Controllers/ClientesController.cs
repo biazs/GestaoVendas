@@ -128,6 +128,7 @@ namespace GestaoVendas.Controllers
                 {
                     _context.Update(cliente);
                     await _context.SaveChangesAsync();
+                    TempData["MSG_S"] = Mensagem.MSG_S001;
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -171,6 +172,7 @@ namespace GestaoVendas.Controllers
             var cliente = await _context.Cliente.FindAsync(id);
             _context.Cliente.Remove(cliente);
             await _context.SaveChangesAsync();
+            TempData["MSG_S"] = Mensagem.MSG_S002;
             return RedirectToAction(nameof(Index));
         }
 

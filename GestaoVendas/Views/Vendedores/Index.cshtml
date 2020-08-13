@@ -5,8 +5,19 @@
 }
 
 <h1 class="titulo text-info">Vendedores</h1>
+@if (TempData["MSG_S"] != null)
+{
+    if (@TempData["MSG_S"].ToString() == GestaoVendas.Libraries.Mensagem.Mensagem.MSG_S001.ToString())
+    {
+        <p class="alert alert-success">@TempData["MSG_S"]</p>
+    }
+    else if (@TempData["MSG_S"].ToString() == GestaoVendas.Libraries.Mensagem.Mensagem.MSG_S002.ToString())
+    {
+        <p class="alert alert-danger">@TempData["MSG_S"]</p>
+    }
+}
 <p>
-    <a href="../Fornecedores/VisualizarComoPDF/" class="btn button-pdf" target="_blank"><img src="../img/pdf.png" title="Gerar PDF" alt="Gerar PDF" width="35" height="35" />Gerar PDF</a>
+    <a href="../Vendedores/VisualizarComoPDF/" class="btn button-pdf" target="_blank"><img src="../img/pdf.png" title="Gerar PDF" alt="Gerar PDF" width="35" height="35" />Gerar PDF</a>
 </p>
 <table class="table">
     <thead>

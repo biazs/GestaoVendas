@@ -168,6 +168,7 @@ namespace GestaoVendas.Controllers
                 _context.ProdutoEstoque.Add(produto_estoque);
 
                 await _context.SaveChangesAsync();
+                TempData["MSG_S"] = Mensagem.MSG_S001;
 
                 return RedirectToAction(nameof(Index));
             }
@@ -245,6 +246,7 @@ namespace GestaoVendas.Controllers
                     estoque.Quantidade = quantidade;
 
                     await _context.SaveChangesAsync();
+                    TempData["MSG_S"] = Mensagem.MSG_S001;
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -302,6 +304,7 @@ namespace GestaoVendas.Controllers
             var produto = await _context.Produto.FindAsync(id);
             _context.Produto.Remove(produto);
             await _context.SaveChangesAsync();
+            TempData["MSG_S"] = Mensagem.MSG_S002;
             return RedirectToAction(nameof(Index));
         }
 

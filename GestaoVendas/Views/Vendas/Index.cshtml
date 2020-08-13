@@ -5,11 +5,22 @@
 }
 
 <h1 class="titulo text-info">Vendas</h1>
+@if (TempData["MSG_S"] != null)
+{
+    if (@TempData["MSG_S"].ToString() == GestaoVendas.Libraries.Mensagem.Mensagem.MSG_S001.ToString())
+    {
+        <p class="alert alert-success">@TempData["MSG_S"]</p>
+    }
+    else if (@TempData["MSG_S"].ToString() == GestaoVendas.Libraries.Mensagem.Mensagem.MSG_S002.ToString())
+    {
+        <p class="alert alert-danger">@TempData["MSG_S"]</p>
+    }
+}
 
 <div class="row">
     <p>
         <a asp-action="Create" class="btn button-novo"><img src="../img/novo.png" alt="Cadastrar novo cliente" title="Cadastrar novo cliente" width="34" height="34" />Registrar Venda</a>
-        <a href="../Clientes/VisualizarComoPDF/" class="btn button-pdf" target="_blank"><img src="../img/pdf.png" title="Gerar PDF" alt="Gerar PDF" width="40" height="40" />Gerar PDF</a>
+        <a href="../Vendas/VisualizarComoPDF/" class="btn button-pdf" target="_blank"><img src="../img/pdf.png" title="Gerar PDF" alt="Gerar PDF" width="40" height="40" />Gerar PDF</a>
     </p>
 </div>
 <table class="table table-bordered">

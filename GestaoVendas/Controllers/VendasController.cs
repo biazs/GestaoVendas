@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using GestaoVendas.Data;
+using GestaoVendas.Libraries.Mensagem;
 using GestaoVendas.Models;
 using GestaoVendas.Models.Dao;
 using Microsoft.AspNetCore.Authorization;
@@ -175,6 +176,9 @@ namespace GestaoVendas.Controllers
 
                         await _context.SaveChangesAsync();
                     }
+
+                    TempData["MSG_S"] = Mensagem.MSG_S001;
+
                 }
                 catch (Exception e)
                 {
@@ -248,6 +252,7 @@ namespace GestaoVendas.Controllers
             }
 
             await _context.SaveChangesAsync();
+            TempData["MSG_S"] = Mensagem.MSG_S002;
             return RedirectToAction(nameof(Index));
         }
 

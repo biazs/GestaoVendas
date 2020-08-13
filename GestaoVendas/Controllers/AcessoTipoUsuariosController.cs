@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using GestaoVendas.Data;
+using GestaoVendas.Libraries.Mensagem;
 using GestaoVendas.Models;
 using GestaoVendas.Models.Dao;
 using Microsoft.AspNetCore.Mvc;
@@ -81,6 +82,7 @@ namespace GestaoVendas.Controllers
             {
                 _context.Add(acessoTipoUsuario);
                 await _context.SaveChangesAsync();
+                TempData["MSG_S"] = Mensagem.MSG_S001;
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdTipoUsuario"] = new SelectList(_context.TipoUsuario, "Id", "NomeTipoUsuario", acessoTipoUsuario.IdTipoUsuario);
@@ -123,6 +125,7 @@ namespace GestaoVendas.Controllers
                 try
                 {
                     _context.Update(acessoTipoUsuario);
+                    TempData["MSG_S"] = Mensagem.MSG_S001;
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -170,6 +173,7 @@ namespace GestaoVendas.Controllers
             var acessoTipoUsuario = await _context.AcessoTipoUsuario.FindAsync(id);
             _context.AcessoTipoUsuario.Remove(acessoTipoUsuario);
             await _context.SaveChangesAsync();
+            TempData["MSG_S"] = Mensagem.MSG_S002;
             return RedirectToAction(nameof(Index));
         }
 
