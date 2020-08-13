@@ -80,7 +80,6 @@ namespace GestaoVendas.Controllers
                 {
                     return NotFound();
                 }
-
                 return View(venda);
             }
             catch (Exception e)
@@ -277,9 +276,7 @@ namespace GestaoVendas.Controllers
 
         private void CarregaLista()
         {
-            //ViewBag.ListaVendas = _context.Venda.ToList();
-
-            List<Venda> listaVendas = _context.Venda.ToList();
+            List<Venda> listaVendas = _context.Venda.OrderByDescending(v => v.Data).ToList();
 
             List<VendaPdf> lista = new List<VendaPdf>();
             VendaPdf item;

@@ -52,7 +52,7 @@
                     @Html.DisplayFor(modelItem => item.Id)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Data)
+                    @Html.TextBoxFor(modelItem => item.Data, "{0:dd/MM/yyyy hh:mm}", new { @class = "my-style", @readonly = true })
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Vendedor.Nome)

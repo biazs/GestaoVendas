@@ -212,7 +212,7 @@
                             {
                                 <tr>
                                     <td>@item.Id</td>
-                                    <td>@item.Data</td>
+                                    <td>@item.Data.Day.ToString("d2")/@item.Data.Month.ToString("d2")/@item.Data.Year @item.Data.Hour.ToString("d2"):@item.Data.Minute.ToString("d2")</td>
                                     <td>@item.Vendedor</td>
                                     <td>@item.Cliente</td>
                                     <td>R$ @item.Total</td>

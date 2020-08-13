@@ -273,3 +273,7 @@ body {
         background: rgba(44, 125, 134, 0.5);
     }
 
+.my-style {
+    outline: none;
+    border: none;
+}
