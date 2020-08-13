@@ -151,6 +151,15 @@ namespace GestaoVendas.Libraries.Mensagem {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Registro já cadastrado..
+        /// </summary>
+        public static string MSG_E010 {
+            get {
+                return ResourceManager.GetString("MSG_E010", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Registro salvo com sucesso..
         /// </summary>
         public static string MSG_S001 {

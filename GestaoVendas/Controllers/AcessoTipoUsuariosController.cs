@@ -80,6 +80,13 @@ namespace GestaoVendas.Controllers
         {
             if (ModelState.IsValid)
             {
+                //Verificar se acesso tipo Usuario já existe
+                if (AcessoTipoUsuarioExists(acessoTipoUsuario.IdTipoUsuario, acessoTipoUsuario.IdFuncionalidade))
+                {
+                    TempData["MSG_E"] = Mensagem.MSG_E010;
+                    return RedirectToAction(nameof(Create));
+                }
+
                 _context.Add(acessoTipoUsuario);
                 await _context.SaveChangesAsync();
                 TempData["MSG_S"] = Mensagem.MSG_S001;
@@ -180,6 +187,11 @@ namespace GestaoVendas.Controllers
         private bool AcessoTipoUsuarioExists(int id)
         {
             return _context.AcessoTipoUsuario.Any(e => e.Id == id);
+        }
+
+        private bool AcessoTipoUsuarioExists(int idTipoUsuario, int idFunc)
+        {
+            return _context.AcessoTipoUsuario.Any(e => e.IdTipoUsuario == idTipoUsuario && e.IdFuncionalidade == idFunc);
         }
 
         public IActionResult Error(string message)

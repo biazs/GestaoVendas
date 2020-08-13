@@ -62,12 +62,18 @@ namespace GestaoVendas.Controllers
         {
             if (ModelState.IsValid)
             {
+                //Verificar se perfil Usuario já existe
+                if (PerfilUsuarioExistsTipo(perfilUsuario.IdTipoUsuario))
+                {
+                    TempData["MSG_E"] = Mensagem.MSG_E010;
+                    return RedirectToAction(nameof(Create));
+                }
+
                 _context.Add(perfilUsuario);
 
                 //inserir na tabela Vendedor
                 if (nome_vendedor != null && nome_vendedor != "" && _context.TipoUsuario.Any(v => v.Id == perfilUsuario.IdTipoUsuario && (v.NomeTipoUsuario == "Vendedor" || v.NomeTipoUsuario == "vendedor")))
                 {
-
                     var email = _context.Users.FirstOrDefault(u => u.Id == perfilUsuario.UserId).Email;
                     var vendedor = new Vendedor() { Nome = nome_vendedor, Email = email, UserId = perfilUsuario.UserId };
                     _context.Vendedor.Add(vendedor);
@@ -186,6 +192,11 @@ namespace GestaoVendas.Controllers
         private bool PerfilUsuarioExists(int id)
         {
             return _context.PerfilUsuario.Any(e => e.Id == id);
+        }
+
+        private bool PerfilUsuarioExistsTipo(int tipoUsuario)
+        {
+            return _context.PerfilUsuario.Any(e => e.IdTipoUsuario == tipoUsuario);
         }
     }
 }

@@ -5,6 +5,8 @@
 }
 
 <h1 class="titulo text-info">Tipos de Usuário</h1>
+
+
 @if (TempData["MSG_S"] != null)
 {
     if (@TempData["MSG_S"].ToString() == GestaoVendas.Libraries.Mensagem.Mensagem.MSG_S001.ToString())
@@ -16,6 +18,9 @@
         <p class="alert alert-danger">@TempData["MSG_S"]</p>
     }
 }
+
+
+
 
 <p>
     <a asp-action="Create" class="btn button-novo"><img src="../img/novo.png" alt="Cadastrar novo tipo de usuário" title="Cadastrar novo tipo de usuário" width="34" height="34" />Cadastrar novo</a>

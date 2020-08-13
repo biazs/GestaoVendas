@@ -56,6 +56,13 @@ namespace GestaoVendas.Controllers
         {
             if (ModelState.IsValid)
             {
+                //Verificar se tipo Usuario já existe
+                if (TipoUsuarioExists(tipoUsuario.NomeTipoUsuario))
+                {
+                    TempData["MSG_E"] = Mensagem.MSG_E010;
+                    return RedirectToAction(nameof(Create));
+                }
+
                 _context.Add(tipoUsuario);
                 await _context.SaveChangesAsync();
                 TempData["MSG_S"] = Mensagem.MSG_S001;
@@ -96,6 +103,13 @@ namespace GestaoVendas.Controllers
             {
                 try
                 {
+                    //Verificar se tipo Usuario já existe
+                    if (TipoUsuarioExists(tipoUsuario.NomeTipoUsuario))
+                    {
+                        TempData["MSG_E"] = Mensagem.MSG_E010;
+                        return RedirectToAction(nameof(Edit));
+                    }
+
                     _context.Update(tipoUsuario);
                     await _context.SaveChangesAsync();
                     TempData["MSG_S"] = Mensagem.MSG_S001;
@@ -149,6 +163,11 @@ namespace GestaoVendas.Controllers
         private bool TipoUsuarioExists(int id)
         {
             return _context.TipoUsuario.Any(e => e.Id == id);
+        }
+
+        private bool TipoUsuarioExists(string nome)
+        {
+            return _context.TipoUsuario.Any(e => e.NomeTipoUsuario == nome);
         }
     }
 }

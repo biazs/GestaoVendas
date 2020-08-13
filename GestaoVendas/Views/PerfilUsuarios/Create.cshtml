@@ -5,8 +5,11 @@
 }
 
 <h1 class="titulo text-info">Cadastrar Perfil de Usuário</h1>
-
 <hr />
+@if (TempData["MSG_E"] != null)
+{
+    <p class="alert alert-danger">@TempData["MSG_E"]</p>
+}
 <div class="row">
     <div class="col-md-12">
         <form asp-action="Create">
