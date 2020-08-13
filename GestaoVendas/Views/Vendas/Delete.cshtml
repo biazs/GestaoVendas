@@ -20,7 +20,7 @@
             @Html.DisplayNameFor(model => model.Data)
         </dt>
         <dd class="col-sm-10">
-            @Html.TextBoxFor(model => model.Data, "{0:dd/MM/yyyy hh:mm:ss}", new { @class = "my-style", @readonly = true })
+            @Html.TextBoxFor(model => model.Data, "{0:dd/MM/yyyy hh:mm:ss}", new { @style = "outline: none; border: none;", @readonly = true })
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Total)

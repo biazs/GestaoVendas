@@ -39,7 +39,7 @@ namespace GestaoVendas.Models.Dao
                               join v2 in _context.Vendedor on v1.VendedorId equals v2.Id
                               join c in _context.Cliente on v1.ClienteId equals c.Id
                               where v1.Data >= DataDe && v1.Data <= DataAte
-                              orderby v1.Data descending, v1.Id, v1.Total
+                              orderby v1.Data, v1.Id, v1.Total
                               select new
                               {
                                   v1.Id,

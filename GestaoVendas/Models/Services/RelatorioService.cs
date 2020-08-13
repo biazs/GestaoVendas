@@ -98,7 +98,7 @@ namespace GestaoVendas.Models.Services
                 var listaVendas = from v1 in _context.Venda
                                   join v2 in _context.Vendedor on v1.VendedorId equals v2.Id
                                   where v2.Id == id && v1.Data.Year == ano
-                                  orderby v1.Data descending, v1.Id, v1.Total
+                                  orderby v1.Data, v1.Id, v1.Total
                                   select new
                                   {
                                       v1.Id,
