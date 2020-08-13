@@ -48,8 +48,11 @@
 
 <script>
     $("#tipoUsuario").change(function () {
+        var select = document.getElementById('tipoUsuario');
+        var textTipoUsuario = select.options[select.selectedIndex].text;
+
         $('#nomeVendedor').hide();
-        if (this.value == "2")
+        if (textTipoUsuario == "Vendedor" || textTipoUsuario == "vendedor")
             $('#nomeVendedor').show();
         else {
             $('#nomeVendedor').hide();
@@ -58,8 +61,10 @@
     });
 
     function Enviardados() {
+        var select = document.getElementById('tipoUsuario');
+        var textTipoUsuario = select.options[select.selectedIndex].text;
 
-        if (document.getElementById("tipoUsuario").value == "2") {
+        if (textTipoUsuario == "Vendedor" || textTipoUsuario == "vendedor") {
 
             if (document.getElementById("nome_vendedor").value == "") {
                 msg.innerHTML = "Campo obrigatório";

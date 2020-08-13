@@ -64,8 +64,9 @@ namespace GestaoVendas.Controllers
                 _context.Add(perfilUsuario);
 
                 //inserir na tabela Vendedor
-                if (nome_vendedor != "" && _context.TipoUsuario.Any(v => v.NomeTipoUsuario == "Vendedor" && v.Id == perfilUsuario.IdTipoUsuario))
+                if (nome_vendedor != null && nome_vendedor != "" && _context.TipoUsuario.Any(v => v.Id == perfilUsuario.IdTipoUsuario && (v.NomeTipoUsuario == "Vendedor" || v.NomeTipoUsuario == "vendedor")))
                 {
+
                     var email = _context.Users.FirstOrDefault(u => u.Id == perfilUsuario.UserId).Email;
                     var vendedor = new Vendedor() { Nome = nome_vendedor, Email = email, UserId = perfilUsuario.UserId };
                     _context.Vendedor.Add(vendedor);
@@ -163,7 +164,7 @@ namespace GestaoVendas.Controllers
             _context.PerfilUsuario.Remove(perfilUsuario);
 
             //deletar Vendedor da tabela
-            var isVendedor = _context.TipoUsuario.Any(v => v.NomeTipoUsuario == "Vendedor" && v.Id == perfilUsuario.IdTipoUsuario);
+            var isVendedor = _context.TipoUsuario.Any(v => v.Id == perfilUsuario.IdTipoUsuario && (v.NomeTipoUsuario == "Vendedor" || v.NomeTipoUsuario == "vendedor"));
             var existeVendedor = _context.Vendedor.Any(v => v.UserId == perfilUsuario.UserId);
 
             if (isVendedor && existeVendedor)
