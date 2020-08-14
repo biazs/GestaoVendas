@@ -19,6 +19,7 @@ namespace GestaoVendas.Models
 
         [Display(Name = "CPF")]
         [Required(ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "MSG_E001")]
+        [RegularExpression(@"^([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})$", ErrorMessage = "CPF Inválido")]
         public string Cpf { get; set; }
 
         [Display(Name = "E-mail")]

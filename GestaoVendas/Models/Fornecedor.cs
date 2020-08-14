@@ -18,6 +18,7 @@ namespace GestaoVendas.Models
 
         [Display(Name = "Cnpj")]
         [Required(ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "MSG_E001")]
+        [RegularExpression(@"^(\d{2}\.?\d{3}\.?\d{3}\/?\d{4}-?\d{2})$", ErrorMessage = "CNPJ Inválido")]
         public string Cnpj { get; set; }
 
         [Display(Name = "Contato")]
