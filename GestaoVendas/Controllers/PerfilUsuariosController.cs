@@ -63,7 +63,7 @@ namespace GestaoVendas.Controllers
             if (ModelState.IsValid)
             {
                 //Verificar se perfil Usuario já existe
-                if (PerfilUsuarioExistsTipo(perfilUsuario.IdTipoUsuario))
+                if (PerfilUsuarioExistsTipo(perfilUsuario.IdTipoUsuario, perfilUsuario.UserId))
                 {
                     TempData["MSG_E"] = Mensagem.MSG_E010;
                     return RedirectToAction(nameof(Create));
@@ -194,9 +194,9 @@ namespace GestaoVendas.Controllers
             return _context.PerfilUsuario.Any(e => e.Id == id);
         }
 
-        private bool PerfilUsuarioExistsTipo(int tipoUsuario)
+        private bool PerfilUsuarioExistsTipo(int tipoUsuario, string userId)
         {
-            return _context.PerfilUsuario.Any(e => e.IdTipoUsuario == tipoUsuario);
+            return _context.PerfilUsuario.Any(e => e.IdTipoUsuario == tipoUsuario && e.UserId == userId);
         }
     }
 }
