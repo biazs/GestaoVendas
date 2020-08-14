@@ -39,6 +39,23 @@ function MascaraCPF(cpf) {
     return formataCampo(cpf, '000.000.000-00', event);
 }
 
+//adiciona mascara de cnpj
+function MascaraCNPJ(cnpj) {
+    if (mascaraInteiro(cnpj) == false) {
+        event.returnValue = false;
+    }
+    return formataCampo(cnpj, '00.000.000/0000-00', event);
+}
+
+//adiciona mascara ao telefone
+function MascaraTelefone(tel) {
+    if (mascaraInteiro(tel) == false) {
+        event.returnValue = false;
+    }
+    return formataCampo(tel, '(00) 0000-0000', event);
+}
+
+
 //valida numero inteiro com mascara
 function mascaraInteiro() {
     if (event.keyCode < 48 || event.keyCode > 57) {
