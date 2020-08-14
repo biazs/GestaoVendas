@@ -33,6 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\video\" />
     <Folder Include="wwwroot\rotativa\" />
   </ItemGroup>
 

@@ -94,7 +94,7 @@ namespace GestaoVendas.Controllers
 
         }
 
-        public IActionResult Privacy()
+        public IActionResult Video()
         {
             return View();
         }
