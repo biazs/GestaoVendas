@@ -48,8 +48,11 @@ namespace GestaoVendas.Controllers
                 {
                     ViewBag.TemAcesso = false;
                 }
+                else
+                {
+                    ViewBag.TemAcesso = true;
+                }
 
-                ViewBag.TemAcesso = true;
                 var gestaoVendasContext = _context.Venda.Include(v => v.Cliente).Include(v => v.Vendedor).OrderByDescending(v => v.Data);
                 return View(await gestaoVendasContext.ToListAsync());
             }
