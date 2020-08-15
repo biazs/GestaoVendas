@@ -53,6 +53,10 @@ namespace GestaoVendas.Models.Services
 
         public List<VendasPorVendedor> RetornarVendasPorVendedor(int mes, int ano)
         {
+            /*
+             * select count(*), Vendedores.Nome from Vendedores join Vendas on Vendedores.Id = Vendas.VendedorId
+             * group by Vendedores.Nome, Vendedores.Id
+             */
             var listaProdutos = (from v1 in _context.Venda
                                  join v2 in _context.Vendedor on v1.VendedorId equals v2.Id
                                  where v1.Data.Month == mes && v1.Data.Year == ano
@@ -65,9 +69,8 @@ namespace GestaoVendas.Models.Services
                                 .Select(gp => new
                                 {
                                     Nome = gp.Key,
-                                    QtdeVendido = gp.Sum(c => c.VendedorId),
+                                    QtdeVendido = gp.Count(),
                                 });
-
 
             List<VendasPorVendedor> lista = new List<VendasPorVendedor>();
             VendasPorVendedor item;
@@ -78,13 +81,11 @@ namespace GestaoVendas.Models.Services
                 item.Vendedor = ls.Nome.ToString();
                 item.QtdeVendido = ls.QtdeVendido;
 
-
                 lista.Add(item);
             }
 
             return lista;
         }
-
 
 
         public List<Venda> RetornarDetalhesVendasPorVendedor(int id, int mes, int ano)

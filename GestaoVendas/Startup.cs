@@ -28,8 +28,8 @@ namespace GestaoVendas
             //    options.UseSqlServer(
             //        Configuration.GetConnectionString("DefaultConnection")));
 
-            //var connectionString = "Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = GestaoVendas; Integrated Security = True; Connect Timeout = 30; Encrypt = False; TrustServerCertificate = False; ApplicationIntent = ReadWrite; MultiSubnetFailover = False";
-            var connectionString = "Data Source = gestaovendasdbserver.database.windows.net; Initial Catalog = GestaoVendas; Persist Security Info = True; User ID = serveradmin; Password = server@dmin1";
+            var connectionString = "Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = GestaoVendas; Integrated Security = True; Connect Timeout = 30; Encrypt = False; TrustServerCertificate = False; ApplicationIntent = ReadWrite; MultiSubnetFailover = False";
+            //var connectionString = "Data Source = gestaovendasdbserver.database.windows.net; Initial Catalog = GestaoVendas; Persist Security Info = True; User ID = ; Password = ";
 
 
             services.AddDbContext<GestaoVendasContext>(options =>
